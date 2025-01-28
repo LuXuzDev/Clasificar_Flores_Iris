@@ -14,6 +14,8 @@ public class Controller {
     private NeuralNetwork neuralNetwork;
     private Validator validator;
     
+    
+    
     public void recieveInput(String widthLeaf, String lengthLeaf, String widthStem, String lengthStem)
     {
         
