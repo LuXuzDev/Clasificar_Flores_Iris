@@ -16,8 +16,9 @@ public class Controller {
     
     
     
-    public void recieveInput(String widthLeaf, String lengthLeaf, String widthStem, String lengthStem)
+    public String flowerType(String widthLeaf, String lengthLeaf, String widthStem, String lengthStem)
     {
-        
+        String type="";
+        return type;
     }
 }
