@@ -4,6 +4,8 @@
  */
 package neuralNetwork;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Angel Hernandez
@@ -36,7 +38,23 @@ public class Normalizer {
             }
         }
     }
+    
+    public ArrayList<Double> normalizarEntrada(ArrayList<Double> dataSet) {
+        ArrayList<Double> dataSetNormalizado = new ArrayList<>(dataSet.size());
 
+        // Inicializar la lista con ceros o valores predeterminados
+        for (int i = 0; i < dataSet.size(); i++) {
+            dataSetNormalizado.add(0.0);
+        }
+
+        for (int i = 0; i < dataSet.size(); i++) {
+            // Normalizar correctamente
+            dataSetNormalizado.set(i, (dataSet.get(i) - minimos[i]) / (maximos[i] - minimos[i]));
+        }
+        return dataSetNormalizado;
+    }
+
+    
     public double[][] normalizar(double[][] dataSet) {
         int numAtributos = dataSet[0].length - 1; // Última columna es la clase
         double[][] dataSetNormalizado = new double[dataSet.length][dataSet[0].length];

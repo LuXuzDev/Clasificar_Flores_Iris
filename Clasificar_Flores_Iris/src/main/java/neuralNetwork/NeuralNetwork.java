@@ -35,6 +35,7 @@ public class NeuralNetwork {
             }
         }
 
+        System.out.println(indiceMaximo);
         // Devolver la clase correspondiente
         switch (indiceMaximo) {
             case 0:
@@ -61,11 +62,14 @@ public class NeuralNetwork {
                 ArrayList<Double> salidasOculta = capaOculta.calcularSalidas(entradas);
                 ArrayList<Double> salidasRed = capaSalida.calcularSalidas(salidasOculta);
 
+                // Calcular la salida esperada en formato one-hot
+                double[] salidaEsperada = new double[3]; // Suponiendo 3 clases
+                salidaEsperada[salidas[i]] = 1.0; // Establecer la clase esperada
 
                 // Calcular el error para cada salida
                 ArrayList<Double> erroresSalida = new ArrayList<>();
                 for (int j = 0; j < salidasRed.size(); j++) {
-                    double errorSalida = salidas[j] - salidasRed.get(j);
+                    double errorSalida = salidaEsperada[j] - salidasRed.get(j);
                     erroresSalida.add(errorSalida); // Agregar el error a la lista
                 }
 
@@ -82,7 +86,7 @@ public class NeuralNetwork {
                     erroresOculta.add(errorOculta);
                 }
 
-                // Ajustar pesos en la segunda capa oculta
+                // Ajustar pesos en la capa oculta
                 capaOculta.ajustarPesos(salidasOculta, erroresOculta, tasaAprendizaje);
             }
         }
