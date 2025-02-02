@@ -24,16 +24,16 @@ public class Main {
         double [][] dataSet = n.normalizar(t.getDataSet());
 
         System.out.println("Entrenando...");
-        redNeuronal.entrenar(dataSet, t.getDataSetSalida(), 0.01, 1000);
+        redNeuronal.entrenar(dataSet, t.getDataSetSalida(), 0.01, 500);
 
         
         ArrayList<Double> entrada1 = new ArrayList<>();
-        entrada1.add(7.0);
-        entrada1.add(3.2);
-        entrada1.add(4.7);
-        entrada1.add(1.4);
+        entrada1.add(5.7);
+        entrada1.add(2.8);
+        entrada1.add(4.1);
+        entrada1.add(1.3);
 
-        String salida = redNeuronal.calcularSalidas(entrada1);
+        String salida = redNeuronal.calcularSalidas(n.normalizarEntrada(entrada1));
 
         System.out.println("Salida red: " + salida);
     }
