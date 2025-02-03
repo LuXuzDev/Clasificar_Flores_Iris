@@ -16,6 +16,7 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -25,6 +26,9 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import neuralNetwork.NeuralNetwork;
+import neuralNetwork.Normalizer;
+import neuralNetwork.Trainer;
 
 
 public class Init_Menu extends javax.swing.JFrame {
@@ -237,6 +241,28 @@ public class Init_Menu extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Init_Menu().setVisible(true);
+                
+                
+                System.out.println("Ejecutando");
+                NeuralNetwork redNeuronal = new NeuralNetwork(4, 5, 3);
+                Trainer t = new Trainer();
+                Normalizer n = new Normalizer();
+                n.ajustar(t.getDataSet());
+                double[][] dataSet = n.normalizar(t.getDataSet());
+
+                System.out.println("Entrenando...");
+                redNeuronal.entrenar(dataSet, t.getDataSetSalida(), 0.01, 1000);
+
+                ArrayList<Double> entrada1 = new ArrayList<>();
+                entrada1.add(5.8);
+                entrada1.add(2.7);
+                entrada1.add(4.1);
+                entrada1.add(1.0);
+
+                String salida = redNeuronal.calcularSalidas(n.normalizarEntrada(entrada1));
+
+                System.out.println("Salida red: " + salida);
+        
             }
         });
     }

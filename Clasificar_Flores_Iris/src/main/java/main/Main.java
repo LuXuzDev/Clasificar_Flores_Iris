@@ -14,7 +14,7 @@ import neuralNetwork.Trainer;
  * @author Angel Hernandez
  */
 public class Main {
-    public static void main(String[] args)
+   /* public static void main(String[] args)
     {
         System.out.println("Ejecutando");
         NeuralNetwork redNeuronal = new NeuralNetwork(4, 5, 3);
@@ -36,5 +36,5 @@ public class Main {
         String salida = redNeuronal.calcularSalidas(n.normalizarEntrada(entrada1));
 
         System.out.println("Salida red: " + salida);
-    }
+    }*/
 }
