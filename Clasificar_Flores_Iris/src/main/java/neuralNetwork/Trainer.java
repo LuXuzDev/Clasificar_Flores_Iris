@@ -121,6 +121,8 @@ public class Trainer {
         salida[48] = 0;
         dataSet[49] = new double[]{5.0,3.3,1.4,0.2};
         salida[49] = 0;
+        
+        
         dataSet[50] = new double[]{7.0,3.2,4.7,1.4};
         salida[50] = 1;
         dataSet[51] = new double[]{6.4,3.2,4.5,1.5};
@@ -222,6 +224,7 @@ public class Trainer {
         dataSet[99] = new double[]{5.7,2.8,4.1,1.3};
         salida[99] = 1;
 
+        
         dataSet[100] = new double[]{6.3,3.3,6.0,2.5};
         salida[100] = 2;
         dataSet[101] = new double[]{5.8,2.7,5.1,1.9};
