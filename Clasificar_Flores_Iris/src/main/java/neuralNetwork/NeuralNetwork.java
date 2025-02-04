@@ -12,9 +12,9 @@ import java.util.ArrayList;
  */
 public class NeuralNetwork {
 
-    private Layer capaEntrada;
-    private Layer capaOculta;
-    private Layer capaSalida;
+    private final Layer capaEntrada;
+    private final Layer capaOculta;
+    private final Layer capaSalida;
 
     public NeuralNetwork(int numEntradas, int numNeuronasOculta, int numSalidas) {
         capaEntrada = new Layer(numEntradas, numEntradas);
@@ -49,6 +49,7 @@ public class NeuralNetwork {
         }
     }
 
+    
     public void entrenar(double[][] dataSet, int[] salidas, double tasaAprendizaje, int epochs) {
         for (int epoch = 0; epoch < epochs; epoch++) {
             for (int i = 0; i < dataSet.length; i++) {
@@ -85,7 +86,6 @@ public class NeuralNetwork {
                     }
                     erroresOculta.add(errorOculta);
                 }
-
                 // Ajustar pesos en la capa oculta
                 capaOculta.ajustarPesos(salidasOculta, erroresOculta, tasaAprendizaje);
             }

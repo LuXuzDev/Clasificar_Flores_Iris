@@ -52,7 +52,7 @@ public class Validator {
     }
     
     
-    public boolean checkPasswor(String input)
+    public boolean checkPassword(String input)
     {
         boolean isCorrect = true;
         if(!input.equals(password))

@@ -4,6 +4,7 @@
  */
 package ui;
 
+import back_end.Controller;
 import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.FlatLightLaf;
 import com.formdev.flatlaf.extras.FlatAnimatedLafChange;
@@ -39,8 +40,11 @@ import neuralNetwork.Trainer;
 
 public class Init_Menu extends javax.swing.JFrame {
 
+
+    //Attributes
+    private Controller controller;
     public static Timer timer;
-    
+  
     public Init_Menu() {
         Flatlaf();
         setFontFamily("Arial");
@@ -48,6 +52,8 @@ public class Init_Menu extends javax.swing.JFrame {
         UIManager.put("TextComponent.arc",999);
         UIManager.put("Button.arc", 25);
         this.setLocationRelativeTo(null);
+        controller = new Controller();
+
         ProgressBar.setStringPainted(true);
         ProgressBar.setVisible(false);
         JprogressbarLabel.setVisible(false);
@@ -63,6 +69,9 @@ public class Init_Menu extends javax.swing.JFrame {
             }
         });
         timer.setRepeats(false);
+
+        
+  
     }
     
      
@@ -388,10 +397,10 @@ public class Init_Menu extends javax.swing.JFrame {
                 redNeuronal.entrenar(dataSet, t.getDataSetSalida(), 0.01, 1000);
 
                 ArrayList<Double> entrada1 = new ArrayList<>();
-                entrada1.add(5.8);
-                entrada1.add(2.7);
-                entrada1.add(4.1);
-                entrada1.add(1.0);
+                entrada1.add(6.3);
+                entrada1.add(2.5);
+                entrada1.add(4.9);
+                entrada1.add(1.5);
 
                 String salida = redNeuronal.calcularSalidas(n.normalizarEntrada(entrada1));
 

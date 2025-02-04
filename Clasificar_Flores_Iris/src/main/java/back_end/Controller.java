@@ -14,7 +14,10 @@ public class Controller {
     private NeuralNetwork neuralNetwork;
     private Validator validator;
     
-    
+    public Controller()
+    {
+        validator = new Validator("admin");
+    }
     
     public String flowerType(String widthLeaf, String lengthLeaf, String widthStem, String lengthStem)
     {
