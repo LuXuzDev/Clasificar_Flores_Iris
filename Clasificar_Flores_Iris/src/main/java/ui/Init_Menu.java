@@ -5,12 +5,15 @@
 package ui;
 
 import back_end.Controller;
+import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.FlatLightLaf;
 import com.formdev.flatlaf.extras.FlatAnimatedLafChange;
+import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import com.formdev.flatlaf.util.FontUtils;
 import com.mycompany.placeholdermaven.TextPrompt;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
 import java.awt.Image;
@@ -46,34 +49,56 @@ public class Init_Menu extends javax.swing.JFrame {
     public static Timer timer;
   
     public Init_Menu() {
-        Flatlaf();
-        setFontFamily("Arial");
-        initComponents();
-        UIManager.put("TextComponent.arc",999);
-        UIManager.put("Button.arc", 25);
-        this.setLocationRelativeTo(null);
         controller = new Controller();
-
-        ProgressBar.setStringPainted(true);
-        ProgressBar.setVisible(false);
-        JprogressbarLabel.setVisible(false);
+        initComponents();
+        design();
         check(FieldAnchoPetalo);
         check(FieldAnchoSepalo);
         check(FieldLongitudPetalo);
         check(FieldLongitudSepalo);
+        
+        //el icono va a ser mejor tranqui
+        setIconImage(new ImageIcon(getClass().getResource("/png/flor.png")).getImage());
+        
         //el timer tengo q ponerlo aqui obligado sino da bateo
-        timer = new Timer(1000, new ActionListener() {
+        timer = new Timer(1500, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 CheckAndStart();
             }
         });
         timer.setRepeats(false);
-
-        
-  
     }
     
+    private void design()
+    {
+        Flatlaf();
+        
+        setFontFamily("Arial");
+        
+        UIManager.put("TextComponent.arc",99);
+        UIManager.put("Button.arc", 25);
+        
+        this.setLocationRelativeTo(null);
+        
+        ProgressBar.setStringPainted(true);
+        ProgressBar.setVisible(false);
+        
+        JprogressbarLabel.setVisible(false);
+        
+        FieldAnchoPetalo.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT,"            Ancho Petalo");
+        FieldAnchoSepalo.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT,"            Ancho Sepalo");
+        FieldLongitudPetalo.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT,"          Longitud Petalo");
+        FieldLongitudSepalo.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT,"          Longitud Sepalo");
+        FieldAnchoPetalo.putClientProperty(FlatClientProperties.TEXT_FIELD_SHOW_CLEAR_BUTTON,true);
+        FieldAnchoSepalo.putClientProperty(FlatClientProperties.TEXT_FIELD_SHOW_CLEAR_BUTTON,true);
+        FieldLongitudPetalo.putClientProperty(FlatClientProperties.TEXT_FIELD_SHOW_CLEAR_BUTTON,true);
+        FieldLongitudSepalo.putClientProperty(FlatClientProperties.TEXT_FIELD_SHOW_CLEAR_BUTTON,true);
+        getRootPane().putClientProperty(FlatClientProperties.TITLE_BAR_BACKGROUND, new Color(102, 153, 255));
+        getRootPane().putClientProperty(FlatClientProperties.TITLE_BAR_SHOW_MAXIMIZE,false);
+        getRootPane().putClientProperty(FlatClientProperties.TITLE_BAR_SHOW_ICON,true);
+        getRootPane().putClientProperty(FlatClientProperties.TITLE_BAR_SHOW_ICONIFFY,true);
+    }
      
     //funcion para ver si no esta vacio un textfield
     private boolean CheckTextField(JTextField field)
@@ -82,6 +107,7 @@ public class Init_Menu extends javax.swing.JFrame {
         if (!field.getText().trim().isEmpty()) {
             salir = true;
         }
+        
         return salir;
     }
     
@@ -169,7 +195,7 @@ public class Init_Menu extends javax.swing.JFrame {
         }
         
     }
-   
+   /*
    //funcion para poner el texto de indicacion a cada textField con lo q debe poner en cada uno
     public void placeHolder(String text,JTextField field)
     {
@@ -178,7 +204,7 @@ public class Init_Menu extends javax.swing.JFrame {
         placeholder.changeAlpha(0.75f);
         placeholder.changeStyle(java.awt.Font.BOLD);
     }
-    
+    */
     //funcion de diseño de flatlaf
     public void Flatlaf()
     {
@@ -186,11 +212,11 @@ public class Init_Menu extends javax.swing.JFrame {
             try {
                 UIManager.setLookAndFeel(new FlatMacLightLaf());
                 SwingUtilities.updateComponentTreeUI(this);
-                placeHolder("     Ancho del petalo", FieldAnchoPetalo);
+                /*placeHolder("     Ancho del petalo", FieldAnchoPetalo);
                 placeHolder("   Longitud del sepalo", FieldLongitudSepalo);
                 placeHolder("     Ancho del sepalo", FieldAnchoSepalo);
                 placeHolder("   Longitud del petalo", FieldLongitudPetalo);
-
+*/
             } catch (UnsupportedLookAndFeelException ex) {
                 Logger.getLogger(Init_Menu.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -307,7 +333,9 @@ public class Init_Menu extends javax.swing.JFrame {
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Resultado");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 150, 130, 30));
-        jPanel1.add(Imagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 260, 70, 60));
+
+        Imagen.setIcon(new javax.swing.ImageIcon("C:\\Users\\Kris\\Documents\\GitHub\\Nuevo\\Clasificar_Flores_Iris\\Clasificar_Flores_Iris\\src\\main\\resources\\png\\flor.png")); // NOI18N
+        jPanel1.add(Imagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 260, 50, 60));
 
         ProgressBar.setBackground(new java.awt.Color(255, 255, 255));
         ProgressBar.setToolTipText("Analizando...");
@@ -327,12 +355,12 @@ public class Init_Menu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ButtonTrainActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonTrainActionPerformed
-       
+        new SecurityPassword(this,true).setVisible(true);
          
     }//GEN-LAST:event_ButtonTrainActionPerformed
 
     private void buttonDatabaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDatabaseActionPerformed
-        // TODO add your handling code here:
+        new SecurityPassword(this,true).setVisible(true);
     }//GEN-LAST:event_buttonDatabaseActionPerformed
 
     private void FieldAnchoPetaloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FieldAnchoPetaloActionPerformed
