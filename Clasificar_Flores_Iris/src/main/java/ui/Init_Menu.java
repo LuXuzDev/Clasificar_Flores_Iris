@@ -14,6 +14,8 @@ import com.mycompany.placeholdermaven.TextPrompt;
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -23,10 +25,14 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JProgressBar;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
+import javax.swing.Timer;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import neuralNetwork.NeuralNetwork;
 import neuralNetwork.Normalizer;
 import neuralNetwork.Trainer;
@@ -34,9 +40,11 @@ import neuralNetwork.Trainer;
 
 public class Init_Menu extends javax.swing.JFrame {
 
+
     //Attributes
     private Controller controller;
-    
+    public static Timer timer;
+  
     public Init_Menu() {
         Flatlaf();
         setFontFamily("Arial");
@@ -45,38 +53,151 @@ public class Init_Menu extends javax.swing.JFrame {
         UIManager.put("Button.arc", 25);
         this.setLocationRelativeTo(null);
         controller = new Controller();
-        
-    }
 
- 
- 
-   
-   
-    public void placeHolder(String text,JTextField field)
-    {
-                TextPrompt placeholder;
-                placeholder = new TextPrompt(text, field);
-                placeholder.changeAlpha(0.75f);
-                placeholder.changeStyle(java.awt.Font.BOLD);
-    }
-    public void Flatlaf()
-    {
-        SwingUtilities.invokeLater(()->{
-           try {
-               UIManager.setLookAndFeel(new FlatMacLightLaf());
-               SwingUtilities.updateComponentTreeUI(this);
-                placeHolder("Ancho del petalo",txt);
-                placeHolder("Longitud del sepalo",txt1);
-                placeHolder("Ancho del sepalo",txt2);
-                placeHolder("Longitud del petalo",txt3);
-                
-           } catch (UnsupportedLookAndFeelException ex) {
-               Logger.getLogger(Init_Menu.class.getName()).log(Level.SEVERE, null, ex);
-           }
-       });
+        ProgressBar.setStringPainted(true);
+        ProgressBar.setVisible(false);
+        JprogressbarLabel.setVisible(false);
+        check(FieldAnchoPetalo);
+        check(FieldAnchoSepalo);
+        check(FieldLongitudPetalo);
+        check(FieldLongitudSepalo);
+        //el timer tengo q ponerlo aqui obligado sino da bateo
+        timer = new Timer(1000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                CheckAndStart();
+            }
+        });
+        timer.setRepeats(false);
+
+        
+  
     }
     
+     
+    //funcion para ver si no esta vacio un textfield
+    private boolean CheckTextField(JTextField field)
+    {
+        boolean salir = false;
+        if (!field.getText().trim().isEmpty()) {
+            salir = true;
+        }
+        return salir;
+    }
+    
+    //Funcion para verificar los textField en tiempo real
+    private void check(JTextField field)
+    {
+        field.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                restartTimer();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                restartTimer();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                restartTimer();
+            }
+        });
+    }
+    //funcion para reiniciar los timers de la busqueda en tiempo real de los text field
+    private void restartTimer()
+    {
+        timer.stop();
+        timer.start();
+    }
+    //funcion para verificar si todos estan llenos y empezar el analisis automatico
+    public void CheckAndStart()
+    {
+        boolean salir=false;
+        if(CheckTextField(FieldAnchoSepalo)==true && CheckTextField(FieldAnchoPetalo)==true && CheckTextField(FieldLongitudPetalo)==true && CheckTextField(FieldLongitudSepalo)==true)
+        {
+            JprogressbarLabel.setVisible(true);
+            ProgressBar.setVisible(true);
+            startProgress(ProgressBar);
+        }
+       
+    }
+ 
+   //analisis automatico de la barraprogress con hilos y reiniciar los datos
+    private void startProgress(JProgressBar progressBar)
+    {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    for (int i = 0; i <= 100; i++) {
+                        try {
+                            Thread.sleep(20);
+                        } catch (InterruptedException ex) {
+                            ex.printStackTrace();
+                        }
+                        progressBar.setValue(i);
+                        FieldAnchoPetalo.setEnabled(false);
+                        FieldAnchoSepalo.setEnabled(false);
+                        FieldLongitudPetalo.setEnabled(false);
+                        FieldLongitudSepalo.setEnabled(false);
+                       
+                    }
+                    SwingUtilities.invokeLater(()->restart());
+                }
+            }).start();
+            
+             
+    }
+    
+    //funcion para reestablecer los datos
+    private void restart()
+    {
+        if(ProgressBar.getValue()==100)
+        {
+            ProgressBar.setValue(0);
+            ProgressBar.setVisible(false);
+            JprogressbarLabel.setVisible(false);
+            FieldAnchoPetalo.setEnabled(true);
+            FieldAnchoSepalo.setEnabled(true);
+            FieldLongitudPetalo.setEnabled(true);
+            FieldLongitudSepalo.setEnabled(true);
+            FieldAnchoPetalo.setText("");
+            FieldAnchoSepalo.setText("");
+            FieldLongitudPetalo.setText("");
+            FieldLongitudSepalo.setText("");
+        }
+        
+    }
    
+   //funcion para poner el texto de indicacion a cada textField con lo q debe poner en cada uno
+    public void placeHolder(String text,JTextField field)
+    {
+        TextPrompt placeholder;
+        placeholder = new TextPrompt(text, field);
+        placeholder.changeAlpha(0.75f);
+        placeholder.changeStyle(java.awt.Font.BOLD);
+    }
+    
+    //funcion de diseño de flatlaf
+    public void Flatlaf()
+    {
+        SwingUtilities.invokeLater(() -> {
+            try {
+                UIManager.setLookAndFeel(new FlatMacLightLaf());
+                SwingUtilities.updateComponentTreeUI(this);
+                placeHolder("     Ancho del petalo", FieldAnchoPetalo);
+                placeHolder("   Longitud del sepalo", FieldLongitudSepalo);
+                placeHolder("     Ancho del sepalo", FieldAnchoSepalo);
+                placeHolder("   Longitud del petalo", FieldLongitudPetalo);
+
+            } catch (UnsupportedLookAndFeelException ex) {
+                Logger.getLogger(Init_Menu.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+    }
+    
+   //Funcion para poner un font general en el Jframe
     private void setFontFamily(String fontFamily)
     {
         java.awt.Font font = UIManager.getFont("defaultFont");
@@ -91,16 +212,17 @@ public class Init_Menu extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        txt = new javax.swing.JTextField();
-        txt1 = new javax.swing.JTextField();
-        txt2 = new javax.swing.JTextField();
-        txt3 = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
+        ButtonTrain = new javax.swing.JButton();
+        buttonDatabase = new javax.swing.JButton();
+        FieldAnchoPetalo = new javax.swing.JTextField();
+        FieldLongitudSepalo = new javax.swing.JTextField();
+        FieldAnchoSepalo = new javax.swing.JTextField();
+        FieldLongitudPetalo = new javax.swing.JTextField();
+        LabelSubField = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         Imagen = new javax.swing.JLabel();
+        ProgressBar = new javax.swing.JProgressBar();
+        JprogressbarLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -108,71 +230,77 @@ public class Init_Menu extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jButton1.setForeground(new java.awt.Color(0, 0, 0));
-        jButton1.setText("Entrenar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        ButtonTrain.setForeground(new java.awt.Color(0, 0, 0));
+        ButtonTrain.setText("Entrenar");
+        ButtonTrain.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                ButtonTrainActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 130, 30));
+        jPanel1.add(ButtonTrain, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 130, 30));
 
-        jButton2.setForeground(new java.awt.Color(0, 0, 0));
-        jButton2.setText("Base de datos");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        buttonDatabase.setForeground(new java.awt.Color(0, 0, 0));
+        buttonDatabase.setText("Base de datos");
+        buttonDatabase.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                buttonDatabaseActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 130, 30));
+        jPanel1.add(buttonDatabase, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 130, 30));
 
-        jLabel1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Resultado");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 230, 130, 30));
-
-        txt.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        txt.setForeground(new java.awt.Color(0, 0, 0));
-        txt.addActionListener(new java.awt.event.ActionListener() {
+        FieldAnchoPetalo.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        FieldAnchoPetalo.setForeground(new java.awt.Color(0, 0, 0));
+        FieldAnchoPetalo.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        FieldAnchoPetalo.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        FieldAnchoPetalo.setKeymap(null);
+        FieldAnchoPetalo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtActionPerformed(evt);
+                FieldAnchoPetaloActionPerformed(evt);
             }
         });
-        jPanel1.add(txt, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, 160, -1));
+        jPanel1.add(FieldAnchoPetalo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, 170, -1));
 
-        txt1.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        txt1.setForeground(new java.awt.Color(0, 0, 0));
-        txt1.addActionListener(new java.awt.event.ActionListener() {
+        FieldLongitudSepalo.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        FieldLongitudSepalo.setForeground(new java.awt.Color(0, 0, 0));
+        FieldLongitudSepalo.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        FieldLongitudSepalo.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        FieldLongitudSepalo.setKeymap(null);
+        FieldLongitudSepalo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt1ActionPerformed(evt);
+                FieldLongitudSepaloActionPerformed(evt);
             }
         });
-        jPanel1.add(txt1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, 160, -1));
+        jPanel1.add(FieldLongitudSepalo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, 170, -1));
 
-        txt2.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        txt2.setForeground(new java.awt.Color(0, 0, 0));
-        txt2.addActionListener(new java.awt.event.ActionListener() {
+        FieldAnchoSepalo.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        FieldAnchoSepalo.setForeground(new java.awt.Color(0, 0, 0));
+        FieldAnchoSepalo.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        FieldAnchoSepalo.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        FieldAnchoSepalo.setKeymap(null);
+        FieldAnchoSepalo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt2ActionPerformed(evt);
+                FieldAnchoSepaloActionPerformed(evt);
             }
         });
-        jPanel1.add(txt2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 160, -1));
+        jPanel1.add(FieldAnchoSepalo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 170, -1));
 
-        txt3.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        txt3.setForeground(new java.awt.Color(0, 0, 0));
-        txt3.addActionListener(new java.awt.event.ActionListener() {
+        FieldLongitudPetalo.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        FieldLongitudPetalo.setForeground(new java.awt.Color(0, 0, 0));
+        FieldLongitudPetalo.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        FieldLongitudPetalo.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        FieldLongitudPetalo.setKeymap(null);
+        FieldLongitudPetalo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt3ActionPerformed(evt);
+                FieldLongitudPetaloActionPerformed(evt);
             }
         });
-        jPanel1.add(txt3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, 160, -1));
+        jPanel1.add(FieldLongitudPetalo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, 170, -1));
 
-        jLabel2.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(102, 153, 255));
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Entradas ");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, 130, 30));
+        LabelSubField.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        LabelSubField.setForeground(new java.awt.Color(102, 153, 255));
+        LabelSubField.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        LabelSubField.setText("Entradas ");
+        jPanel1.add(LabelSubField, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 150, 130, 30));
 
         jLabel3.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(102, 153, 255));
@@ -181,35 +309,47 @@ public class Init_Menu extends javax.swing.JFrame {
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 150, 130, 30));
         jPanel1.add(Imagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 260, 70, 60));
 
+        ProgressBar.setBackground(new java.awt.Color(255, 255, 255));
+        ProgressBar.setToolTipText("Analizando...");
+        ProgressBar.setOpaque(true);
+        jPanel1.add(ProgressBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 234, 170, 20));
+
+        JprogressbarLabel.setBackground(new java.awt.Color(255, 255, 255));
+        JprogressbarLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        JprogressbarLabel.setForeground(new java.awt.Color(102, 153, 255));
+        JprogressbarLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        JprogressbarLabel.setText("Analizando...");
+        jPanel1.add(JprogressbarLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 206, 90, 30));
+
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 610, 340));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void ButtonTrainActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonTrainActionPerformed
        
          
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_ButtonTrainActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void buttonDatabaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDatabaseActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_buttonDatabaseActionPerformed
 
-    private void txtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtActionPerformed
+    private void FieldAnchoPetaloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FieldAnchoPetaloActionPerformed
         
-    }//GEN-LAST:event_txtActionPerformed
+    }//GEN-LAST:event_FieldAnchoPetaloActionPerformed
 
-    private void txt1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt1ActionPerformed
+    private void FieldLongitudSepaloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FieldLongitudSepaloActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txt1ActionPerformed
+    }//GEN-LAST:event_FieldLongitudSepaloActionPerformed
 
-    private void txt2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt2ActionPerformed
+    private void FieldAnchoSepaloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FieldAnchoSepaloActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txt2ActionPerformed
+    }//GEN-LAST:event_FieldAnchoSepaloActionPerformed
 
-    private void txt3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt3ActionPerformed
+    private void FieldLongitudPetaloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FieldLongitudPetaloActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txt3ActionPerformed
+    }//GEN-LAST:event_FieldLongitudPetaloActionPerformed
 
     /**
      * @param args the command line arguments
@@ -271,16 +411,17 @@ public class Init_Menu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton ButtonTrain;
+    private javax.swing.JTextField FieldAnchoPetalo;
+    private javax.swing.JTextField FieldAnchoSepalo;
+    private javax.swing.JTextField FieldLongitudPetalo;
+    private javax.swing.JTextField FieldLongitudSepalo;
     private javax.swing.JLabel Imagen;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel JprogressbarLabel;
+    private javax.swing.JLabel LabelSubField;
+    private javax.swing.JProgressBar ProgressBar;
+    private javax.swing.JButton buttonDatabase;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField txt;
-    private javax.swing.JTextField txt1;
-    private javax.swing.JTextField txt2;
-    private javax.swing.JTextField txt3;
     // End of variables declaration//GEN-END:variables
 }
