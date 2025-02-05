@@ -7,46 +7,79 @@ package neuralNetwork;
 import java.util.ArrayList;
 import java.util.Random;
 
-/**
- *
- * @author Angel Hernandez
- */
 public class Neuron {
     
-    public ArrayList<Double> weigths;
+    public ArrayList<Double> weights; // Pesos de la neurona
     private double bias;
     private Random random;
+    private boolean isOutputNeuron; // Indica si es una neurona de salida
+    private final double alpha; // Parámetro para Leaky ReLU
 
-    public Neuron(int numEntradas) {
-        weigths = new ArrayList<>();
+    // Constructor que acepta un parámetro para indicar si es una neurona de salida
+    public Neuron(int numEntradas, boolean isOutputNeuron) {
+         this.isOutputNeuron = isOutputNeuron;
+        this.alpha = 0.01;
+        weights = new ArrayList<>();
         random = new Random();
-        // Inicializa los pesos y el bias aleatoriamente
-        for (int i = 0; i < numEntradas; i++) {
-            weigths.add(i,random.nextDouble() * 0.1 - 0.05);
+
+        // Inicialización de He
+        if (!isOutputNeuron) { // Si es neurona de capa oculta (usa Leaky ReLU)
+            double limite = Math.sqrt(2.0 / numEntradas); // He initialization
+            for (int i = 0; i < numEntradas; i++) {
+                weights.add(random.nextGaussian() * limite); // Distribución normal
+            }
+        } else { // Si es neurona de salida
+            for (int i = 0; i < numEntradas; i++) {
+                weights.add(random.nextDouble() * 2 - 1); // Inicialización aleatoria simple
+            }
         }
-        bias = random.nextDouble() * 0.1 - 0.05; 
+
+        bias = random.nextDouble() * 2 - 1;
     }
 
-    
     public double calcularSalida(ArrayList<Double> entradas) {
         double suma = 0.0;
         for (int i = 0; i < entradas.size(); i++) {
-            suma += entradas.get(i) * weigths.get(i);
+            suma += entradas.get(i) * weights.get(i);
         }
         suma += bias;
-        return sigmoide(suma); // Usar sigmoide
+
+        // Usar la función de activación adecuada
+        return isOutputNeuron ? suma : leakyReLU(suma); // Para capas ocultas, usar Leaky ReLU
     }
 
-    
-    private double sigmoide(double x) {
-        return 1.0 / (1.0 + Math.exp(-x));
+    private double leakyReLU(double x) {
+        return (x > 0) ? x : alpha * x; // Leaky ReLU
     }
 
-    
-    public void ajustarPesos(ArrayList<Double> entradas, double error, double tasaAprendizaje) {
-        for (int i = 0; i < weigths.size(); i++) {
-            weigths.set(i, weigths.get(i) + tasaAprendizaje * error * entradas.get(i));
+    public static ArrayList<Double> softmax(ArrayList<Double> logits) {
+        ArrayList<Double> softmaxOutputs = new ArrayList<>();
+        double maxLogit = Double.NEGATIVE_INFINITY;
+
+        // Encuentra el valor máximo para estabilidad numérica
+        for (double logit : logits) {
+            if (logit > maxLogit) {
+                maxLogit = logit;
+            }
         }
-        bias += tasaAprendizaje * error;
+
+        double sum = 0.0;
+        for (double logit : logits) {
+            sum += Math.exp(logit - maxLogit); // Resta el máximo para estabilidad
+        }
+
+        for (double logit : logits) {
+            softmaxOutputs.add(Math.exp(logit - maxLogit) / sum);
+        }
+
+        return softmaxOutputs;
     }
+
+    public void ajustarPesos(ArrayList<Double> entradas, double error, double tasaAprendizaje, double lambda) {
+    for (int i = 0; i < weights.size(); i++) {
+        // Actualizar pesos con L2 regularization
+        weights.set(i, weights.get(i) + tasaAprendizaje * (error * entradas.get(i) - lambda * weights.get(i)));
+    }
+    bias += tasaAprendizaje * error; // Actualizar bias
+}
 }
