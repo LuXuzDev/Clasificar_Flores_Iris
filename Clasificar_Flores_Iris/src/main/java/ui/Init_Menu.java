@@ -23,6 +23,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -418,25 +419,57 @@ public class Init_Menu extends javax.swing.JFrame {
                 init.setVisible(true);
                 
                 
-                System.out.println("Ejecutando");
-                NeuralNetwork redNeuronal = new NeuralNetwork(4, 5, 3);
+                NeuralNetwork redNeuronal = new NeuralNetwork(4,50, 3); 
+
+                // Crear el entrenador y normalizador
                 Trainer t = new Trainer();
                 Normalizer n = new Normalizer();
+
+                // Ajustar y normalizar el conjunto de datos
                 n.ajustar(t.getDataSet());
                 double[][] dataSet = n.normalizar(t.getDataSet());
 
+                // Imprimir el conjunto de datos normalizado
+                System.out.println("Conjunto de datos normalizado:");
+
+                // Entrenar la red neuronal
                 System.out.println("Entrenando...");
-                redNeuronal.entrenar(dataSet, t.getDataSetSalida(), 0.01, 1000);
-
+                redNeuronal.entrenar(dataSet, t.getDataSetSalida(), 0.0001, 2500,0.05);
+                
+                
+                // Iris Setosa
                 ArrayList<Double> entrada1 = new ArrayList<>();
-                entrada1.add(6.3);
-                entrada1.add(2.5);
-                entrada1.add(4.9);
-                entrada1.add(1.5);
+                entrada1.add(5.1); 
+                entrada1.add(3.5); 
+                entrada1.add(1.4); 
+                entrada1.add(0.2); 
+                
 
-                String salida = redNeuronal.calcularSalidas(n.normalizarEntrada(entrada1));
+                
+                // Iris Virginica
+                ArrayList<Double> entrada2 = new ArrayList<>();
+                entrada2.add(4.9);
+                entrada2.add(2.4);
+                entrada2.add(3.3);
+                entrada2.add(1.0);
+                
 
-                System.out.println("Salida red: " + salida);
+                // Iris Versicolor
+                ArrayList<Double> entrada3 = new ArrayList<>();
+                entrada3.add(6.3);
+                entrada3.add(3.3);
+                entrada3.add(6.0);
+                entrada3.add(2.5);
+
+                /*
+                    0-Setosa
+                    1-Virginica
+                    2-Versicolor
+                    Mejor Precision = 0.73
+                */
+                
+                redNeuronal.mostrar(dataSet, t.getDataSetSalida());
+                System.out.println("Salida red: " + redNeuronal.calcularSalidas(n.normalizarEntrada(entrada2)));
         
             }
         });
