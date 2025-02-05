@@ -58,7 +58,8 @@ public class Init_Menu extends javax.swing.JFrame {
         check(FieldLongitudSepalo);
         
         //el icono va a ser mejor tranqui
-        setIconImage(new ImageIcon(getClass().getResource("/png/flor.png")).getImage());
+        FlatSVGIcon icon=new FlatSVGIcon("png/bluebell.svg");
+        setIconImage(icon.getImage());
         
         //el timer tengo q ponerlo aqui obligado sino da bateo
         timer = new Timer(1500, new ActionListener() {
@@ -98,6 +99,7 @@ public class Init_Menu extends javax.swing.JFrame {
         getRootPane().putClientProperty(FlatClientProperties.TITLE_BAR_SHOW_MAXIMIZE,false);
         getRootPane().putClientProperty(FlatClientProperties.TITLE_BAR_SHOW_ICON,true);
         getRootPane().putClientProperty(FlatClientProperties.TITLE_BAR_SHOW_ICONIFFY,true);
+        
     }
      
     //funcion para ver si no esta vacio un textfield
@@ -188,10 +190,7 @@ public class Init_Menu extends javax.swing.JFrame {
             FieldAnchoSepalo.setEnabled(true);
             FieldLongitudPetalo.setEnabled(true);
             FieldLongitudSepalo.setEnabled(true);
-            FieldAnchoPetalo.setText("");
-            FieldAnchoSepalo.setText("");
-            FieldLongitudPetalo.setText("");
-            FieldLongitudSepalo.setText("");
+            
         }
         
     }
@@ -251,6 +250,8 @@ public class Init_Menu extends javax.swing.JFrame {
         JprogressbarLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Iris");
+        setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -263,7 +264,7 @@ public class Init_Menu extends javax.swing.JFrame {
                 ButtonTrainActionPerformed(evt);
             }
         });
-        jPanel1.add(ButtonTrain, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 130, 30));
+        jPanel1.add(ButtonTrain, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 80, 130, 30));
 
         buttonDatabase.setForeground(new java.awt.Color(0, 0, 0));
         buttonDatabase.setText("Base de datos");
@@ -272,7 +273,7 @@ public class Init_Menu extends javax.swing.JFrame {
                 buttonDatabaseActionPerformed(evt);
             }
         });
-        jPanel1.add(buttonDatabase, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 130, 30));
+        jPanel1.add(buttonDatabase, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, 130, 30));
 
         FieldAnchoPetalo.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         FieldAnchoPetalo.setForeground(new java.awt.Color(0, 0, 0));
@@ -334,8 +335,8 @@ public class Init_Menu extends javax.swing.JFrame {
         jLabel3.setText("Resultado");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 150, 130, 30));
 
-        Imagen.setIcon(new javax.swing.ImageIcon("C:\\Users\\Kris\\Documents\\GitHub\\Nuevo\\Clasificar_Flores_Iris\\Clasificar_Flores_Iris\\src\\main\\resources\\png\\flor.png")); // NOI18N
-        jPanel1.add(Imagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 260, 50, 60));
+        Imagen.setIcon(new FlatSVGIcon("png/bluebell.svg"));
+        jPanel1.add(Imagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 260, 70, 60));
 
         ProgressBar.setBackground(new java.awt.Color(255, 255, 255));
         ProgressBar.setToolTipText("Analizando...");
@@ -355,12 +356,14 @@ public class Init_Menu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ButtonTrainActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonTrainActionPerformed
-        new SecurityPassword(this,true).setVisible(true);
-         
+        SecurityPassword secu2= new SecurityPassword(this,true,2);
+       secu2.setVisible(true);
+        
     }//GEN-LAST:event_ButtonTrainActionPerformed
 
     private void buttonDatabaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDatabaseActionPerformed
-        new SecurityPassword(this,true).setVisible(true);
+       SecurityPassword secu= new SecurityPassword(this,true,1);
+       secu.setVisible(true);
     }//GEN-LAST:event_buttonDatabaseActionPerformed
 
     private void FieldAnchoPetaloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FieldAnchoPetaloActionPerformed
@@ -411,7 +414,8 @@ public class Init_Menu extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Init_Menu().setVisible(true);
+                Init_Menu init = new Init_Menu();
+                init.setVisible(true);
                 
                 
                 System.out.println("Ejecutando");

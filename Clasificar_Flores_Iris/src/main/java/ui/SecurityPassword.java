@@ -7,11 +7,13 @@ package ui;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.extras.FlatAnimatedLafChange;
+import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import com.formdev.flatlaf.util.FontUtils;
 import java.awt.Color;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -22,11 +24,19 @@ import javax.swing.UnsupportedLookAndFeelException;
  */
 public class SecurityPassword extends javax.swing.JDialog {
 
-    /**
-     * Creates new form SecurityPassword
-     */
-    public SecurityPassword(java.awt.Frame parent, boolean modal) {
+    private JFrame parentFrame;
+    private int frame=0;
+    public SecurityPassword(java.awt.Frame parent, boolean modal,int page) {
         super(parent, modal);
+        this.parentFrame=(JFrame) parent;
+        if(page==1)
+        {
+            frame=1;
+        }
+        else if(page==2)
+        {
+            frame=2;
+        }
         setSize(386, 270);
         initComponents();
         Flatlaf();
@@ -34,6 +44,9 @@ public class SecurityPassword extends javax.swing.JDialog {
         UIManager.put("TextComponent.arc",99);
         UIManager.put("Button.arc", 25);
         this.setLocationRelativeTo(null);
+        FlatSVGIcon icon=new FlatSVGIcon("png/bluebell.svg");
+        setIconImage(icon.getImage());
+        
         getRootPane().putClientProperty(FlatClientProperties.TITLE_BAR_BACKGROUND, new Color(102, 153, 255));
         getRootPane().putClientProperty(FlatClientProperties.TITLE_BAR_SHOW_MAXIMIZE,false);
         getRootPane().putClientProperty(FlatClientProperties.TITLE_BAR_SHOW_ICON,true);
@@ -82,6 +95,8 @@ public class SecurityPassword extends javax.swing.JDialog {
         LabelIncorrecto = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Seguridad");
+        setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         setPreferredSize(new java.awt.Dimension(610, 340));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -100,6 +115,7 @@ public class SecurityPassword extends javax.swing.JDialog {
         PasswordField.setForeground(new java.awt.Color(0, 0, 0));
         jPanel1.add(PasswordField, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 90, 200, 30));
 
+        buttonBack.setIcon(new FlatSVGIcon("png/arrow.svg"));
         buttonBack.setBackground(new java.awt.Color(255, 255, 255));
         buttonBack.setForeground(new java.awt.Color(102, 153, 255));
         buttonBack.addActionListener(new java.awt.event.ActionListener() {
@@ -150,6 +166,21 @@ public class SecurityPassword extends javax.swing.JDialog {
         {
             LabelIncorrecto.setVisible(false);
             PasswordField.putClientProperty("JComponent.outline",new Color(102, 153, 255));
+            if(frame==1)
+            {
+                
+                parentFrame.setVisible(false);
+                this.dispose();
+                DataBaseMenu data=new DataBaseMenu();
+                data.setVisible(true);
+            }
+            else if(frame==2)
+            {
+                parentFrame.setVisible(false);
+                new Init_Menu().setVisible(false);
+                new Trainer().setVisible(true);
+                this.dispose();
+            }
         }
     }//GEN-LAST:event_ButtonEnterActionPerformed
 
@@ -183,7 +214,7 @@ public class SecurityPassword extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                SecurityPassword dialog = new SecurityPassword(new javax.swing.JFrame(), true);
+                SecurityPassword dialog = new SecurityPassword(new javax.swing.JFrame(), true,0);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
