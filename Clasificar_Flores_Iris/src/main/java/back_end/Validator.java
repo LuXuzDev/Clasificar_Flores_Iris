@@ -60,4 +60,13 @@ public class Validator {
         return isCorrect;
     }
     
+    
+    public static boolean isCorrectFile(String file){
+        
+        boolean isCorrect = true;
+        if(file.trim().isEmpty() || file == null)
+            isCorrect=false;
+        return isCorrect;
+    }
+    
 }
