@@ -16,25 +16,27 @@ import neuralNetwork.Trainer;
 public class Controller {
     private NeuralNetwork neuralNetwork;
     private Validator validator;
-    private Trainer t;
-    private Normalizer n;
+    private Trainer trainner;
+    private Normalizer normalizer;
     
 
     public Controller()
     {
         neuralNetwork = new NeuralNetwork(4,50, 3); 
         
-        // Crear el entrenador y normalizador
-        t = new Trainer();
-        n = new Normalizer();
+        // Crear Entrenador y Normalizador
+        trainner = new Trainer();
+        normalizer = new Normalizer();
         
+        //Crear Validator con contraseña
         validator = new Validator("admin");
     }
     
     
+    
     public String flowerType(String widthLeaf, String lengthLeaf, String widthStem, String lengthStem)
     {
-        int output = neuralNetwork.calcularSalidas(n.normalizarEntrada(takeInput(widthLeaf, lengthLeaf, widthStem, lengthStem)));
+        int output = neuralNetwork.calcularSalidas(normalizer.normalizarEntrada(takeInput(widthLeaf, lengthLeaf, widthStem, lengthStem)));
         System.out.println("La clasifica como: "+classifierOutput(output));
         return classifierOutput(output);
     }
@@ -77,15 +79,15 @@ public class Controller {
     
     public void train() {
 
-        n.ajustar(t.getDataSet());
-        double[][] dataSet = n.normalizar(t.getDataSet());
+        normalizer.ajustar(trainner.getDataSet());
+        double[][] dataSet = normalizer.normalizar(trainner.getDataSet());
 
         // Imprimir el conjunto de datos normalizado
         System.out.println("Conjunto de datos normalizado:");
 
         // Entrenar la red neuronal
         System.out.println("Entrenando...");
-        TrainerResults results = neuralNetwork.entrenar(dataSet, t.getDataSetSalida(), 0.0001, 2500, 0.05);
+        TrainerResults results = neuralNetwork.entrenar(dataSet, trainner.getDataSetSalida(), 0.0001, 2500, 0.05);
         System.out.println(results);
         // Iris Setosa
         ArrayList<Double> entrada1 = new ArrayList<>();
@@ -114,6 +116,6 @@ public class Controller {
                     2-Versicolor
                     Mejor Precision = 0.73
          */
-        System.out.println("Salida red: " + neuralNetwork.calcularSalidas(n.normalizarEntrada(entrada1)));
+        System.out.println("Salida red: " + neuralNetwork.calcularSalidas(normalizer.normalizarEntrada(entrada1)));
     }
 }

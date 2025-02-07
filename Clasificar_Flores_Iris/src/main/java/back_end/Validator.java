@@ -22,6 +22,13 @@ public class Validator {
         boolean correct=true;
         if(input.trim().isEmpty() || isLetter(input))
             correct=false;
+        else
+        {
+            double num = Double.parseDouble(input);
+            if(num<=0 || num>=10)
+                correct=false;
+        }
+        
         return correct;
     }
     
