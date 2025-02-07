@@ -85,8 +85,8 @@ public class Controller {
 
         // Entrenar la red neuronal
         System.out.println("Entrenando...");
-        neuralNetwork.entrenar(dataSet, t.getDataSetSalida(), 0.0001, 2500, 0.05);
-
+        TrainerResults results = neuralNetwork.entrenar(dataSet, t.getDataSetSalida(), 0.0001, 2500, 0.05);
+        System.out.println(results);
         // Iris Setosa
         ArrayList<Double> entrada1 = new ArrayList<>();
         entrada1.add(5.1);
@@ -114,7 +114,6 @@ public class Controller {
                     2-Versicolor
                     Mejor Precision = 0.73
          */
-        neuralNetwork.mostrar(dataSet, t.getDataSetSalida());
         System.out.println("Salida red: " + neuralNetwork.calcularSalidas(n.normalizarEntrada(entrada1)));
     }
 }

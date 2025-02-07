@@ -17,21 +17,19 @@ public class TrainerResults {
     private int epoch;
     private ArrayList<Double> errorEntrenamiento;
     private ArrayList<String> metricasEpoca;
-    private int[] aciertosPorClase = new int[3];
-    private int[] totalPorClase = new int[3];
+    private ArrayList<Double> acurracyClass;
 
     
     
     //Builder
     public TrainerResults(double acurracyTotal, int epoch,ArrayList<Double> errorEntrenamiento
-                        ,ArrayList<String> metricasEpoca, int[] aciertoClase,int[] totalPorClase)
+                        ,ArrayList<String> metricasEpoca, ArrayList<Double> acurracyClass)
     {
         this.acurracyTotal=acurracyTotal;
         this.epoch = epoch;
         this.errorEntrenamiento=errorEntrenamiento;
         this.metricasEpoca=metricasEpoca;
-        this.aciertosPorClase=aciertosPorClase;
-        this.totalPorClase=totalPorClase;
+        this.acurracyClass=acurracyClass;
     }
     
     
@@ -43,6 +41,11 @@ public class TrainerResults {
     public int getEpoch() {return epoch;}
     public ArrayList<Double> getErrorEntrenamiento() {return errorEntrenamiento;}
     public ArrayList<String> getMetricasEpoca() {return metricasEpoca;}
-    public int[] getAciertosPorClase() {return aciertosPorClase;}
-    public int[] getTotalPorClase() {return totalPorClase;}
+    public ArrayList<Double> getAcurracyClass() {return acurracyClass;}
+
+    @Override
+    public String toString()
+    {
+        return "Precision "+acurracyTotal;
+    }
 }

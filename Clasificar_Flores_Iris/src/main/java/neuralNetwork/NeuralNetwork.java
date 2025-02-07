@@ -4,6 +4,7 @@
  */
 package neuralNetwork;
 
+import back_end.TrainerResults;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -17,21 +18,12 @@ public class NeuralNetwork {
     private final Layer capaOculta; // Solo una capa oculta
     private final Layer capaSalida;
 
-    //Datos mostrables
-    private double precision;
-    int[] aciertosPorClase = new int[3];
-    int[] totalPorClase = new int[3];
-    private ArrayList<Double> errorEntrenamiento;
-    private ArrayList<String> metricasEpoca;
-
     // Constructor modificado para incluir solo una capa oculta
     public NeuralNetwork(int numEntradas, int numNeuronasOculta, int numSalidas) {
         capaEntrada = new Layer(numEntradas, numEntradas, false); // Capa de entrada
         capaOculta = new Layer(numNeuronasOculta, numEntradas, false); // Primera capa oculta
         capaSalida = new Layer(numSalidas, numNeuronasOculta, true); // Capa de salida
 
-        errorEntrenamiento = new ArrayList<>();
-        metricasEpoca = new ArrayList<>();
     }
 
     // Método para calcular las salidas de la red
@@ -60,38 +52,18 @@ public class NeuralNetwork {
         return -Math.log(predicciones.get(claseReal) + epsilon);
     }
 
-    // Método de entrenamiento modificado para incluir solo una capa oculta
-    public void entrenar(double[][] dataSet, int[] salidas, double tasaAprendizaje, int epochs, double lambda) {
+    public TrainerResults entrenar(double[][] dataSet, int[] salidas, double tasaAprendizaje, int epochs, double lambda) {
+
+        ArrayList<String> metricas = new ArrayList<String>();
+        ArrayList<Double> errorEntrenamiento = new ArrayList<Double>();
         double mejorError = Double.MAX_VALUE;
         int paciencia = 50;
         int contador = 0;
 
-        int[] indices = new int[dataSet.length];
-        for (int i = 0; i < dataSet.length; i++) {
-            indices[i] = i;
-        }
+        Object[] shuffledData = mezclarDataSet(dataSet, salidas);
+        dataSet = (double[][]) shuffledData[0];
+        salidas = (int[]) shuffledData[1];
 
-        Random random = new Random();
-        for (int i = dataSet.length - 1; i > 0; i--) {
-            int j = random.nextInt(i + 1);
-            // Intercambia los índices
-            int temp = indices[i];
-            indices[i] = indices[j];
-            indices[j] = temp;
-        }
-
-        double[][] dataSetMezclado = new double[dataSet.length][dataSet[0].length];
-        int[] salidasMezcladas = new int[salidas.length];
-        for (int i = 0; i < dataSet.length; i++) {
-            dataSetMezclado[i] = dataSet[indices[i]];
-            salidasMezcladas[i] = salidas[indices[i]];
-        }
-
-        dataSet = dataSetMezclado;
-        salidas = salidasMezcladas;
-
-
-        
         for (int epoch = 0; epoch < epochs; epoch++) {
             double errorTotal = 0.0;
             int aciertos = 0;
@@ -145,7 +117,6 @@ public class NeuralNetwork {
                 }
             }
 
-            errorEntrenamiento.add(errorTotal);
             // Early stopping
             if (errorTotal < mejorError) {
                 mejorError = errorTotal;
@@ -159,16 +130,52 @@ public class NeuralNetwork {
                 break;
             }
 
-            // Mostrar métricas
             String metrica = "Epoca: " + epoch + ", Error: " + errorTotal + ", Precision: " + (double) aciertos / dataSet.length;
-            metricasEpoca.add(metrica);
+            metricas.add(metrica);
+            errorEntrenamiento.add(errorTotal);
         }
+        return guardarEntrenamiento(dataSet, salidas, metricas, errorEntrenamiento);
     }
 
-    public void mostrar(double[][] dataSetPrueba, int[] salidasReales) {
+    
+    private Object[] mezclarDataSet(double[][] dataSet, int[] salidas) {
+        int[] indices = new int[dataSet.length];
+        for (int i = 0; i < dataSet.length; i++) {
+            indices[i] = i;
+        }
+
+        Random random = new Random();
+        for (int i = dataSet.length - 1; i > 0; i--) {
+            int j = random.nextInt(i + 1);
+            // Intercambia los índices
+            int temp = indices[i];
+            indices[i] = indices[j];
+            indices[j] = temp;
+        }
+
+        double[][] dataSetMezclado = new double[dataSet.length][dataSet[0].length];
+        int[] salidasMezcladas = new int[salidas.length];
+        for (int i = 0; i < dataSet.length; i++) {
+            dataSetMezclado[i] = dataSet[indices[i]];
+            salidasMezcladas[i] = salidas[indices[i]];
+        }
+
+        return new Object[]{dataSetMezclado, salidasMezcladas};
+    }
+
+    
+    private TrainerResults guardarEntrenamiento(double[][] dataSetPrueba, int[] salidasReales, ArrayList<String> metricas, ArrayList<Double> error) {
+
         int aciertos = 0;
         int[] aciertosPorClase = new int[3];
         int[] totalPorClase = new int[3];
+        double precision;
+
+        ArrayList<Double> errorEntrenamiento = error;
+        ArrayList<String> metricasEpoca = metricas;
+        ArrayList<Double> precisionClase = new ArrayList<>();
+
+        TrainerResults results;
 
         for (int i = 0; i < dataSetPrueba.length; i++) {
             ArrayList<Double> entradas = new ArrayList<>();
@@ -185,26 +192,15 @@ public class NeuralNetwork {
             totalPorClase[salidasReales[i]]++;
         }
 
-        precision = (double) aciertos / dataSetPrueba.length; // Calcula la precisión una sola vez
-        System.out.printf("Precision total final: %.4f%n", precision); // Formato de salida mejorado
+        precision = (double) aciertos / dataSetPrueba.length;
 
         for (int i = 0; i < 3; i++) {
             if (totalPorClase[i] > 0) {
-                double precisionClase = (double) aciertosPorClase[i] / totalPorClase[i];
-                System.out.printf("Precision clase %d: %.4f%n", i, precisionClase); // Formato mejorado
-            } else {
-                System.out.printf("No se puede calcular la precision para la clase %d: no hay ejemplos en el conjunto de prueba.%n", i);
+                precisionClase.add((double) aciertosPorClase[i] / totalPorClase[i]);
             }
         }
 
-        System.out.println("\nError de entrenamiento por época:"); // Mensaje más claro
-        for (int i = 0; i < errorEntrenamiento.size(); i++) {
-            System.out.printf("Época %d: %.4f%n", i + 1, errorEntrenamiento.get(i)); // Formato mejorado
-        }
-
-        System.out.println("\nMétricas por época:"); // Mensaje más claro
-        for (int i = 0; i < metricasEpoca.size(); i++) {
-            System.out.println(metricasEpoca.get(i));
-        }
+        results = new TrainerResults(precision, dataSetPrueba.length, errorEntrenamiento, metricasEpoca, precisionClase);
+        return results;
     }
 }
