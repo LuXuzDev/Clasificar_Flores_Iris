@@ -57,6 +57,7 @@ public class Init_Menu extends javax.swing.JFrame {
         check(FieldAnchoSepalo);
         check(FieldLongitudPetalo);
         check(FieldLongitudSepalo);
+        controller.train();
         
         //el icono va a ser mejor tranqui
         FlatSVGIcon icon=new FlatSVGIcon("png/bluebell.svg");
@@ -88,10 +89,10 @@ public class Init_Menu extends javax.swing.JFrame {
         
         JprogressbarLabel.setVisible(false);
         
-        FieldAnchoPetalo.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT,"            Ancho Petalo");
-        FieldAnchoSepalo.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT,"            Ancho Sepalo");
-        FieldLongitudPetalo.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT,"          Longitud Petalo");
-        FieldLongitudSepalo.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT,"          Longitud Sepalo");
+        FieldAnchoPetalo.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT,"Ancho Petalo");
+        FieldAnchoSepalo.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT,"Ancho Sepalo");
+        FieldLongitudPetalo.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT,"Longitud Petalo");
+        FieldLongitudSepalo.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT,"Longitud Sepalo");
         FieldAnchoPetalo.putClientProperty(FlatClientProperties.TEXT_FIELD_SHOW_CLEAR_BUTTON,true);
         FieldAnchoSepalo.putClientProperty(FlatClientProperties.TEXT_FIELD_SHOW_CLEAR_BUTTON,true);
         FieldLongitudPetalo.putClientProperty(FlatClientProperties.TEXT_FIELD_SHOW_CLEAR_BUTTON,true);
@@ -173,6 +174,8 @@ public class Init_Menu extends javax.swing.JFrame {
                        
                     }
                     SwingUtilities.invokeLater(()->restart());
+                    jLabel_Resultado.setText(controller.flowerType(FieldLongitudSepalo.getText(),FieldAnchoSepalo.getText()
+                                                ,FieldLongitudPetalo.getText(), FieldAnchoPetalo.getText()));
                 }
             }).start();
             
@@ -244,8 +247,7 @@ public class Init_Menu extends javax.swing.JFrame {
         FieldLongitudSepalo = new javax.swing.JTextField();
         FieldAnchoSepalo = new javax.swing.JTextField();
         FieldLongitudPetalo = new javax.swing.JTextField();
-        LabelSubField = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        jLabel_Resultado = new javax.swing.JLabel();
         Imagen = new javax.swing.JLabel();
         ProgressBar = new javax.swing.JProgressBar();
         JprogressbarLabel = new javax.swing.JLabel();
@@ -324,17 +326,10 @@ public class Init_Menu extends javax.swing.JFrame {
         });
         jPanel1.add(FieldLongitudPetalo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, 170, -1));
 
-        LabelSubField.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
-        LabelSubField.setForeground(new java.awt.Color(102, 153, 255));
-        LabelSubField.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        LabelSubField.setText("Entradas ");
-        jPanel1.add(LabelSubField, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 150, 130, 30));
-
-        jLabel3.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(102, 153, 255));
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("Resultado");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 150, 130, 30));
+        jLabel_Resultado.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        jLabel_Resultado.setForeground(new java.awt.Color(102, 153, 255));
+        jLabel_Resultado.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jPanel1.add(jLabel_Resultado, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 230, 160, 30));
 
         Imagen.setIcon(new FlatSVGIcon("png/bluebell.svg"));
         jPanel1.add(Imagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 260, 70, 60));
@@ -419,57 +414,7 @@ public class Init_Menu extends javax.swing.JFrame {
                 init.setVisible(true);
                 
                 
-                NeuralNetwork redNeuronal = new NeuralNetwork(4,50, 3); 
-
-                // Crear el entrenador y normalizador
-                Trainer t = new Trainer();
-                Normalizer n = new Normalizer();
-
-                // Ajustar y normalizar el conjunto de datos
-                n.ajustar(t.getDataSet());
-                double[][] dataSet = n.normalizar(t.getDataSet());
-
-                // Imprimir el conjunto de datos normalizado
-                System.out.println("Conjunto de datos normalizado:");
-
-                // Entrenar la red neuronal
-                System.out.println("Entrenando...");
-                redNeuronal.entrenar(dataSet, t.getDataSetSalida(), 0.0001, 2500,0.05);
-                
-                
-                // Iris Setosa
-                ArrayList<Double> entrada1 = new ArrayList<>();
-                entrada1.add(5.1); 
-                entrada1.add(3.5); 
-                entrada1.add(1.4); 
-                entrada1.add(0.2); 
-                
-
-                
-                // Iris Virginica
-                ArrayList<Double> entrada2 = new ArrayList<>();
-                entrada2.add(4.9);
-                entrada2.add(2.4);
-                entrada2.add(3.3);
-                entrada2.add(1.0);
-                
-
-                // Iris Versicolor
-                ArrayList<Double> entrada3 = new ArrayList<>();
-                entrada3.add(6.3);
-                entrada3.add(3.3);
-                entrada3.add(6.0);
-                entrada3.add(2.5);
-
-                /*
-                    0-Setosa
-                    1-Virginica
-                    2-Versicolor
-                    Mejor Precision = 0.73
-                */
-                
-                redNeuronal.mostrar(dataSet, t.getDataSetSalida());
-                System.out.println("Salida red: " + redNeuronal.calcularSalidas(n.normalizarEntrada(entrada2)));
+               
         
             }
         });
@@ -483,10 +428,9 @@ public class Init_Menu extends javax.swing.JFrame {
     private javax.swing.JTextField FieldLongitudSepalo;
     private javax.swing.JLabel Imagen;
     private javax.swing.JLabel JprogressbarLabel;
-    private javax.swing.JLabel LabelSubField;
     private javax.swing.JProgressBar ProgressBar;
     private javax.swing.JButton buttonDatabase;
-    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel_Resultado;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }
