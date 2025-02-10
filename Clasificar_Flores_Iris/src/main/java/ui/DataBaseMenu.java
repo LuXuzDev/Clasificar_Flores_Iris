@@ -14,8 +14,11 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -43,6 +46,8 @@ public class DataBaseMenu extends javax.swing.JFrame {
     
     public DataBaseMenu() {
         initComponents();
+        createArchivodat();
+       
         Flatlaf();
         setFontFamily("Arial");
         UIManager.put("TextComponent.arc",99);
@@ -64,7 +69,43 @@ public class DataBaseMenu extends javax.swing.JFrame {
         timer.setRepeats(false);
         LabelSuccess.setVisible(false);
     }
+    
+    public void createArchivodat()
+    {
+        try (FileOutputStream fos = new FileOutputStream("archivo.dat");
+              DataOutputStream dos = new DataOutputStream(fos)) {
 
+            // Escribir datos en el archivo
+            dos.writeUTF("Hola, mundo!");  // Escribir una cadena
+            dos.writeInt(123);            // Escribir un entero
+            dos.writeDouble(45.67);       // Escribir un número decimal
+
+            System.out.println("Archivo creado exitosamente.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    
+    }
+    
+    public void readArchivodat(String path)
+    {
+         try (FileInputStream fis = new FileInputStream(path);
+             DataInputStream dis = new DataInputStream(fis)) {
+
+            // Leer datos del archivo
+            String cadena = dis.readUTF();  // Leer una cadena
+            int entero = dis.readInt();    // Leer un entero
+            double decimal = dis.readDouble(); // Leer un número decimal
+
+            // Mostrar los datos leídos
+            System.out.println("Cadena: " + cadena);
+            System.out.println("Entero: " + entero);
+            System.out.println("Decimal: " + decimal);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     private void setFontFamily(String fontFamily)
     {
         java.awt.Font font = UIManager.getFont("defaultFont");
@@ -107,13 +148,11 @@ public class DataBaseMenu extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         ButtonBack = new javax.swing.JButton();
         ButtonEdit = new javax.swing.JButton();
-        ButtonCreate1 = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        ListTrain = new javax.swing.JList<>();
         jLabel1 = new javax.swing.JLabel();
-        ButtonDelete1 = new javax.swing.JButton();
         ButtonLoad1 = new javax.swing.JButton();
         LabelSuccess = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        ListTrain = new javax.swing.JList<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Iris");
@@ -121,6 +160,7 @@ public class DataBaseMenu extends javax.swing.JFrame {
         setPreferredSize(new java.awt.Dimension(610, 340));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setPreferredSize(new java.awt.Dimension(610, 340));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         ButtonBack.setIcon(new FlatSVGIcon("png/arrow.svg"));
@@ -131,16 +171,40 @@ public class DataBaseMenu extends javax.swing.JFrame {
         });
         jPanel1.add(ButtonBack, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 20, 40, 30));
 
-        ButtonEdit.setText("Editar");
+        ButtonEdit.setText("Modificar dataset");
         ButtonEdit.addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentResized(java.awt.event.ComponentEvent evt) {
                 ButtonEditComponentResized(evt);
             }
         });
-        jPanel1.add(ButtonEdit, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 220, 90, 30));
+        ButtonEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonEditActionPerformed(evt);
+            }
+        });
+        jPanel1.add(ButtonEdit, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, 130, 30));
 
-        ButtonCreate1.setText("Crear");
-        jPanel1.add(ButtonCreate1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 100, 90, 30));
+        jLabel1.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(102, 153, 255));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Entrenamientos Cargados");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 30, 220, 30));
+
+        ButtonLoad1.setText("Cargar dataset");
+        ButtonLoad1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonLoad1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(ButtonLoad1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, 130, 30));
+
+        LabelSuccess.setBackground(new java.awt.Color(255, 255, 255));
+        LabelSuccess.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        LabelSuccess.setForeground(new java.awt.Color(0, 0, 0));
+        LabelSuccess.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        LabelSuccess.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(102, 153, 255)));
+        jPanel1.add(LabelSuccess, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 70, 220, 20));
 
         ListTrain.setBackground(new java.awt.Color(255, 255, 255));
         ListTrain.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
@@ -150,31 +214,6 @@ public class DataBaseMenu extends javax.swing.JFrame {
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 110, 220, 150));
 
-        jLabel1.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(102, 153, 255));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Entrenamientos Cargados");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 30, 220, 30));
-
-        ButtonDelete1.setText("Eliminar");
-        jPanel1.add(ButtonDelete1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 160, 90, 30));
-
-        ButtonLoad1.setText("Cargar");
-        ButtonLoad1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ButtonLoad1ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(ButtonLoad1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 40, 90, 30));
-
-        LabelSuccess.setBackground(new java.awt.Color(255, 255, 255));
-        LabelSuccess.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        LabelSuccess.setForeground(new java.awt.Color(0, 0, 0));
-        LabelSuccess.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        LabelSuccess.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(102, 153, 255)));
-        jPanel1.add(LabelSuccess, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 70, 220, 20));
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -183,7 +222,7 @@ public class DataBaseMenu extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 338, Short.MAX_VALUE)
         );
 
         pack();
@@ -207,11 +246,11 @@ public class DataBaseMenu extends javax.swing.JFrame {
             File file= filetxt.getSelectedFile();
             System.out.println(file.getName());
             String FileName=file.getName();
-            if(FileName.endsWith(".txt"))
+            if(FileName.endsWith(".dat"))
             {
                 valid=true;
                 String path = filetxt.getSelectedFile().getAbsolutePath();
-                System.out.println(path);
+                
                 DefaultListModel<String> listModel;
                 if(ListTrain.getModel() instanceof DefaultListModel)
                 {
@@ -230,27 +269,12 @@ public class DataBaseMenu extends javax.swing.JFrame {
                     restartTimer();
                 }
                 
+                readArchivodat(path);
                 
-                try (BufferedReader br = new BufferedReader(new FileReader(path))) {
-
-                    String line;
-                    while ((line = br.readLine()) != null) {
-                        line = line.trim();
-                        if (line.isEmpty()) {
-                            System.out.println("           ");
-                        } else {
-                            System.out.println(line);
-                        }
-
-                    }
-                    
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
             }
             else
             {
-                JOptionPane.showMessageDialog(null,"El archivo no es un .txt Selecciono un archivo invalid","Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null,"El archivo no es un .dat Selecciono un archivo invalid","Error", JOptionPane.ERROR_MESSAGE);
             }
             
         }
@@ -261,6 +285,12 @@ public class DataBaseMenu extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_ButtonLoad1ActionPerformed
+
+    private void ButtonEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonEditActionPerformed
+        
+        new ModifyDataset().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_ButtonEditActionPerformed
 
    
     public void createTable(boolean add,String filename)
@@ -305,8 +335,6 @@ public class DataBaseMenu extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ButtonBack;
-    private javax.swing.JButton ButtonCreate1;
-    private javax.swing.JButton ButtonDelete1;
     private javax.swing.JButton ButtonEdit;
     private javax.swing.JButton ButtonLoad1;
     private javax.swing.JLabel LabelSuccess;
