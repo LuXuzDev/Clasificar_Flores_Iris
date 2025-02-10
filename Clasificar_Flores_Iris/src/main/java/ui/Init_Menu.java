@@ -5,6 +5,7 @@
 package ui;
 
 import back_end.Controller;
+import back_end.Validator;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.FlatLightLaf;
@@ -59,11 +60,11 @@ public class Init_Menu extends javax.swing.JFrame {
         check(FieldLongitudSepalo);
         controller.train();
         
-        //el icono va a ser mejor tranqui
+
         FlatSVGIcon icon=new FlatSVGIcon("png/bluebell.svg");
         setIconImage(icon.getImage());
         
-        //el timer tengo q ponerlo aqui obligado sino da bateo
+
         timer = new Timer(1500, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -135,17 +136,22 @@ public class Init_Menu extends javax.swing.JFrame {
             }
         });
     }
+    
+    
     //funcion para reiniciar los timers de la busqueda en tiempo real de los text field
     private void restartTimer()
     {
         timer.stop();
         timer.start();
     }
+    
+    
     //funcion para verificar si todos estan llenos y empezar el analisis automatico
     public void CheckAndStart()
     {
         boolean salir=false;
-        if(CheckTextField(FieldAnchoSepalo)==true && CheckTextField(FieldAnchoPetalo)==true && CheckTextField(FieldLongitudPetalo)==true && CheckTextField(FieldLongitudSepalo)==true)
+        if(Validator.isCorrectInput(FieldAnchoPetalo.getText()) && Validator.isCorrectInput(FieldAnchoSepalo.getText()) &&
+           Validator.isCorrectInput(FieldLongitudPetalo.getText()) && Validator.isCorrectInput(FieldLongitudSepalo.getText()))
         {
             JprogressbarLabel.setVisible(true);
             ProgressBar.setVisible(true);
@@ -154,6 +160,7 @@ public class Init_Menu extends javax.swing.JFrame {
        
     }
  
+    
    //analisis automatico de la barraprogress con hilos y reiniciar los datos
     private void startProgress(JProgressBar progressBar)
     {
@@ -182,6 +189,7 @@ public class Init_Menu extends javax.swing.JFrame {
              
     }
     
+    
     //funcion para reestablecer los datos
     private void restart()
     {
@@ -198,16 +206,8 @@ public class Init_Menu extends javax.swing.JFrame {
         }
         
     }
-   /*
-   //funcion para poner el texto de indicacion a cada textField con lo q debe poner en cada uno
-    public void placeHolder(String text,JTextField field)
-    {
-        TextPrompt placeholder;
-        placeholder = new TextPrompt(text, field);
-        placeholder.changeAlpha(0.75f);
-        placeholder.changeStyle(java.awt.Font.BOLD);
-    }
-    */
+
+    
     //funcion de diseño de flatlaf
     public void Flatlaf()
     {
@@ -215,16 +215,12 @@ public class Init_Menu extends javax.swing.JFrame {
             try {
                 UIManager.setLookAndFeel(new FlatMacLightLaf());
                 SwingUtilities.updateComponentTreeUI(this);
-                /*placeHolder("     Ancho del petalo", FieldAnchoPetalo);
-                placeHolder("   Longitud del sepalo", FieldLongitudSepalo);
-                placeHolder("     Ancho del sepalo", FieldAnchoSepalo);
-                placeHolder("   Longitud del petalo", FieldLongitudPetalo);
-*/
             } catch (UnsupportedLookAndFeelException ex) {
                 Logger.getLogger(Init_Menu.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
     }
+    
     
    //Funcion para poner un font general en el Jframe
     private void setFontFamily(String fontFamily)
@@ -283,9 +279,9 @@ public class Init_Menu extends javax.swing.JFrame {
         FieldAnchoPetalo.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         FieldAnchoPetalo.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         FieldAnchoPetalo.setKeymap(null);
-        FieldAnchoPetalo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                FieldAnchoPetaloActionPerformed(evt);
+        FieldAnchoPetalo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                FieldInputsKeyReleased(evt);
             }
         });
         jPanel1.add(FieldAnchoPetalo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, 170, -1));
@@ -295,9 +291,9 @@ public class Init_Menu extends javax.swing.JFrame {
         FieldLongitudSepalo.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         FieldLongitudSepalo.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         FieldLongitudSepalo.setKeymap(null);
-        FieldLongitudSepalo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                FieldLongitudSepaloActionPerformed(evt);
+        FieldLongitudSepalo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                FieldInputsKeyReleased(evt);
             }
         });
         jPanel1.add(FieldLongitudSepalo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, 170, -1));
@@ -307,9 +303,9 @@ public class Init_Menu extends javax.swing.JFrame {
         FieldAnchoSepalo.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         FieldAnchoSepalo.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         FieldAnchoSepalo.setKeymap(null);
-        FieldAnchoSepalo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                FieldAnchoSepaloActionPerformed(evt);
+        FieldAnchoSepalo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                FieldInputsKeyReleased(evt);
             }
         });
         jPanel1.add(FieldAnchoSepalo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 170, -1));
@@ -319,9 +315,9 @@ public class Init_Menu extends javax.swing.JFrame {
         FieldLongitudPetalo.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         FieldLongitudPetalo.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         FieldLongitudPetalo.setKeymap(null);
-        FieldLongitudPetalo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                FieldLongitudPetaloActionPerformed(evt);
+        FieldLongitudPetalo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                FieldInputsKeyReleased(evt);
             }
         });
         jPanel1.add(FieldLongitudPetalo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, 170, -1));
@@ -362,21 +358,10 @@ public class Init_Menu extends javax.swing.JFrame {
        secu.setVisible(true);
     }//GEN-LAST:event_buttonDatabaseActionPerformed
 
-    private void FieldAnchoPetaloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FieldAnchoPetaloActionPerformed
-        
-    }//GEN-LAST:event_FieldAnchoPetaloActionPerformed
-
-    private void FieldLongitudSepaloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FieldLongitudSepaloActionPerformed
+    private void FieldInputsKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_FieldInputsKeyReleased
         // TODO add your handling code here:
-    }//GEN-LAST:event_FieldLongitudSepaloActionPerformed
-
-    private void FieldAnchoSepaloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FieldAnchoSepaloActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_FieldAnchoSepaloActionPerformed
-
-    private void FieldLongitudPetaloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FieldLongitudPetaloActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_FieldLongitudPetaloActionPerformed
+        //Cambiar Color de los inputs aqui
+    }//GEN-LAST:event_FieldInputsKeyReleased
 
     /**
      * @param args the command line arguments
@@ -412,10 +397,6 @@ public class Init_Menu extends javax.swing.JFrame {
             public void run() {
                 Init_Menu init = new Init_Menu();
                 init.setVisible(true);
-                
-                
-               
-        
             }
         });
     }

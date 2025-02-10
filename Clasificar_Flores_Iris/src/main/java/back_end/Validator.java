@@ -10,17 +10,13 @@ package back_end;
  */
 public class Validator {
     
-    private String password;
+    private static String password = "admin";
     
-    public Validator(String password)
-    {
-        this.password = password;
-    }
-    
-    public boolean isCorrectInput(String input)
+
+    public static boolean isCorrectInput(String input)
     {
         boolean correct=true;
-        if(input.trim().isEmpty() || isLetter(input))
+        if(input.trim().isEmpty() || containsLetter(input))
             correct=false;
         else
         {
@@ -28,38 +24,37 @@ public class Validator {
             if(num<=0 || num>=10)
                 correct=false;
         }
-        
         return correct;
     }
     
     
-    private boolean isLetter(String input)
+    private static boolean containsLetter(String input)
     {
-        boolean letter = true;
+        boolean letter = false;
         char[] array = input.toCharArray();
         for(int i=0;i<input.length();i++)
         {
-            if(Character.isDigit(array[i]))
-                letter=false;
+            if(Character.isAlphabetic(array[i]))
+                letter=true;
         }
         return letter;
     }
     
     
-    private boolean isNumber(String input)
+    private static boolean containsNumber(String input)
     {
-        boolean number = true;
+        boolean number = false;
         char[] array = input.toCharArray();
         for(int i=0;i<input.length();i++)
         {
-            if(Character.isAlphabetic(array[i]))
-                number=false;
+            if(Character.isDigit(array[i]))
+                number=true;
         }
         return number;
     }
     
     
-    public boolean checkPassword(String input)
+    public static boolean checkPassword(String input)
     {
         boolean isCorrect = true;
         if(!input.equals(password))

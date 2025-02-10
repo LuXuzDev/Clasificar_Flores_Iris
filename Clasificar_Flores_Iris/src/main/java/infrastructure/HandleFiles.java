@@ -12,8 +12,8 @@ import neuralNetwork.NeuralNetwork;
 
 public class HandleFiles {
 
+    
     public static void newFile(String nombreArchivo) {
-
         File archivo = new File(nombreArchivo);
 
         while (!Validator.isCorrectFile(nombreArchivo) || archivo.exists()) {
@@ -43,6 +43,7 @@ public class HandleFiles {
         }
     }
 
+    
     public static void writerFiles(String nombreArchivo, String contenido) {
 
         while (contenido == null) {
@@ -57,7 +58,8 @@ public class HandleFiles {
         }
     }
 
-    public static ArrayList<String>readFiles(String nombreArchivo) {
+    
+    public static ArrayList<String>readFiles(String nombreArchivo){
         
         /* Lee el archivo y lo guarda en una lista para luego devolverlo como un ArrayList.
        Devuelve un ArrayList vacío si no pudo leer nada. */
@@ -73,8 +75,9 @@ public class HandleFiles {
         return lineas;
     }
 
+    
+    //Este metodo elimina un archivo
     public static void deleteFiles(String nombreArchivo) {
-        
         try {
             Path archivo = Paths.get(nombreArchivo);
             while (!Files.exists(archivo)) {
@@ -82,7 +85,6 @@ public class HandleFiles {
                     System.err.println("El archivo " + nombreArchivo + " no existe");
                 }
             }
-
             Files.delete(archivo);
             System.out.println("Archivo eliminado correctamente: " + nombreArchivo);
 
@@ -90,14 +92,16 @@ public class HandleFiles {
             System.err.println("Error al eliminar el archivo: " + ex.getMessage());
         }
     }
-        
-        public static void saveObjectToBinaryFile(Object objeto, String nombreArchivo) throws IOException {
-        try (FileOutputStream fileOut = new FileOutputStream(nombreArchivo);
-             ObjectOutputStream objectOut = new ObjectOutputStream(fileOut)) {
-            
+
+    
+    
+    public static void saveObjectToBinaryFile(Object objeto, String nombreArchivo) throws IOException {
+        try (FileOutputStream fileOut = new FileOutputStream(nombreArchivo); 
+                
+            ObjectOutputStream objectOut = new ObjectOutputStream(fileOut)) {
             objectOut.writeObject(objeto);
             System.out.println("Objeto guardado correctamente en: " + nombreArchivo);
-            
+
         } catch (IOException e) {
             System.err.println("Error al guardar objeto: " + e.getMessage());
             throw e;

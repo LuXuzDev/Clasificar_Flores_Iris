@@ -15,7 +15,6 @@ import neuralNetwork.Trainer;
  */
 public class Controller {
     private NeuralNetwork neuralNetwork;
-    private Validator validator;
     private Trainer trainner;
     private Normalizer normalizer;
     
@@ -27,9 +26,6 @@ public class Controller {
         // Crear Entrenador y Normalizador
         trainner = new Trainer();
         normalizer = new Normalizer();
-        
-        //Crear Validator con contraseña
-        validator = new Validator("admin");
     }
     
     
