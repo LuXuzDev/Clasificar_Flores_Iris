@@ -16,9 +16,9 @@ public class HandleFiles {
     public static void newFile(String nombreArchivo) {
         File archivo = new File(nombreArchivo);
 
-        while (!Validator.isCorrectFile(nombreArchivo) || archivo.exists()) {
+        while (!Validator.isEmptyInput(nombreArchivo) || archivo.exists()) {
 
-            if (!Validator.isCorrectFile(nombreArchivo)) {
+            if (!Validator.isEmptyInput(nombreArchivo)) {
                 System.err.println("El nombre del archivo no puede ser null o vacío");
             }
 

@@ -150,8 +150,8 @@ public class Init_Menu extends javax.swing.JFrame {
     public void CheckAndStart()
     {
         boolean salir=false;
-        if(Validator.isCorrectInput(FieldAnchoPetalo.getText()) && Validator.isCorrectInput(FieldAnchoSepalo.getText()) &&
-           Validator.isCorrectInput(FieldLongitudPetalo.getText()) && Validator.isCorrectInput(FieldLongitudSepalo.getText()))
+        if(Validator.isCorrectInputOnlyNumbers(FieldAnchoPetalo.getText()) && Validator.isCorrectInputOnlyNumbers(FieldAnchoSepalo.getText()) &&
+           Validator.isCorrectInputOnlyNumbers(FieldLongitudPetalo.getText()) && Validator.isCorrectInputOnlyNumbers(FieldLongitudSepalo.getText()))
         {
             JprogressbarLabel.setVisible(true);
             ProgressBar.setVisible(true);

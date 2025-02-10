@@ -13,10 +13,10 @@ public class Validator {
     private static String password = "admin";
     
 
-    public static boolean isCorrectInput(String input)
+    public static boolean isCorrectInputOnlyNumbers(String input)
     {
         boolean correct=true;
-        if(input.trim().isEmpty() || containsLetter(input))
+        if(isEmptyInput(input) || containsLetter(input))
             correct=false;
         else
         {
@@ -26,6 +26,9 @@ public class Validator {
         }
         return correct;
     }
+    
+    
+    public static boolean isEmptyInput(String input){return input.trim().isEmpty();}
     
     
     private static boolean containsLetter(String input)
@@ -61,14 +64,4 @@ public class Validator {
             isCorrect=false;
         return isCorrect;
     }
-    
-    
-    public static boolean isCorrectFile(String file){
-        
-        boolean isCorrect = true;
-        if(file.trim().isEmpty() || file == null)
-            isCorrect=false;
-        return isCorrect;
-    }
-    
 }
