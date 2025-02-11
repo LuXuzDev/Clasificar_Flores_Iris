@@ -178,7 +178,7 @@ public class SecurityPassword extends javax.swing.JDialog {
             {
                 parentFrame.setVisible(false);
                 new Init_Menu().setVisible(false);
-                new Trainer().setVisible(true);
+                new TrainMenu().setVisible(true);
                 this.dispose();
             }
         }
