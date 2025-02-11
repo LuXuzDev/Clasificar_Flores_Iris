@@ -32,7 +32,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-import static ui.Init_Menu.timer;
+
 
 /**
  *
