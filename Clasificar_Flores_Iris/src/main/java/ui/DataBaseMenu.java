@@ -4,6 +4,7 @@
  */
 package ui;
 
+import back_end.Validator;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.extras.FlatAnimatedLafChange;
@@ -18,33 +19,43 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.ListModel;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 
-/**
- *
- * @author Kris
- */
+
 public class DataBaseMenu extends javax.swing.JFrame {
 
     private boolean valid=false;
     private static Timer timer;
-    private DefaultListModel<String> listModel;
+    private DefaultListModel<String> listModel= new DefaultListModel<>();
+    private static Object [][] datos = new Object[160][5];
+    private static ArrayList<String> array=new ArrayList<>();
+    private boolean trainCheck=false;
     
     public DataBaseMenu() {
+        
+        
+        
         initComponents();
         createArchivodat();
        
@@ -53,6 +64,7 @@ public class DataBaseMenu extends javax.swing.JFrame {
         UIManager.put("TextComponent.arc",99);
         UIManager.put("Button.arc", 25);
         this.setLocationRelativeTo(null);
+        
         getRootPane().putClientProperty(FlatClientProperties.TITLE_BAR_BACKGROUND, new Color(102, 153, 255));
         getRootPane().putClientProperty(FlatClientProperties.TITLE_BAR_SHOW_MAXIMIZE,false);
         getRootPane().putClientProperty(FlatClientProperties.TITLE_BAR_SHOW_ICON,true);
@@ -68,6 +80,7 @@ public class DataBaseMenu extends javax.swing.JFrame {
         });
         timer.setRepeats(false);
         LabelSuccess.setVisible(false);
+       
     }
     
     public void createArchivodat()
@@ -87,24 +100,55 @@ public class DataBaseMenu extends javax.swing.JFrame {
     
     }
     
-    public void readArchivodat(String path)
+    public Object[][] readArchivodat(String path)
     {
-         try (FileInputStream fis = new FileInputStream(path);
-             DataInputStream dis = new DataInputStream(fis)) {
-
-            // Leer datos del archivo
-            String cadena = dis.readUTF();  // Leer una cadena
-            int entero = dis.readInt();    // Leer un entero
-            double decimal = dis.readDouble(); // Leer un número decimal
-
-            // Mostrar los datos leídos
-            System.out.println("Cadena: " + cadena);
-            System.out.println("Entero: " + entero);
-            System.out.println("Decimal: " + decimal);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Object[][] datos = new Object[160][5];
+        int i=0;
+        int j=0;
+        
+        float [] arreglo={0};
+         try
+         {
+             Scanner scanner= new Scanner(new File(path));
+             while(scanner.hasNextLine())
+             {
+                 String linea = scanner.nextLine();
+                 String [] partes = linea.split(",");
+                 if (partes.length == 5) 
+                 {
+                    j=0;
+                    
+                    float float1=Float.parseFloat(partes[0]);
+                    float float2=Float.parseFloat(partes[1]);
+                    float float3=Float.parseFloat(partes[2]);
+                    float float4=Float.parseFloat(partes[3]);
+                    datos[i][j++]=(float)float1;
+                    datos[i][j++]=(float)float2;
+                    datos[i][j++]=(float)float3;
+                    datos[i][j++]=(float)float4;
+                    
+                   
+                    String texto=partes[4];
+                    datos[i][j++]=((String)texto);
+                    System.out.println("Floats: "+datos[i][0]+", "+datos[i][1]+", "+datos[i][2]+", "+datos[i][3]);
+                    System.out.println("String: "+texto);
+                    i++;
+                 }
+                 else
+                 {
+                     System.out.println("Error");
+                 }
+             }
+             scanner.close();
+         }catch(FileNotFoundException e)
+         {
+             System.out.println("El archivo no fue encontrado"+e.getMessage());
+         }catch(NumberFormatException e)
+         {
+             System.out.println("Error al convertir un valor a float"+e.getMessage());
+         }
+          
+         return datos;
     }
     private void setFontFamily(String fontFamily)
     {
@@ -141,6 +185,8 @@ public class DataBaseMenu extends javax.swing.JFrame {
             }
         });
     }
+     
+      
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -229,7 +275,7 @@ public class DataBaseMenu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ButtonBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonBackActionPerformed
-        new Init_Menu().setVisible(true);
+        new Init_Menu(trainCheck).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_ButtonBackActionPerformed
 
@@ -239,6 +285,7 @@ public class DataBaseMenu extends javax.swing.JFrame {
 
     private void ButtonLoad1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonLoad1ActionPerformed
         JFileChooser filetxt=new JFileChooser();
+        
         int opcion=filetxt.showOpenDialog(this);
         valid=false;
         if(opcion == JFileChooser.APPROVE_OPTION)
@@ -246,7 +293,7 @@ public class DataBaseMenu extends javax.swing.JFrame {
             File file= filetxt.getSelectedFile();
             System.out.println(file.getName());
             String FileName=file.getName();
-            if(FileName.endsWith(".dat"))
+            if(FileName.endsWith(".data"))
             {
                 valid=true;
                 String path = filetxt.getSelectedFile().getAbsolutePath();
@@ -264,17 +311,18 @@ public class DataBaseMenu extends javax.swing.JFrame {
                 if(FileName!=null)
                 {
                     listModel.addElement(FileName);
+                    trainCheck=true;
                     LabelSuccess.setVisible(true);
                     LabelSuccess.setText("Archivo cargado");
                     restartTimer();
                 }
                 
-                readArchivodat(path);
+                datos=readArchivodat(path);
                 
             }
             else
             {
-                JOptionPane.showMessageDialog(null,"El archivo no es un .dat Selecciono un archivo invalid","Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null,"El archivo no es un .data Selecciono un archivo invalido","Error", JOptionPane.ERROR_MESSAGE);
             }
             
         }
@@ -288,8 +336,20 @@ public class DataBaseMenu extends javax.swing.JFrame {
 
     private void ButtonEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonEditActionPerformed
         
-        new ModifyDataset().setVisible(true);
-        this.dispose();
+        ArrayList<String> meta=new ArrayList<>();
+        FlatSVGIcon icon2=new FlatSVGIcon("png/bluebell.svg");
+        if(ListTrain.getSelectedValue()!=null)
+        {
+            String path2=ListTrain.getSelectedValue().toString();
+            
+            new ModifyDataset(path2,datos).setVisible(true);
+            this.dispose();
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar en la lista un dataset para modificar", "Informacion", JOptionPane.INFORMATION_MESSAGE, icon2);
+        }
+        
     }//GEN-LAST:event_ButtonEditActionPerformed
 
    

@@ -11,6 +11,7 @@ import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import com.formdev.flatlaf.util.FontUtils;
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
@@ -26,8 +27,12 @@ public class SecurityPassword extends javax.swing.JDialog {
 
     private JFrame parentFrame;
     private int frame=0;
-    public SecurityPassword(java.awt.Frame parent, boolean modal,int page) {
+    private static ArrayList<String> array=new ArrayList<>();
+    private boolean train=false;
+    
+    public SecurityPassword(java.awt.Frame parent, boolean modal,int page,boolean trainIcon) {
         super(parent, modal);
+        train=trainIcon;
         this.parentFrame=(JFrame) parent;
         if(page==1)
         {
@@ -177,8 +182,8 @@ public class SecurityPassword extends javax.swing.JDialog {
             else if(frame==2)
             {
                 parentFrame.setVisible(false);
-                new Init_Menu().setVisible(false);
-                new TrainMenu().setVisible(true);
+                new Init_Menu(train).setVisible(false);
+                new TrainMenu(train).setVisible(true);
                 this.dispose();
             }
         }
@@ -214,7 +219,7 @@ public class SecurityPassword extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                SecurityPassword dialog = new SecurityPassword(new javax.swing.JFrame(), true,0);
+                SecurityPassword dialog = new SecurityPassword(new javax.swing.JFrame(), true,0,false);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

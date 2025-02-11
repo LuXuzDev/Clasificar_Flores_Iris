@@ -26,7 +26,11 @@ public class TrainMenu extends javax.swing.JFrame {
     /**
      * Creates new form TrainMenu
      */
-    public TrainMenu() {
+    private boolean train=false;
+    
+    public TrainMenu(boolean trainIcon) {
+        train=trainIcon;
+        
         initComponents();
         Flatlaf();
         setFontFamily("Arial");
@@ -39,6 +43,11 @@ public class TrainMenu extends javax.swing.JFrame {
         FlatSVGIcon icon=new FlatSVGIcon("png/bluebell.svg");
         setIconImage(icon.getImage());
         this.setLocationRelativeTo(null);
+        if(train==true)
+        {
+            
+            LabelIcon.setIcon(new FlatSVGIcon("png/notis.svg"));
+        }
     }
 
     public void Flatlaf()
@@ -71,6 +80,7 @@ public class TrainMenu extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        LabelIcon = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Iris");
@@ -105,7 +115,13 @@ public class TrainMenu extends javax.swing.JFrame {
         jButton3.setBackground(new java.awt.Color(255, 255, 255));
         jButton3.setForeground(new java.awt.Color(0, 0, 0));
         jButton3.setText("Cargar Entrenamiento");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 160, 30));
+        jPanel1.add(LabelIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 90, 40, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -127,9 +143,13 @@ public class TrainMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void buttonBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBackActionPerformed
-        new Init_Menu().setVisible(true);
+        new Init_Menu(train).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_buttonBackActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        LabelIcon.setVisible(false);
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -161,12 +181,13 @@ public class TrainMenu extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TrainMenu().setVisible(true);
+                new TrainMenu(false).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel LabelIcon;
     private javax.swing.JButton buttonBack;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;

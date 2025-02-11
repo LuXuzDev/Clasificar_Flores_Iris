@@ -30,6 +30,7 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JProgressBar;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
@@ -48,9 +49,11 @@ public class Init_Menu extends javax.swing.JFrame {
 
     //Attributes
     private Controller controller;
+    private boolean train=false;
     
   
-    public Init_Menu() {
+    public Init_Menu(boolean trainIcon) {
+        train=trainIcon;
         controller = new Controller();
         initComponents();
         design();
@@ -141,30 +144,31 @@ public class Init_Menu extends javax.swing.JFrame {
     
     
     //funcion para verificar si todos estan llenos y empezar el analisis automatico
-    public void CheckAndStart()
+    public boolean CheckAndStart()
     {
-        
+        boolean back=false;
         if (!Validator.isCorrectInputOnlyNumbers(FieldAnchoPetalo.getText())) {
-            Error(FieldAnchoPetalo);
+            //Error(FieldAnchoPetalo);
         } else if (!Validator.isCorrectInputOnlyNumbers(FieldAnchoSepalo.getText())) {
-            Error(FieldAnchoSepalo);
+            //Error(FieldAnchoSepalo);
         } else if (!Validator.isCorrectInputOnlyNumbers(FieldLongitudPetalo.getText())) {
-            Error(FieldLongitudPetalo);
+            //Error(FieldLongitudPetalo);
         } else if (!Validator.isCorrectInputOnlyNumbers(FieldLongitudSepalo.getText())) {
-            Error(FieldLongitudSepalo);
+            //Error(FieldLongitudSepalo);
         }
         else
         {
-            JprogressbarLabel.setVisible(true);
-            ProgressBar.setVisible(true);
-            startProgress(ProgressBar);
+            back=true;
+            
         }
+        return back;
     }
  
     
    //analisis automatico de la barraprogress con hilos y reiniciar los datos
     private void startProgress(JProgressBar progressBar)
     {
+        buttonAnalize.setEnabled(false);
             new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -182,7 +186,7 @@ public class Init_Menu extends javax.swing.JFrame {
                        
                     }
                     SwingUtilities.invokeLater(()->restart());
-                    buttonAnalize.setVisible(false);
+                    
                     jLabel_Resultado.setText(controller.flowerType(FieldLongitudSepalo.getText(),FieldAnchoSepalo.getText()
                                                 ,FieldLongitudPetalo.getText(), FieldAnchoPetalo.getText()));
                 }
@@ -204,7 +208,7 @@ public class Init_Menu extends javax.swing.JFrame {
             FieldAnchoSepalo.setEnabled(true);
             FieldLongitudPetalo.setEnabled(true);
             FieldLongitudSepalo.setEnabled(true);
-            buttonAnalize.setVisible(true);
+            buttonAnalize.setEnabled(true);
             
         }
         
@@ -361,13 +365,13 @@ public class Init_Menu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ButtonTrainActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonTrainActionPerformed
-        SecurityPassword secu2= new SecurityPassword(this,true,2);
+        SecurityPassword secu2= new SecurityPassword(this,true,2,train);
        secu2.setVisible(true);
         
     }//GEN-LAST:event_ButtonTrainActionPerformed
 
     private void buttonDatabaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDatabaseActionPerformed
-       SecurityPassword secu= new SecurityPassword(this,true,1);
+       SecurityPassword secu= new SecurityPassword(this,true,1,train);
        secu.setVisible(true);
     }//GEN-LAST:event_buttonDatabaseActionPerformed
 
@@ -377,7 +381,18 @@ public class Init_Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_FieldInputsKeyReleased
 
     private void buttonAnalizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAnalizeActionPerformed
-        CheckAndStart();
+        
+        FlatSVGIcon icon=new FlatSVGIcon("png/bluebell.svg");
+        if(CheckAndStart()==true)
+        {
+            JprogressbarLabel.setVisible(true);
+            ProgressBar.setVisible(true);
+            startProgress(ProgressBar);
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Debe Introducir datos correctos para analizar", "Informacion", JOptionPane.INFORMATION_MESSAGE, icon);
+        }
     }//GEN-LAST:event_buttonAnalizeActionPerformed
 
     /**
@@ -412,7 +427,7 @@ public class Init_Menu extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                Init_Menu init = new Init_Menu();
+                Init_Menu init = new Init_Menu(false);
                 init.setVisible(true);
             }
         });

@@ -279,7 +279,7 @@ public class Trainer extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonGraph1ActionPerformed
 
     private void buttonBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBackActionPerformed
-        new TrainMenu().setVisible(true);
+        new TrainMenu(false).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_buttonBackActionPerformed
 public static void main(String args[]) {
