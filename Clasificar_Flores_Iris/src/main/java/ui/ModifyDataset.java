@@ -30,7 +30,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ModifyDataset extends javax.swing.JFrame {
 
-   private String text;
+   
     
     String[] columnas={"Ancho petalo","Longitud petalo","Ancho sepalo","Longitud sepalo","Resultado"};
     
@@ -47,13 +47,20 @@ public class ModifyDataset extends javax.swing.JFrame {
     private static ArrayList<String> array=new ArrayList<>();
     
     
-    public ModifyDataset(String path,Object[][] datos) {
+    public ModifyDataset(Object[][] datos) {
+        
         
         data=datos;
         dataTest=datos;
         initComponents();
-        text=path;
-        labelIndication.setText("Archivo cargado: "+text);
+        widhLeaf.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT,"AnchoP");
+        widthStem.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT,"AnchoS");
+        LongLeaf.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT,"Long P");
+        LongStem.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT," Long S");
+        if(!UIControllers.Filename.isBlank())
+        {
+            labelIndication.setText("Archivo cargado: "+UIControllers.Filename);
+        }
         Flatlaf();
         realTimeCheck(widhLeaf);
         realTimeCheck(LongLeaf);
@@ -92,7 +99,7 @@ public class ModifyDataset extends javax.swing.JFrame {
                 UIManager.setLookAndFeel(new FlatMacLightLaf());
                 SwingUtilities.updateComponentTreeUI(this);
             } catch (UnsupportedLookAndFeelException ex) {
-                Logger.getLogger(Init_Menu.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(InitMenu.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
     }
@@ -212,6 +219,7 @@ public class ModifyDataset extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Iris");
+        setResizable(false);
 
         PanelPrin.setBackground(new java.awt.Color(255, 255, 255));
         PanelPrin.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -233,13 +241,13 @@ public class ModifyDataset extends javax.swing.JFrame {
         PanelPrin.add(buttonBack, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 10, 50, 40));
 
         widhLeaf.setBackground(new java.awt.Color(255, 255, 255));
-        PanelPrin.add(widhLeaf, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 290, -1, -1));
+        PanelPrin.add(widhLeaf, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 290, 70, -1));
 
         LongLeaf.setBackground(new java.awt.Color(255, 255, 255));
-        PanelPrin.add(LongLeaf, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 290, -1, -1));
+        PanelPrin.add(LongLeaf, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 290, 70, -1));
 
         widthStem.setBackground(new java.awt.Color(255, 255, 255));
-        PanelPrin.add(widthStem, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 290, -1, -1));
+        PanelPrin.add(widthStem, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 290, 70, -1));
 
         buttonEnter.setBackground(new java.awt.Color(255, 255, 255));
         buttonEnter.setForeground(new java.awt.Color(0, 0, 0));
@@ -254,11 +262,10 @@ public class ModifyDataset extends javax.swing.JFrame {
         labelIndication.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         labelIndication.setForeground(new java.awt.Color(102, 153, 255));
         labelIndication.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labelIndication.setText(text);
         PanelPrin.add(labelIndication, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 30, 340, -1));
 
         LongStem.setBackground(new java.awt.Color(255, 255, 255));
-        PanelPrin.add(LongStem, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 290, 60, -1));
+        PanelPrin.add(LongStem, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 290, 70, -1));
 
         ComboBoxIris.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ","Iris-setosa", "Iris-versicolor", "Iris-virginica", }));
         PanelPrin.add(ComboBoxIris, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 290, 110, 30));
@@ -326,7 +333,8 @@ public class ModifyDataset extends javax.swing.JFrame {
 
     private void buttonSafeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSafeActionPerformed
         FlatSVGIcon icon2=new FlatSVGIcon("png/bluebell.svg");
-        int resultado=JOptionPane.showConfirmDialog(null, "Desea guardar los cambios hechos", "Guardar Cambios",JOptionPane.OK_OPTION, JOptionPane.OK_OPTION, icon2);
+        String [] botones={"Si","No"};
+        int resultado=JOptionPane.showOptionDialog(null, "Desea guardrar los cambios realizados", "Guardar cambios", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, icon2, botones, botones[0]);
         if(resultado==JOptionPane.YES_OPTION)
         {
             returnDataset(data);
@@ -368,7 +376,7 @@ public class ModifyDataset extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ModifyDataset("",data).setVisible(true);
+                new ModifyDataset(data).setVisible(true);
             }
         });
     }

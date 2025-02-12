@@ -44,16 +44,16 @@ import neuralNetwork.Normalizer;
 import neuralNetwork.Trainer;
 
 
-public class Init_Menu extends javax.swing.JFrame {
+public class InitMenu extends javax.swing.JFrame {
 
 
     //Attributes
-    private Controller controller;
-    private boolean train=false;
+   private Controller controller;
+    
     
   
-    public Init_Menu(boolean trainIcon) {
-        train=trainIcon;
+    public InitMenu() {
+        
         controller = new Controller();
         initComponents();
         design();
@@ -85,10 +85,10 @@ public class Init_Menu extends javax.swing.JFrame {
         
         JprogressbarLabel.setVisible(false);
         
-        FieldAnchoPetalo.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT,"Ancho Petalo");
-        FieldAnchoSepalo.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT,"Ancho Sepalo");
-        FieldLongitudPetalo.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT,"Longitud Petalo");
-        FieldLongitudSepalo.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT," Longitud Sepalo");
+        FieldAnchoPetalo.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT,"            Ancho Petalo");
+        FieldAnchoSepalo.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT,"            Ancho Sepalo");
+        FieldLongitudPetalo.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT,"          Longitud Petalo");
+        FieldLongitudSepalo.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT,"          Longitud Sepalo");
         FieldAnchoPetalo.putClientProperty(FlatClientProperties.TEXT_FIELD_SHOW_CLEAR_BUTTON,true);
         FieldAnchoSepalo.putClientProperty(FlatClientProperties.TEXT_FIELD_SHOW_CLEAR_BUTTON,true);
         FieldLongitudPetalo.putClientProperty(FlatClientProperties.TEXT_FIELD_SHOW_CLEAR_BUTTON,true);
@@ -214,7 +214,7 @@ public class Init_Menu extends javax.swing.JFrame {
                 UIManager.setLookAndFeel(new FlatMacLightLaf());
                 SwingUtilities.updateComponentTreeUI(this);
             } catch (UnsupportedLookAndFeelException ex) {
-                Logger.getLogger(Init_Menu.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(InitMenu.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
     }
@@ -250,6 +250,7 @@ public class Init_Menu extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Iris");
         setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -356,13 +357,15 @@ public class Init_Menu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ButtonTrainActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonTrainActionPerformed
-        SecurityPassword secu2= new SecurityPassword(this,true,2,train);
+        UIControllers.Security=2;
+        SecurityPassword secu2= new SecurityPassword(this,true);
        secu2.setVisible(true);
         
     }//GEN-LAST:event_ButtonTrainActionPerformed
 
     private void buttonDatabaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDatabaseActionPerformed
-       SecurityPassword secu= new SecurityPassword(this,true,1,train);
+       UIControllers.Security=1;
+        SecurityPassword secu= new SecurityPassword(this,true);
        secu.setVisible(true);
     }//GEN-LAST:event_buttonDatabaseActionPerformed
 
@@ -404,21 +407,23 @@ public class Init_Menu extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Init_Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InitMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Init_Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InitMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Init_Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InitMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Init_Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InitMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                Init_Menu init = new Init_Menu(false);
+                InitMenu init = new InitMenu();
                 init.setVisible(true);
             }
         });
