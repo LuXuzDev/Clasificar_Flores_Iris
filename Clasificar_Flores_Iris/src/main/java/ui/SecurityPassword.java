@@ -26,22 +26,14 @@ import javax.swing.UnsupportedLookAndFeelException;
 public class SecurityPassword extends javax.swing.JDialog {
 
     private JFrame parentFrame;
-    private int frame=0;
-    private static ArrayList<String> array=new ArrayList<>();
-    private boolean train=false;
     
-    public SecurityPassword(java.awt.Frame parent, boolean modal,int page,boolean trainIcon) {
+    private static ArrayList<String> array=new ArrayList<>();
+    
+    
+    public SecurityPassword(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-        train=trainIcon;
+        
         this.parentFrame=(JFrame) parent;
-        if(page==1)
-        {
-            frame=1;
-        }
-        else if(page==2)
-        {
-            frame=2;
-        }
         setSize(386, 270);
         initComponents();
         Flatlaf();
@@ -79,7 +71,7 @@ public class SecurityPassword extends javax.swing.JDialog {
                 UIManager.setLookAndFeel(new FlatMacLightLaf());
                 SwingUtilities.updateComponentTreeUI(this);
             } catch (UnsupportedLookAndFeelException ex) {
-                Logger.getLogger(Init_Menu.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(InitMenu.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
     }
@@ -172,7 +164,7 @@ public class SecurityPassword extends javax.swing.JDialog {
         {
             LabelIncorrecto.setVisible(false);
             PasswordField.putClientProperty("JComponent.outline",new Color(102, 153, 255));
-            if(frame==1)
+            if(UIControllers.Security==1)
             {
                 
                 parentFrame.setVisible(false);
@@ -180,11 +172,11 @@ public class SecurityPassword extends javax.swing.JDialog {
                 DataBaseMenu data=new DataBaseMenu();
                 data.setVisible(true);
             }
-            else if(frame==2)
+            else if(UIControllers.Security==2)
             {
                 parentFrame.setVisible(false);
-                new Init_Menu(train).setVisible(false);
-                new TrainMenu(train).setVisible(true);
+                new InitMenu().setVisible(false);
+                new TrainMenu().setVisible(true);
                 this.dispose();
             }
         }
@@ -220,7 +212,7 @@ public class SecurityPassword extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                SecurityPassword dialog = new SecurityPassword(new javax.swing.JFrame(), true,0,false);
+                SecurityPassword dialog = new SecurityPassword(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

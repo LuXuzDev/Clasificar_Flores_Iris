@@ -4,6 +4,7 @@
  */
 package ui;
 
+import back_end.Controller;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.extras.FlatAnimatedLafChange;
@@ -26,10 +27,10 @@ public class TrainMenu extends javax.swing.JFrame {
     /**
      * Creates new form TrainMenu
      */
-    private boolean train=false;
+    private Controller controller;
     
-    public TrainMenu(boolean trainIcon) {
-        train=trainIcon;
+    public TrainMenu() {
+        
         
         initComponents();
         Flatlaf();
@@ -43,7 +44,7 @@ public class TrainMenu extends javax.swing.JFrame {
         FlatSVGIcon icon=new FlatSVGIcon("png/bluebell.svg");
         setIconImage(icon.getImage());
         this.setLocationRelativeTo(null);
-        if(train==true)
+        if(UIControllers.icon==true)
         {
             
             LabelIcon.setIcon(new FlatSVGIcon("png/notis.svg"));
@@ -62,6 +63,7 @@ public class TrainMenu extends javax.swing.JFrame {
         });
     }
     
+    
     private void setFontFamily(String fontFamily)
     {
         java.awt.Font font = UIManager.getFont("defaultFont");
@@ -77,9 +79,9 @@ public class TrainMenu extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         buttonBack = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        buttonEstadis = new javax.swing.JButton();
+        buttonTrain = new javax.swing.JButton();
+        buttonLoadTrain = new javax.swing.JButton();
         LabelIcon = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -98,30 +100,35 @@ public class TrainMenu extends javax.swing.JFrame {
         });
         jPanel1.add(buttonBack, new org.netbeans.lib.awtextra.AbsoluteConstraints(545, 10, 50, 40));
 
-        jButton1.setBackground(new java.awt.Color(255, 255, 255));
-        jButton1.setForeground(new java.awt.Color(0, 0, 0));
-        jButton1.setText("Estadisticas");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        buttonEstadis.setBackground(new java.awt.Color(255, 255, 255));
+        buttonEstadis.setForeground(new java.awt.Color(0, 0, 0));
+        buttonEstadis.setText("Estadisticas");
+        buttonEstadis.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                buttonEstadisActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 130, 30));
+        jPanel1.add(buttonEstadis, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 130, 30));
 
-        jButton2.setBackground(new java.awt.Color(255, 255, 255));
-        jButton2.setForeground(new java.awt.Color(0, 0, 0));
-        jButton2.setText("Entrenar");
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 130, 30));
-
-        jButton3.setBackground(new java.awt.Color(255, 255, 255));
-        jButton3.setForeground(new java.awt.Color(0, 0, 0));
-        jButton3.setText("Cargar Entrenamiento");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        buttonTrain.setBackground(new java.awt.Color(255, 255, 255));
+        buttonTrain.setForeground(new java.awt.Color(0, 0, 0));
+        buttonTrain.setText("Entrenar");
+        buttonTrain.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                buttonTrainActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 160, 30));
+        jPanel1.add(buttonTrain, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 130, 30));
+
+        buttonLoadTrain.setBackground(new java.awt.Color(255, 255, 255));
+        buttonLoadTrain.setForeground(new java.awt.Color(0, 0, 0));
+        buttonLoadTrain.setText("Cargar Entrenamiento");
+        buttonLoadTrain.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonLoadTrainActionPerformed(evt);
+            }
+        });
+        jPanel1.add(buttonLoadTrain, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 160, 30));
         jPanel1.add(LabelIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 90, 40, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -138,19 +145,28 @@ public class TrainMenu extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void buttonEstadisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEstadisActionPerformed
         new Trainer().setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_buttonEstadisActionPerformed
 
     private void buttonBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBackActionPerformed
-        new Init_Menu(train).setVisible(true);
+        new InitMenu().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_buttonBackActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void buttonLoadTrainActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonLoadTrainActionPerformed
+        //controller = new Controller();
         LabelIcon.setVisible(false);
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_buttonLoadTrainActionPerformed
+
+    private void buttonTrainActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonTrainActionPerformed
+        if(!LabelIcon.isVisible())
+        {
+            //controller.train();
+        }
+        
+    }//GEN-LAST:event_buttonTrainActionPerformed
 
     /**
      * @param args the command line arguments
@@ -182,7 +198,7 @@ public class TrainMenu extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TrainMenu(false).setVisible(true);
+                new TrainMenu().setVisible(true);
             }
         });
     }
@@ -190,9 +206,9 @@ public class TrainMenu extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel LabelIcon;
     private javax.swing.JButton buttonBack;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton buttonEstadis;
+    private javax.swing.JButton buttonLoadTrain;
+    private javax.swing.JButton buttonTrain;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }

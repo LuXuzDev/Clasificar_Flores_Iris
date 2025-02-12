@@ -28,6 +28,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import org.jfree.chart.ChartPanel;
+import org.jfree.chart.annotations.XYTextAnnotation;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.data.category.DefaultCategoryDataset;
 
@@ -39,7 +40,7 @@ public class Trainer extends javax.swing.JFrame {
     
     //private CardLayout cardLayout;
     //JPanel cardPanel;
-    
+    JFreeChart chart;
     public Trainer() {
         initComponents();
         Flatlaf();
@@ -146,8 +147,13 @@ public class Trainer extends javax.swing.JFrame {
                 false
         );
 
+         // Método para añadir anotaciones (etiquetas) al gráfico
+
+    
+
         // Personalizar el gráfico
         XYPlot plot = chart.getXYPlot();
+        addAnnotations(plot, numeroGrafico);
         plot.setBackgroundPaint(Color.WHITE); // Fondo blanco
         plot.setDomainGridlinePaint(Color.LIGHT_GRAY); // Líneas de la cuadrícula
         plot.setRangeGridlinePaint(Color.LIGHT_GRAY);
@@ -165,6 +171,30 @@ public class Trainer extends javax.swing.JFrame {
         return panel;
         
         
+    }
+     
+     private static void addAnnotations(XYPlot plot, int graphNumber) {
+        XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer) plot.getRenderer();
+
+        // Añadir etiquetas personalizadas
+        switch (graphNumber) {
+            case 1:
+                System.out.println("graph 1");
+                renderer.addAnnotation(new XYTextAnnotation("Info Gráfico 1 (50%)", 5, 50));
+                break;
+            case 2:
+                System.out.println("graph 2");
+                renderer.addAnnotation(new XYTextAnnotation("Info Gráfico 2 (75%)", 5, 200));
+                break;
+            case 3:
+                System.out.println("graph 3");
+                renderer.addAnnotation(new XYTextAnnotation("Info Gráfico 3 (90%)", 5, 500));
+                break;
+            case 4:
+                System.out.println("graph 4");
+                renderer.addAnnotation(new XYTextAnnotation("Info Gráfico 4 (100%)", 5, 1000));
+                break;
+        }
     }
     
     @SuppressWarnings("unchecked")
@@ -184,7 +214,6 @@ public class Trainer extends javax.swing.JFrame {
         setBackground(new java.awt.Color(255, 255, 255));
         setBounds(new java.awt.Rectangle(0, 0, 610, 340));
         setMinimumSize(new java.awt.Dimension(610, 340));
-        setPreferredSize(new java.awt.Dimension(630, 370));
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -238,7 +267,7 @@ public class Trainer extends javax.swing.JFrame {
         });
         buttonPanel.add(buttonGraph4, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 10, -1, -1));
 
-        jPanel1.add(buttonPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 260, 610, 60));
+        jPanel1.add(buttonPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 260, 600, 70));
 
         buttonBack.setIcon(new FlatSVGIcon("png/arrow.svg"));
         buttonBack.setBackground(new java.awt.Color(255, 255, 255));
@@ -257,6 +286,8 @@ public class Trainer extends javax.swing.JFrame {
     private void buttonGraph2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonGraph2ActionPerformed
        CardLayout c1= (CardLayout)(cardPanel.getLayout());
         c1.show(cardPanel, "Grafico 1");
+        
+        
         System.out.println("annadiendo grafico 1");
     }//GEN-LAST:event_buttonGraph2ActionPerformed
 
@@ -280,7 +311,7 @@ public class Trainer extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonGraph1ActionPerformed
 
     private void buttonBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBackActionPerformed
-        new TrainMenu(false).setVisible(true);
+        new TrainMenu().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_buttonBackActionPerformed
 public static void main(String args[]) {
