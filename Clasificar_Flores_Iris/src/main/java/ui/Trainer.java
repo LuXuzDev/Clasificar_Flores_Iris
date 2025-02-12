@@ -185,6 +185,7 @@ public class Trainer extends javax.swing.JFrame {
         setBounds(new java.awt.Rectangle(0, 0, 610, 340));
         setMinimumSize(new java.awt.Dimension(610, 340));
         setPreferredSize(new java.awt.Dimension(630, 370));
+        setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));

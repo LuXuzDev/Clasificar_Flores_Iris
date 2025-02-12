@@ -212,6 +212,7 @@ public class ModifyDataset extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Iris");
+        setResizable(false);
 
         PanelPrin.setBackground(new java.awt.Color(255, 255, 255));
         PanelPrin.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());

@@ -103,6 +103,7 @@ public class SecurityPassword extends javax.swing.JDialog {
         setTitle("Seguridad");
         setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         setPreferredSize(new java.awt.Dimension(610, 340));
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setPreferredSize(new java.awt.Dimension(474, 270));

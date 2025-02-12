@@ -49,6 +49,7 @@ public class DataBaseMenu extends javax.swing.JFrame {
     private static Timer timer;
     private DefaultListModel<String> listModel= new DefaultListModel<>();
     private static Object [][] datos = new Object[160][5];
+    private static Object [][] datos1 = new Object[160][5];
     private static ArrayList<String> array=new ArrayList<>();
     private boolean trainCheck=false;
     
@@ -57,9 +58,8 @@ public class DataBaseMenu extends javax.swing.JFrame {
         
         
         initComponents();
-        createArchivodat();
-       
         Flatlaf();
+        addStringList("ARCHIVO", "ESTE");
         setFontFamily("Arial");
         UIManager.put("TextComponent.arc",99);
         UIManager.put("Button.arc", 25);
@@ -83,22 +83,7 @@ public class DataBaseMenu extends javax.swing.JFrame {
        
     }
     
-    public void createArchivodat()
-    {
-        try (FileOutputStream fos = new FileOutputStream("archivo.dat");
-              DataOutputStream dos = new DataOutputStream(fos)) {
-
-            // Escribir datos en el archivo
-            dos.writeUTF("Hola, mundo!");  // Escribir una cadena
-            dos.writeInt(123);            // Escribir un entero
-            dos.writeDouble(45.67);       // Escribir un número decimal
-
-            System.out.println("Archivo creado exitosamente.");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    
-    }
+   
     
     public Object[][] readArchivodat(String path)
     {
@@ -186,6 +171,19 @@ public class DataBaseMenu extends javax.swing.JFrame {
         });
     }
      
+     public void addStringList(String text1,String text2)
+     {
+         //DefaultListModel<String> model= new DefaultListModel<>();
+         if (ListTrain.getModel() instanceof DefaultListModel) {
+             listModel = (DefaultListModel<String>) ListTrain.getModel();
+         } else {
+             listModel = new DefaultListModel<>();
+             ListTrain.setModel(listModel);
+         }
+         listModel.add(0, text1);
+         listModel.add(1, text2);
+     }
+     
       
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -204,6 +202,7 @@ public class DataBaseMenu extends javax.swing.JFrame {
         setTitle("Iris");
         setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         setPreferredSize(new java.awt.Dimension(610, 340));
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setPreferredSize(new java.awt.Dimension(610, 340));
@@ -274,6 +273,8 @@ public class DataBaseMenu extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    
     private void ButtonBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonBackActionPerformed
         new Init_Menu(trainCheck).setVisible(true);
         this.dispose();
@@ -285,7 +286,6 @@ public class DataBaseMenu extends javax.swing.JFrame {
 
     private void ButtonLoad1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonLoad1ActionPerformed
         JFileChooser filetxt=new JFileChooser();
-        
         int opcion=filetxt.showOpenDialog(this);
         valid=false;
         if(opcion == JFileChooser.APPROVE_OPTION)
@@ -316,8 +316,15 @@ public class DataBaseMenu extends javax.swing.JFrame {
                     LabelSuccess.setText("Archivo cargado");
                     restartTimer();
                 }
+               if(FileName.equals("iris.data"))
+               {
+                   datos=readArchivodat(path);
+               }
+               else
+               {
+                   datos1=readArchivodat(path);
+               }
                 
-                datos=readArchivodat(path);
                 
             }
             else
@@ -338,12 +345,20 @@ public class DataBaseMenu extends javax.swing.JFrame {
         
         ArrayList<String> meta=new ArrayList<>();
         FlatSVGIcon icon2=new FlatSVGIcon("png/bluebell.svg");
-        if(ListTrain.getSelectedValue()!=null)
+        if(ListTrain.getSelectedValue()!=null && ListTrain.getSelectedValue().endsWith(".data"))
         {
             String path2=ListTrain.getSelectedValue().toString();
+            if(path2.equals("iris.data"))
+            {
+                new ModifyDataset(path2,datos).setVisible(true);
+                this.dispose();
+            }
+            else
+            {
+                new ModifyDataset(path2,datos1).setVisible(true);
+                this.dispose();
+            }
             
-            new ModifyDataset(path2,datos).setVisible(true);
-            this.dispose();
         }
         else
         {
