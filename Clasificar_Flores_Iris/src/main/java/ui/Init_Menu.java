@@ -100,15 +100,15 @@ public class Init_Menu extends javax.swing.JFrame {
         realTimeCheck(FieldAnchoPetalo);
         realTimeCheck(FieldAnchoSepalo);
         realTimeCheck(FieldLongitudPetalo);
-        realTimeCheck(FieldLongitudSepalo);
-        
-        
+        realTimeCheck(FieldLongitudSepalo);  
     }
      
+    
     private void Error(JTextField field)
     {
         field.putClientProperty("JComponent.outline","error");
     }
+    
     
     private void realTimeCheck(JTextField field)
     {
@@ -131,6 +131,8 @@ public class Init_Menu extends javax.swing.JFrame {
     
         });
     }
+    
+    
     private void check(JTextField field)
     {
         if (!Validator.isCorrectInputOnlyNumbers(field.getText())) {
@@ -144,24 +146,15 @@ public class Init_Menu extends javax.swing.JFrame {
     
     
     //funcion para verificar si todos estan llenos y empezar el analisis automatico
-    public boolean CheckAndStart()
+    public boolean checkAndStart()
     {
-        boolean back=false;
-        if (!Validator.isCorrectInputOnlyNumbers(FieldAnchoPetalo.getText())) {
-            //Error(FieldAnchoPetalo);
-        } else if (!Validator.isCorrectInputOnlyNumbers(FieldAnchoSepalo.getText())) {
-            //Error(FieldAnchoSepalo);
-        } else if (!Validator.isCorrectInputOnlyNumbers(FieldLongitudPetalo.getText())) {
-            //Error(FieldLongitudPetalo);
-        } else if (!Validator.isCorrectInputOnlyNumbers(FieldLongitudSepalo.getText())) {
-            //Error(FieldLongitudSepalo);
-        }
-        else
-        {
-            back=true;
-            
-        }
-        return back;
+        boolean isCorrectInput=false;
+        if (Validator.isCorrectInputOnlyNumbers(FieldAnchoPetalo.getText()) && 
+            Validator.isCorrectInputOnlyNumbers(FieldAnchoSepalo.getText()) && 
+            Validator.isCorrectInputOnlyNumbers(FieldLongitudPetalo.getText()) &&
+            Validator.isCorrectInputOnlyNumbers(FieldLongitudSepalo.getText()))
+            isCorrectInput=true;
+        return isCorrectInput;
     }
  
     
@@ -209,9 +202,7 @@ public class Init_Menu extends javax.swing.JFrame {
             FieldLongitudPetalo.setEnabled(true);
             FieldLongitudSepalo.setEnabled(true);
             buttonAnalize.setEnabled(true);
-            
         }
-        
     }
 
     
@@ -383,7 +374,7 @@ public class Init_Menu extends javax.swing.JFrame {
     private void buttonAnalizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAnalizeActionPerformed
         
         FlatSVGIcon icon=new FlatSVGIcon("png/bluebell.svg");
-        if(CheckAndStart()==true)
+        if(checkAndStart()==true)
         {
             JprogressbarLabel.setVisible(true);
             ProgressBar.setVisible(true);
