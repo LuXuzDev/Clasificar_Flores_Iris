@@ -15,9 +15,13 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -26,8 +30,10 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ModifyDataset extends javax.swing.JFrame {
 
+   private String text;
     
-    String[] columnas={"Ancho petalo","Ancho sepalo","Longitud petalo","Longitud sepalo","Resultado"};
+    String[] columnas={"Ancho petalo","Longitud petalo","Ancho sepalo","Longitud sepalo","Resultado"};
+    
     DefaultTableModel model=new DefaultTableModel(columnas, 0)
     {
         @Override
@@ -36,13 +42,32 @@ public class ModifyDataset extends javax.swing.JFrame {
             return false;
         }
     };
+    private static Object [][] data= new Object[160][5];
+    private static Object [][] dataTest= new Object[160][5];
+    private static ArrayList<String> array=new ArrayList<>();
     
-    public ModifyDataset() {
+    
+    public ModifyDataset(String path,Object[][] datos) {
+        
+        data=datos;
+        dataTest=datos;
         initComponents();
+        text=path;
+        labelIndication.setText("Archivo cargado: "+text);
         Flatlaf();
+        realTimeCheck(widhLeaf);
+        realTimeCheck(LongLeaf);
+        realTimeCheck(widthStem);
+        realTimeCheck(LongStem);
         setFontFamily("Arial");
         UIManager.put("TextComponent.arc",9);
         UIManager.put("Button.arc", 25);
+        buttonSafe.setEnabled(false);
+        if(data[0][0]!=null)
+        {
+            datasetTabel(data);
+        }
+        
         getRootPane().putClientProperty(FlatClientProperties.TITLE_BAR_BACKGROUND, new Color(102, 153, 255));
         getRootPane().putClientProperty(FlatClientProperties.TITLE_BAR_SHOW_MAXIMIZE,false);
         getRootPane().putClientProperty(FlatClientProperties.TITLE_BAR_SHOW_ICON,true);
@@ -52,6 +77,13 @@ public class ModifyDataset extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
     }
 
+    private void datasetTabel(Object[][] datos)
+    {
+        for (Object[] fila : data)
+        {
+            model.addRow(fila);
+        }
+    }
     
     public void Flatlaf()
     {
@@ -75,6 +107,91 @@ public class ModifyDataset extends javax.swing.JFrame {
         
     }
     
+    private void realTimeCheck(JTextField field)
+    {
+        field.getDocument().addDocumentListener(new DocumentListener()
+        {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                check(field);
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                check(field);
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                check(field);
+            }
+    
+        });
+    }
+    private void check(JTextField field)
+    {
+        if (!Validator.isCorrectInputOnlyNumbers(field.getText())) {
+            Error(field);
+        }
+        else
+        {
+            field.putClientProperty("JComponent.outline",new Color(102, 153, 255));
+        }
+    }
+    
+    private void Error(JTextField field)
+    {
+        field.putClientProperty("JComponent.outline","error");
+    }
+    
+    private int lastIndex(Object[][] datos)
+    {
+        int i=0;
+        int j=0;
+        int retorno=0;
+        boolean end=true;
+        
+        
+        for(i=0;i<datos.length && end==true;i++)
+        {
+            for(j=0;j<datos[i].length;j++)
+            {
+                if(datos[i][j]== null)
+                {
+                    retorno=i;
+                    
+                    end=false;
+                }
+            }
+        }
+        return retorno;
+    }
+    
+    private Object[][] returnDataset(Object[][] datos)
+    {
+        return datos;
+    }
+    
+    private Object[][] addData(int ultimo)
+    {
+        FlatSVGIcon icon2 = new FlatSVGIcon("png/bluebell.svg");
+        ultimo = lastIndex(data);
+        data[ultimo][0] = widhLeaf.getText();
+        data[ultimo][1] = LongLeaf.getText();
+        data[ultimo][2] = widthStem.getText();
+        data[ultimo][3] = LongStem.getText();
+        data[ultimo++][4] = ComboBoxIris.getSelectedItem().toString();
+        model.setRowCount(0);
+        datasetTabel(data);
+        if (ultimo == 160) {
+            JOptionPane.showMessageDialog(null, "Ya alcanzo el maximo de elementos a agregar en el dataset", "Advertencia", JOptionPane.INFORMATION_MESSAGE, icon2);
+            buttonEnter.setEnabled(false);
+        }
+        System.out.println(data.length);
+        return data;
+    }
+    
+    
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -84,13 +201,14 @@ public class ModifyDataset extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tableData = new javax.swing.JTable(model);
         buttonBack = new javax.swing.JButton();
-        textField1 = new javax.swing.JTextField();
-        textField2 = new javax.swing.JTextField();
-        textField3 = new javax.swing.JTextField();
-        textField4 = new javax.swing.JTextField();
+        widhLeaf = new javax.swing.JTextField();
+        LongLeaf = new javax.swing.JTextField();
+        widthStem = new javax.swing.JTextField();
         buttonEnter = new javax.swing.JButton();
         labelIndication = new javax.swing.JLabel();
-        textField5 = new javax.swing.JTextField();
+        LongStem = new javax.swing.JTextField();
+        ComboBoxIris = new javax.swing.JComboBox<>();
+        buttonSafe = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Iris");
@@ -103,7 +221,7 @@ public class ModifyDataset extends javax.swing.JFrame {
         tableData.setModel(model);
         jScrollPane1.setViewportView(tableData);
 
-        PanelPrin.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 60, 460, 210));
+        PanelPrin.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 60, 460, 210));
 
         buttonBack.setIcon(new FlatSVGIcon("png/arrow.svg"));
         buttonBack.setBackground(new java.awt.Color(255, 255, 255));
@@ -114,17 +232,14 @@ public class ModifyDataset extends javax.swing.JFrame {
         });
         PanelPrin.add(buttonBack, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 10, 50, 40));
 
-        textField1.setBackground(new java.awt.Color(255, 255, 255));
-        PanelPrin.add(textField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 290, 110, -1));
+        widhLeaf.setBackground(new java.awt.Color(255, 255, 255));
+        PanelPrin.add(widhLeaf, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 290, -1, -1));
 
-        textField2.setBackground(new java.awt.Color(255, 255, 255));
-        PanelPrin.add(textField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 290, -1, -1));
+        LongLeaf.setBackground(new java.awt.Color(255, 255, 255));
+        PanelPrin.add(LongLeaf, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 290, -1, -1));
 
-        textField3.setBackground(new java.awt.Color(255, 255, 255));
-        PanelPrin.add(textField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 290, -1, -1));
-
-        textField4.setBackground(new java.awt.Color(255, 255, 255));
-        PanelPrin.add(textField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 290, -1, -1));
+        widthStem.setBackground(new java.awt.Color(255, 255, 255));
+        PanelPrin.add(widthStem, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 290, -1, -1));
 
         buttonEnter.setBackground(new java.awt.Color(255, 255, 255));
         buttonEnter.setForeground(new java.awt.Color(0, 0, 0));
@@ -138,11 +253,23 @@ public class ModifyDataset extends javax.swing.JFrame {
 
         labelIndication.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         labelIndication.setForeground(new java.awt.Color(102, 153, 255));
-        labelIndication.setText("Nuevo.dat");
-        PanelPrin.add(labelIndication, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 30, 340, -1));
+        labelIndication.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelIndication.setText(text);
+        PanelPrin.add(labelIndication, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 30, 340, -1));
 
-        textField5.setBackground(new java.awt.Color(255, 255, 255));
-        PanelPrin.add(textField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 290, 60, -1));
+        LongStem.setBackground(new java.awt.Color(255, 255, 255));
+        PanelPrin.add(LongStem, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 290, 60, -1));
+
+        ComboBoxIris.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ","Iris-setosa", "Iris-versicolor", "Iris-virginica", }));
+        PanelPrin.add(ComboBoxIris, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 290, 110, 30));
+
+        buttonSafe.setText("Guardar");
+        buttonSafe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonSafeActionPerformed(evt);
+            }
+        });
+        PanelPrin.add(buttonSafe, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 220, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -160,25 +287,56 @@ public class ModifyDataset extends javax.swing.JFrame {
 
     private void buttonEnterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEnterActionPerformed
         
-        if(Validator.isCorrectInputOnlyNumbers(textField2.getText()) && Validator.isCorrectInputOnlyNumbers(textField4.getText()) && Validator.isCorrectInputOnlyNumbers(textField3.getText())  &&  Validator.isCorrectInputOnlyNumbers(textField1.getText()))
-                {
-                    Object[] fila={textField2.getText(),textField3.getText(),textField4.getText(),textField5.getText(),textField1.getText()};
-                    model.addRow(fila);
-                }
-        Object[] fila={textField2.getText(),textField3.getText(),textField4.getText(),textField5.getText(),textField1.getText()};
-        model.addRow(fila);
-        textField1.setText("");
-        textField2.setText("");
-        textField3.setText("");
-        textField4.setText("");
-        textField5.setText("");
-        
+        //Object[] fila2={widhLeaf.getText(),LongLeaf.getText(),widthStem.getText(),LongStem.getText(),ComboBoxIris.getSelectedItem().toString()};
+        //model.addRow(fila2);
+        int ultimo=0;
+        buttonSafe.setEnabled(true);
+        FlatSVGIcon icon2=new FlatSVGIcon("png/bluebell.svg");
+        if (data[0][0] == null) {
+            if (Validator.isCorrectInputOnlyNumbers(widhLeaf.getText()) && Validator.isCorrectInputOnlyNumbers(widthStem.getText()) && Validator.isCorrectInputOnlyNumbers(LongLeaf.getText()) && Validator.isCorrectInputOnlyNumbers(LongStem.getText()) && ComboBoxIris.getSelectedItem() != " ") {
+                Object[] fila3 = {widhLeaf.getText(), LongLeaf.getText(), widthStem.getText(), LongStem.getText(), ComboBoxIris.getSelectedItem().toString()};
+                model.addRow(fila3);
+            } else {
+                JOptionPane.showMessageDialog(null, "Debe Introducir datos correctos para agregar al dataset", "Informacion", JOptionPane.INFORMATION_MESSAGE, icon2);
+            }
+        }
+        else
+        {
+            if (Validator.isCorrectInputOnlyNumbers(widhLeaf.getText()) && Validator.isCorrectInputOnlyNumbers(widthStem.getText()) && Validator.isCorrectInputOnlyNumbers(LongLeaf.getText()) && Validator.isCorrectInputOnlyNumbers(LongStem.getText()) && ComboBoxIris.getSelectedItem() != " ") {
+                addData(ultimo);
+            } else {
+                JOptionPane.showMessageDialog(null, "Debe Introducir datos correctos para agregar al dataset", "Informacion", JOptionPane.INFORMATION_MESSAGE, icon2);
+            }
+        } 
+        ComboBoxIris.setSelectedItem(" ");
+        widhLeaf.setText("");
+        LongLeaf.setText("");
+        widthStem.setText("");
+        LongStem.setText("");
+        widhLeaf.putClientProperty("JComponent.outline",new Color(102, 153, 255));
+        LongLeaf.putClientProperty("JComponent.outline",new Color(102, 153, 255));
+        widthStem.putClientProperty("JComponent.outline",new Color(102, 153, 255));
+        LongStem.putClientProperty("JComponent.outline",new Color(102, 153, 255));
     }//GEN-LAST:event_buttonEnterActionPerformed
 
     private void buttonBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBackActionPerformed
         new DataBaseMenu().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_buttonBackActionPerformed
+
+    private void buttonSafeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSafeActionPerformed
+        FlatSVGIcon icon2=new FlatSVGIcon("png/bluebell.svg");
+        int resultado=JOptionPane.showConfirmDialog(null, "Desea guardar los cambios hechos", "Guardar Cambios",JOptionPane.OK_OPTION, JOptionPane.OK_OPTION, icon2);
+        if(resultado==JOptionPane.YES_OPTION)
+        {
+            returnDataset(data);
+        }
+        else
+        {
+            returnDataset(dataTest);
+        }
+        
+    }//GEN-LAST:event_buttonSafeActionPerformed
 
     /**
      * @param args the command line arguments
@@ -210,22 +368,23 @@ public class ModifyDataset extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ModifyDataset().setVisible(true);
+                new ModifyDataset("",data).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> ComboBoxIris;
+    private javax.swing.JTextField LongLeaf;
+    private javax.swing.JTextField LongStem;
     private javax.swing.JPanel PanelPrin;
     private javax.swing.JButton buttonBack;
     private javax.swing.JButton buttonEnter;
+    private javax.swing.JButton buttonSafe;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labelIndication;
     private javax.swing.JTable tableData;
-    private javax.swing.JTextField textField1;
-    private javax.swing.JTextField textField2;
-    private javax.swing.JTextField textField3;
-    private javax.swing.JTextField textField4;
-    private javax.swing.JTextField textField5;
+    private javax.swing.JTextField widhLeaf;
+    private javax.swing.JTextField widthStem;
     // End of variables declaration//GEN-END:variables
 }

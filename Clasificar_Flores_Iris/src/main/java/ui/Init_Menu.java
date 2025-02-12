@@ -30,6 +30,7 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JProgressBar;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
@@ -48,16 +49,15 @@ public class Init_Menu extends javax.swing.JFrame {
 
     //Attributes
     private Controller controller;
-    public static Timer timer;
+    private boolean train=false;
+    
   
-    public Init_Menu() {
+    public Init_Menu(boolean trainIcon) {
+        train=trainIcon;
         controller = new Controller();
         initComponents();
         design();
-        check(FieldAnchoPetalo);
-        check(FieldAnchoSepalo);
-        check(FieldLongitudPetalo);
-        check(FieldLongitudSepalo);
+       
         controller.train();
         
 
@@ -65,14 +65,9 @@ public class Init_Menu extends javax.swing.JFrame {
         setIconImage(icon.getImage());
         
 
-        timer = new Timer(1500, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                CheckAndStart();
-            }
-        });
-        timer.setRepeats(false);
+        
     }
+    
     
     private void design()
     {
@@ -102,68 +97,78 @@ public class Init_Menu extends javax.swing.JFrame {
         getRootPane().putClientProperty(FlatClientProperties.TITLE_BAR_SHOW_MAXIMIZE,false);
         getRootPane().putClientProperty(FlatClientProperties.TITLE_BAR_SHOW_ICON,true);
         getRootPane().putClientProperty(FlatClientProperties.TITLE_BAR_SHOW_ICONIFFY,true);
+        realTimeCheck(FieldAnchoPetalo);
+        realTimeCheck(FieldAnchoSepalo);
+        realTimeCheck(FieldLongitudPetalo);
+        realTimeCheck(FieldLongitudSepalo);
+        
         
     }
      
-    //funcion para ver si no esta vacio un textfield
-    private boolean CheckTextField(JTextField field)
+    private void Error(JTextField field)
     {
-        boolean salir = false;
-        if (!field.getText().trim().isEmpty()) {
-            salir = true;
-        }
-        
-        return salir;
+        field.putClientProperty("JComponent.outline","error");
     }
     
-    //Funcion para verificar los textField en tiempo real
-    private void check(JTextField field)
+    private void realTimeCheck(JTextField field)
     {
-        field.getDocument().addDocumentListener(new DocumentListener() {
+        field.getDocument().addDocumentListener(new DocumentListener()
+        {
             @Override
             public void insertUpdate(DocumentEvent e) {
-                restartTimer();
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                restartTimer();
+                check(field);
             }
 
             @Override
             public void changedUpdate(DocumentEvent e) {
-                restartTimer();
+                check(field);
             }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                check(field);
+            }
+    
         });
     }
-    
-    
-    //funcion para reiniciar los timers de la busqueda en tiempo real de los text field
-    private void restartTimer()
+    private void check(JTextField field)
     {
-        timer.stop();
-        timer.start();
+        if (!Validator.isCorrectInputOnlyNumbers(field.getText())) {
+            Error(field);
+        }
+        else
+        {
+            field.putClientProperty("JComponent.outline",new Color(102, 153, 255));
+        }
     }
     
     
     //funcion para verificar si todos estan llenos y empezar el analisis automatico
-    public void CheckAndStart()
+    public boolean CheckAndStart()
     {
-        boolean salir=false;
-        if(Validator.isCorrectInputOnlyNumbers(FieldAnchoPetalo.getText()) && Validator.isCorrectInputOnlyNumbers(FieldAnchoSepalo.getText()) &&
-           Validator.isCorrectInputOnlyNumbers(FieldLongitudPetalo.getText()) && Validator.isCorrectInputOnlyNumbers(FieldLongitudSepalo.getText()))
-        {
-            JprogressbarLabel.setVisible(true);
-            ProgressBar.setVisible(true);
-            startProgress(ProgressBar);
+        boolean back=false;
+        if (!Validator.isCorrectInputOnlyNumbers(FieldAnchoPetalo.getText())) {
+            //Error(FieldAnchoPetalo);
+        } else if (!Validator.isCorrectInputOnlyNumbers(FieldAnchoSepalo.getText())) {
+            //Error(FieldAnchoSepalo);
+        } else if (!Validator.isCorrectInputOnlyNumbers(FieldLongitudPetalo.getText())) {
+            //Error(FieldLongitudPetalo);
+        } else if (!Validator.isCorrectInputOnlyNumbers(FieldLongitudSepalo.getText())) {
+            //Error(FieldLongitudSepalo);
         }
-       
+        else
+        {
+            back=true;
+            
+        }
+        return back;
     }
  
     
    //analisis automatico de la barraprogress con hilos y reiniciar los datos
     private void startProgress(JProgressBar progressBar)
     {
+        buttonAnalize.setEnabled(false);
             new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -181,6 +186,7 @@ public class Init_Menu extends javax.swing.JFrame {
                        
                     }
                     SwingUtilities.invokeLater(()->restart());
+                    
                     jLabel_Resultado.setText(controller.flowerType(FieldLongitudSepalo.getText(),FieldAnchoSepalo.getText()
                                                 ,FieldLongitudPetalo.getText(), FieldAnchoPetalo.getText()));
                 }
@@ -202,6 +208,7 @@ public class Init_Menu extends javax.swing.JFrame {
             FieldAnchoSepalo.setEnabled(true);
             FieldLongitudPetalo.setEnabled(true);
             FieldLongitudSepalo.setEnabled(true);
+            buttonAnalize.setEnabled(true);
             
         }
         
@@ -247,6 +254,7 @@ public class Init_Menu extends javax.swing.JFrame {
         Imagen = new javax.swing.JLabel();
         ProgressBar = new javax.swing.JProgressBar();
         JprogressbarLabel = new javax.swing.JLabel();
+        buttonAnalize = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Iris");
@@ -342,19 +350,28 @@ public class Init_Menu extends javax.swing.JFrame {
         JprogressbarLabel.setText("Analizando...");
         jPanel1.add(JprogressbarLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 206, 90, 30));
 
+        buttonAnalize.setForeground(new java.awt.Color(0, 0, 0));
+        buttonAnalize.setText("Analizar");
+        buttonAnalize.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonAnalizeActionPerformed(evt);
+            }
+        });
+        jPanel1.add(buttonAnalize, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 160, 110, 30));
+
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 610, 340));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void ButtonTrainActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonTrainActionPerformed
-        SecurityPassword secu2= new SecurityPassword(this,true,2);
+        SecurityPassword secu2= new SecurityPassword(this,true,2,train);
        secu2.setVisible(true);
         
     }//GEN-LAST:event_ButtonTrainActionPerformed
 
     private void buttonDatabaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDatabaseActionPerformed
-       SecurityPassword secu= new SecurityPassword(this,true,1);
+       SecurityPassword secu= new SecurityPassword(this,true,1,train);
        secu.setVisible(true);
     }//GEN-LAST:event_buttonDatabaseActionPerformed
 
@@ -362,6 +379,21 @@ public class Init_Menu extends javax.swing.JFrame {
         // TODO add your handling code here:
         //Cambiar Color de los inputs aqui
     }//GEN-LAST:event_FieldInputsKeyReleased
+
+    private void buttonAnalizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAnalizeActionPerformed
+        
+        FlatSVGIcon icon=new FlatSVGIcon("png/bluebell.svg");
+        if(CheckAndStart()==true)
+        {
+            JprogressbarLabel.setVisible(true);
+            ProgressBar.setVisible(true);
+            startProgress(ProgressBar);
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Debe Introducir datos correctos para analizar", "Informacion", JOptionPane.INFORMATION_MESSAGE, icon);
+        }
+    }//GEN-LAST:event_buttonAnalizeActionPerformed
 
     /**
      * @param args the command line arguments
@@ -395,7 +427,7 @@ public class Init_Menu extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                Init_Menu init = new Init_Menu();
+                Init_Menu init = new Init_Menu(false);
                 init.setVisible(true);
             }
         });
@@ -410,6 +442,7 @@ public class Init_Menu extends javax.swing.JFrame {
     private javax.swing.JLabel Imagen;
     private javax.swing.JLabel JprogressbarLabel;
     private javax.swing.JProgressBar ProgressBar;
+    private javax.swing.JButton buttonAnalize;
     private javax.swing.JButton buttonDatabase;
     private javax.swing.JLabel jLabel_Resultado;
     private javax.swing.JPanel jPanel1;
