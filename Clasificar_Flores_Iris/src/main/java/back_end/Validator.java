@@ -34,12 +34,15 @@ public class Validator {
     private static boolean containsLetter(String input)
     {
         boolean letter = false;
-        char[] array = input.toCharArray();
-        for(int i=0;i<input.length();i++)
+        
+        try
         {
-            if(Character.isAlphabetic(array[i]))
-                letter=true;
+            Double.parseDouble(input);
+        }catch(Exception e)
+        {
+            letter=true;
         }
+        
         return letter;
     }
     
