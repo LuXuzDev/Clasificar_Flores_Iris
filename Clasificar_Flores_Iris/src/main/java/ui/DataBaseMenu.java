@@ -49,6 +49,7 @@ public class DataBaseMenu extends javax.swing.JFrame {
     private static Timer timer;
     private DefaultListModel<String> listModel= new DefaultListModel<>();
     private static Object [][] datos = new Object[160][5];
+    private static Object [][] datos1 = new Object[160][5];
     private static ArrayList<String> array=new ArrayList<>();
     private boolean trainCheck=false;
     
@@ -57,10 +58,13 @@ public class DataBaseMenu extends javax.swing.JFrame {
         
         
         initComponents();
-        createArchivodat();
-       
         Flatlaf();
-        setFontFamily("Arial");
+        if(!UIControllers.path.isEmpty())
+        {
+            addStringList(UIControllers.path);
+        }
+        
+        UIControllers.setFontFamily("Arial");
         UIManager.put("TextComponent.arc",99);
         UIManager.put("Button.arc", 25);
         this.setLocationRelativeTo(null);
@@ -83,22 +87,7 @@ public class DataBaseMenu extends javax.swing.JFrame {
        
     }
     
-    public void createArchivodat()
-    {
-        try (FileOutputStream fos = new FileOutputStream("archivo.dat");
-              DataOutputStream dos = new DataOutputStream(fos)) {
-
-            // Escribir datos en el archivo
-            dos.writeUTF("Hola, mundo!");  // Escribir una cadena
-            dos.writeInt(123);            // Escribir un entero
-            dos.writeDouble(45.67);       // Escribir un número decimal
-
-            System.out.println("Archivo creado exitosamente.");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    
-    }
+   
     
     public Object[][] readArchivodat(String path)
     {
@@ -150,18 +139,7 @@ public class DataBaseMenu extends javax.swing.JFrame {
           
          return datos;
     }
-    private void setFontFamily(String fontFamily)
-    {
-        java.awt.Font font = UIManager.getFont("defaultFont");
-        java.awt.Font newFont=FontUtils.getCompositeFont(fontFamily, font.getStyle(),font.getSize());
-        UIManager.put("defaultFont", newFont);
-        FlatLaf.updateUI();
-        FlatAnimatedLafChange.hideSnapshotWithAnimation();
-        getRootPane().putClientProperty(FlatClientProperties.TITLE_BAR_BACKGROUND, new Color(102, 153, 255));
-        getRootPane().putClientProperty(FlatClientProperties.TITLE_BAR_SHOW_MAXIMIZE,false);
-        getRootPane().putClientProperty(FlatClientProperties.TITLE_BAR_SHOW_ICON,true);
-        getRootPane().putClientProperty(FlatClientProperties.TITLE_BAR_SHOW_ICONIFFY,true);
-    }
+    
     
     private void restartTimer()
     {
@@ -186,6 +164,21 @@ public class DataBaseMenu extends javax.swing.JFrame {
         });
     }
      
+     public void addStringList(ArrayList<String> path)
+     {
+         //DefaultListModel<String> model= new DefaultListModel<>();
+         if (ListTrain.getModel() instanceof DefaultListModel) {
+             listModel = (DefaultListModel<String>) ListTrain.getModel();
+         } else {
+             listModel = new DefaultListModel<>();
+             ListTrain.setModel(listModel);
+         }
+         for(int i=0;i<path.size();i++)
+         {
+             listModel.add(i, path.get(i));
+         }
+     }
+     
       
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -204,6 +197,7 @@ public class DataBaseMenu extends javax.swing.JFrame {
         setTitle("Iris");
         setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         setPreferredSize(new java.awt.Dimension(610, 340));
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setPreferredSize(new java.awt.Dimension(610, 340));
@@ -274,8 +268,10 @@ public class DataBaseMenu extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    
     private void ButtonBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonBackActionPerformed
-        new Init_Menu(trainCheck).setVisible(true);
+        new InitMenu().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_ButtonBackActionPerformed
 
@@ -285,7 +281,6 @@ public class DataBaseMenu extends javax.swing.JFrame {
 
     private void ButtonLoad1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonLoad1ActionPerformed
         JFileChooser filetxt=new JFileChooser();
-        
         int opcion=filetxt.showOpenDialog(this);
         valid=false;
         if(opcion == JFileChooser.APPROVE_OPTION)
@@ -311,13 +306,21 @@ public class DataBaseMenu extends javax.swing.JFrame {
                 if(FileName!=null)
                 {
                     listModel.addElement(FileName);
-                    trainCheck=true;
+                    UIControllers.icon=true;
                     LabelSuccess.setVisible(true);
                     LabelSuccess.setText("Archivo cargado");
                     restartTimer();
+                    UIControllers.path.add(FileName);
                 }
+               if(FileName.equals("iris.data"))
+               {
+                   datos=readArchivodat(path);
+               }
+               else
+               {
+                   datos1=readArchivodat(path);
+               }
                 
-                datos=readArchivodat(path);
                 
             }
             else
@@ -338,12 +341,13 @@ public class DataBaseMenu extends javax.swing.JFrame {
         
         ArrayList<String> meta=new ArrayList<>();
         FlatSVGIcon icon2=new FlatSVGIcon("png/bluebell.svg");
-        if(ListTrain.getSelectedValue()!=null)
+        if(ListTrain.getSelectedValue()!=null && ListTrain.getSelectedValue().endsWith(".data"))
         {
             String path2=ListTrain.getSelectedValue().toString();
-            
-            new ModifyDataset(path2,datos).setVisible(true);
+            UIControllers.Filename=path2;
+            new ModifyDataset(datos).setVisible(true);
             this.dispose();
+            
         }
         else
         {
