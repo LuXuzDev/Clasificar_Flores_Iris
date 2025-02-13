@@ -48,11 +48,10 @@ public class ModifyDataset extends javax.swing.JFrame {
     
     
     public ModifyDataset(Object[][] datos) {
-        
-        
         data=datos;
         dataTest=datos;
         initComponents();
+        Flatlaf();
         widhLeaf.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT,"AnchoP");
         widthStem.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT,"AnchoS");
         LongLeaf.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT,"Long P");
@@ -61,26 +60,21 @@ public class ModifyDataset extends javax.swing.JFrame {
         {
             labelIndication.setText("Archivo cargado: "+UIControllers.Filename);
         }
-        Flatlaf();
         realTimeCheck(widhLeaf);
         realTimeCheck(LongLeaf);
         realTimeCheck(widthStem);
         realTimeCheck(LongStem);
         setFontFamily("Arial");
-        UIManager.put("TextComponent.arc",9);
-        UIManager.put("Button.arc", 25);
+        setIconImage(UIControllers.design().getImage());
         buttonSafe.setEnabled(false);
         if(data[0][0]!=null)
         {
             datasetTabel(data);
         }
-        
         getRootPane().putClientProperty(FlatClientProperties.TITLE_BAR_BACKGROUND, new Color(102, 153, 255));
         getRootPane().putClientProperty(FlatClientProperties.TITLE_BAR_SHOW_MAXIMIZE,false);
         getRootPane().putClientProperty(FlatClientProperties.TITLE_BAR_SHOW_ICON,true);
         getRootPane().putClientProperty(FlatClientProperties.TITLE_BAR_SHOW_ICONIFFY,true);
-        FlatSVGIcon icon=new FlatSVGIcon("png/bluebell.svg");
-        setIconImage(icon.getImage());
         this.setLocationRelativeTo(null);
     }
 
