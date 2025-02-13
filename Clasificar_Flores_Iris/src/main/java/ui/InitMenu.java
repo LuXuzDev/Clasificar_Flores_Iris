@@ -57,7 +57,7 @@ public class InitMenu extends javax.swing.JFrame {
         controller = new Controller();
         initComponents();
         design();
-        //controller.train();
+        controller.train();
         
         
 
