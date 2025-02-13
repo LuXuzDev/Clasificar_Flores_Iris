@@ -57,12 +57,8 @@ public class InitMenu extends javax.swing.JFrame {
         controller = new Controller();
         initComponents();
         design();
-       
-        controller.train();
+        //controller.train();
         
-
-        FlatSVGIcon icon=new FlatSVGIcon("png/bluebell.svg");
-        setIconImage(icon.getImage());
         
 
         
@@ -73,11 +69,8 @@ public class InitMenu extends javax.swing.JFrame {
     {
         Flatlaf();
         
-        setFontFamily("Arial");
-        
-        UIManager.put("TextComponent.arc",99);
-        UIManager.put("Button.arc", 25);
-        
+        UIControllers.setFontFamily("Arial");
+        setIconImage(UIControllers.design().getImage());
         this.setLocationRelativeTo(null);
         
         ProgressBar.setStringPainted(true);
@@ -221,15 +214,7 @@ public class InitMenu extends javax.swing.JFrame {
     
     
    //Funcion para poner un font general en el Jframe
-    private void setFontFamily(String fontFamily)
-    {
-        java.awt.Font font = UIManager.getFont("defaultFont");
-        java.awt.Font newFont=FontUtils.getCompositeFont(fontFamily, font.getStyle(),font.getSize());
-        UIManager.put("defaultFont", newFont);
-        FlatLaf.updateUI();
-        FlatAnimatedLafChange.hideSnapshotWithAnimation();
-        
-    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

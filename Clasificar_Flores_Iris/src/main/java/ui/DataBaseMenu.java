@@ -14,6 +14,8 @@ import com.formdev.flatlaf.util.FontUtils;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -45,6 +47,7 @@ import javax.swing.event.DocumentListener;
 
 public class DataBaseMenu extends javax.swing.JFrame {
 
+    private static boolean check=false;
     private boolean valid=false;
     private static Timer timer;
     private DefaultListModel<String> listModel= new DefaultListModel<>();
@@ -63,18 +66,17 @@ public class DataBaseMenu extends javax.swing.JFrame {
         {
             addStringList(UIControllers.path);
         }
-        
-        UIControllers.setFontFamily("Arial");
-        UIManager.put("TextComponent.arc",99);
-        UIManager.put("Button.arc", 25);
-        this.setLocationRelativeTo(null);
-        
+        if(addMouse()==true)
+        {
+            this.dispose();
+        }
+       // setFontFamily("Arial");
+        setIconImage(UIControllers.design().getImage());
+        this.setLocationRelativeTo(null); 
         getRootPane().putClientProperty(FlatClientProperties.TITLE_BAR_BACKGROUND, new Color(102, 153, 255));
         getRootPane().putClientProperty(FlatClientProperties.TITLE_BAR_SHOW_MAXIMIZE,false);
         getRootPane().putClientProperty(FlatClientProperties.TITLE_BAR_SHOW_ICON,true);
         getRootPane().putClientProperty(FlatClientProperties.TITLE_BAR_SHOW_ICONIFFY,true);
-        FlatSVGIcon icon=new FlatSVGIcon("png/bluebell.svg");
-        setIconImage(icon.getImage());
         timer = new Timer(1500, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -87,7 +89,17 @@ public class DataBaseMenu extends javax.swing.JFrame {
        
     }
     
-   
+  /* public void setFontFamily(String fontFamily)
+    {
+        java.awt.Font font = UIManager.getFont("defaultFont");
+        System.out.println(font);
+        java.awt.Font newFont=FontUtils.getCompositeFont(fontFamily, font.getStyle(),font.getSize());
+        UIManager.put("defaultFont", newFont);
+        FlatLaf.updateUI();
+        FlatAnimatedLafChange.hideSnapshotWithAnimation();
+        
+    }*/
+    
     
     public Object[][] readArchivodat(String path)
     {
@@ -140,7 +152,30 @@ public class DataBaseMenu extends javax.swing.JFrame {
          return datos;
     }
     
-    
+    private boolean addMouse()
+    {
+        ListTrain.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                // Verificar si fue un doble clic
+                if (e.getClickCount() == 2) 
+                {
+                    ArrayList<String> meta = new ArrayList<>();
+                    FlatSVGIcon icon2 = new FlatSVGIcon("png/bluebell.svg");
+                    if (ListTrain.getSelectedValue() != null && ListTrain.getSelectedValue().endsWith(".data")) 
+                    {
+                        check=true;
+                        String path2 = ListTrain.getSelectedValue().toString();
+                        UIControllers.Filename = path2;
+                        new ModifyDataset(datos).setVisible(true);
+                        
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Debe seleccionar en la lista un dataset para modificar", "Informacion", JOptionPane.INFORMATION_MESSAGE, icon2);
+                    }
+                }}
+        });
+        return check;
+    }
     private void restartTimer()
     {
         timer.stop();
@@ -188,18 +223,20 @@ public class DataBaseMenu extends javax.swing.JFrame {
         ButtonBack = new javax.swing.JButton();
         ButtonEdit = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        ButtonLoad1 = new javax.swing.JButton();
+        ButtonCreate = new javax.swing.JButton();
         LabelSuccess = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         ListTrain = new javax.swing.JList<>();
+        ButtonLoad2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Iris");
-        setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         setPreferredSize(new java.awt.Dimension(610, 340));
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setFont(null);
         jPanel1.setPreferredSize(new java.awt.Dimension(610, 340));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -222,7 +259,7 @@ public class DataBaseMenu extends javax.swing.JFrame {
                 ButtonEditActionPerformed(evt);
             }
         });
-        jPanel1.add(ButtonEdit, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, 130, 30));
+        jPanel1.add(ButtonEdit, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, 130, 30));
 
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -231,13 +268,13 @@ public class DataBaseMenu extends javax.swing.JFrame {
         jLabel1.setText("Entrenamientos Cargados");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 30, 220, 30));
 
-        ButtonLoad1.setText("Cargar dataset");
-        ButtonLoad1.addActionListener(new java.awt.event.ActionListener() {
+        ButtonCreate.setText("Cargar dataset");
+        ButtonCreate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ButtonLoad1ActionPerformed(evt);
+                ButtonCreateActionPerformed(evt);
             }
         });
-        jPanel1.add(ButtonLoad1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, 130, 30));
+        jPanel1.add(ButtonCreate, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, 130, 30));
 
         LabelSuccess.setBackground(new java.awt.Color(255, 255, 255));
         LabelSuccess.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
@@ -253,6 +290,14 @@ public class DataBaseMenu extends javax.swing.JFrame {
         jScrollPane1.setViewportView(ListTrain);
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 110, 220, 150));
+
+        ButtonLoad2.setText("Crear dataset");
+        ButtonLoad2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonLoad2ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(ButtonLoad2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, 130, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -279,7 +324,7 @@ public class DataBaseMenu extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_ButtonEditComponentResized
 
-    private void ButtonLoad1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonLoad1ActionPerformed
+    private void ButtonCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonCreateActionPerformed
         JFileChooser filetxt=new JFileChooser();
         int opcion=filetxt.showOpenDialog(this);
         valid=false;
@@ -335,7 +380,7 @@ public class DataBaseMenu extends javax.swing.JFrame {
         }
         
         
-    }//GEN-LAST:event_ButtonLoad1ActionPerformed
+    }//GEN-LAST:event_ButtonCreateActionPerformed
 
     private void ButtonEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonEditActionPerformed
         
@@ -356,6 +401,11 @@ public class DataBaseMenu extends javax.swing.JFrame {
         
     }//GEN-LAST:event_ButtonEditActionPerformed
 
+    private void ButtonLoad2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonLoad2ActionPerformed
+         FlatSVGIcon icon=new FlatSVGIcon("png/bluebell.svg");
+        JOptionPane.showInputDialog(null, "Escriba el nombre del dataset", "Crear Dataset", JOptionPane.QUESTION_MESSAGE, icon, null, "");
+    }//GEN-LAST:event_ButtonLoad2ActionPerformed
+
    
     public void createTable(boolean add,String filename)
     {
@@ -366,30 +416,6 @@ public class DataBaseMenu extends javax.swing.JFrame {
         }
     }
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(DataBaseMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(DataBaseMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(DataBaseMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(DataBaseMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new DataBaseMenu().setVisible(true);
@@ -399,8 +425,9 @@ public class DataBaseMenu extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ButtonBack;
+    private javax.swing.JButton ButtonCreate;
     private javax.swing.JButton ButtonEdit;
-    private javax.swing.JButton ButtonLoad1;
+    private javax.swing.JButton ButtonLoad2;
     private javax.swing.JLabel LabelSuccess;
     private javax.swing.JList<String> ListTrain;
     private javax.swing.JLabel jLabel1;

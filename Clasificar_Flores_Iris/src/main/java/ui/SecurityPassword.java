@@ -37,32 +37,20 @@ public class SecurityPassword extends javax.swing.JDialog {
         setSize(386, 270);
         initComponents();
         Flatlaf();
-        setFontFamily("Arial");
-        UIManager.put("TextComponent.arc",99);
-        UIManager.put("Button.arc", 25);
-        this.setLocationRelativeTo(null);
-        FlatSVGIcon icon=new FlatSVGIcon("png/bluebell.svg");
-        setIconImage(icon.getImage());
-        
+        UIControllers.setFontFamily("Arial");
         getRootPane().putClientProperty(FlatClientProperties.TITLE_BAR_BACKGROUND, new Color(102, 153, 255));
         getRootPane().putClientProperty(FlatClientProperties.TITLE_BAR_SHOW_MAXIMIZE,false);
         getRootPane().putClientProperty(FlatClientProperties.TITLE_BAR_SHOW_ICON,true);
         getRootPane().putClientProperty(FlatClientProperties.TITLE_BAR_SHOW_ICONIFFY,true);
+        setIconImage(UIControllers.design().getImage());
+        this.setLocationRelativeTo(null);
         PasswordField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "  ********  ");
         PasswordField.putClientProperty(FlatClientProperties.STYLE,"showRevealButton:true;");
         LabelIncorrecto.setVisible(false);
         
     }
 
-    private void setFontFamily(String fontFamily)
-    {
-        java.awt.Font font = UIManager.getFont("defaultFont");
-        java.awt.Font newFont=FontUtils.getCompositeFont(fontFamily, font.getStyle(),font.getSize());
-        UIManager.put("defaultFont", newFont);
-        FlatLaf.updateUI();
-        FlatAnimatedLafChange.hideSnapshotWithAnimation();
-        
-    }
+   
     
     public void Flatlaf()
     {

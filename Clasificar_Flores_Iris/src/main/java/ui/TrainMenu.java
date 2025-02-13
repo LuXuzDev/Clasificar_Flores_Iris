@@ -34,15 +34,12 @@ public class TrainMenu extends javax.swing.JFrame {
         
         initComponents();
         Flatlaf();
-        setFontFamily("Arial");
-        UIManager.put("TextComponent.arc",9);
-        UIManager.put("Button.arc", 25);
+        UIControllers.setFontFamily("Arial");
+        setIconImage(UIControllers.design().getImage());
         getRootPane().putClientProperty(FlatClientProperties.TITLE_BAR_BACKGROUND, new Color(102, 153, 255));
         getRootPane().putClientProperty(FlatClientProperties.TITLE_BAR_SHOW_MAXIMIZE,false);
         getRootPane().putClientProperty(FlatClientProperties.TITLE_BAR_SHOW_ICON,true);
         getRootPane().putClientProperty(FlatClientProperties.TITLE_BAR_SHOW_ICONIFFY,true);
-        FlatSVGIcon icon=new FlatSVGIcon("png/bluebell.svg");
-        setIconImage(icon.getImage());
         this.setLocationRelativeTo(null);
         if(UIControllers.icon==true)
         {
@@ -64,15 +61,6 @@ public class TrainMenu extends javax.swing.JFrame {
     }
     
     
-    private void setFontFamily(String fontFamily)
-    {
-        java.awt.Font font = UIManager.getFont("defaultFont");
-        java.awt.Font newFont=FontUtils.getCompositeFont(fontFamily, font.getStyle(),font.getSize());
-        UIManager.put("defaultFont", newFont);
-        FlatLaf.updateUI();
-        FlatAnimatedLafChange.hideSnapshotWithAnimation();
-        
-    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
