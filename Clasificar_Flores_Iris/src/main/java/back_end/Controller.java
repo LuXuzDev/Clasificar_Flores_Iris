@@ -4,6 +4,7 @@
  */
 package back_end;
 
+import infrastructure.DataBaseController;
 import java.util.ArrayList;
 import neuralNetwork.NeuralNetwork;
 import neuralNetwork.Normalizer;
@@ -17,6 +18,7 @@ public class Controller {
     private NeuralNetwork neuralNetwork;
     private Trainer trainner;
     private Normalizer normalizer;
+    private DataBaseController dataBaseController;
     
 
     public Controller()
@@ -26,6 +28,9 @@ public class Controller {
         // Crear Entrenador y Normalizador
         trainner = new Trainer();
         normalizer = new Normalizer();
+        
+        //Crear dataBaseController
+        dataBaseController = new DataBaseController();
     }
     
     
