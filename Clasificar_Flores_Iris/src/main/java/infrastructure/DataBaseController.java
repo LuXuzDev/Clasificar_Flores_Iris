@@ -31,7 +31,7 @@ public class DataBaseController {
         files.add(file2);   
     }
     
-    public void createFile(String directionURL)
+    public void createFile(String directionURL) throws IOException
     {
         File file = HandleFiles.newFile(directionURL);
         files.add(file);    
