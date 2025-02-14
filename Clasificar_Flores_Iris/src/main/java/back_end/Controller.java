@@ -5,6 +5,7 @@
 package back_end;
 
 import infrastructure.DataBaseController;
+import java.io.File;
 import java.util.ArrayList;
 import neuralNetwork.NeuralNetwork;
 import neuralNetwork.Normalizer;
@@ -15,10 +16,10 @@ import neuralNetwork.Trainer;
  * @author Angel Hernandez
  */
 public class Controller {
-    private NeuralNetwork neuralNetwork;
-    private Trainer trainner;
-    private Normalizer normalizer;
-    private DataBaseController dataBaseController;
+    private static NeuralNetwork neuralNetwork;
+    private final Trainer trainner;
+    private final Normalizer normalizer;
+
     
 
     public Controller()
@@ -28,9 +29,7 @@ public class Controller {
         // Crear Entrenador y Normalizador
         trainner = new Trainer();
         normalizer = new Normalizer();
-        
-        //Crear dataBaseController
-        dataBaseController = new DataBaseController();
+
     }
     
     
@@ -121,9 +120,15 @@ public class Controller {
     }
     
     
-    public void loadFile(String directionURL)
+    public ArrayList<String> loadedFilesName (String directionURL)
     {
+        ArrayList<File> files = DataBaseController.getFilesInPackage();
+        ArrayList<String> names = new ArrayList<>();
         
-        dataBaseController.createFile(directionURL);
+        for(File f : files)
+        {
+            names.add(f.getName());
+        }
+        return names;
     }
 }
