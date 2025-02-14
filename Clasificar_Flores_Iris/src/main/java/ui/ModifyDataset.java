@@ -30,15 +30,10 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ModifyDataset extends javax.swing.JFrame {
 
-   
-    
     String[] columnas={"Ancho petalo","Longitud petalo","Ancho sepalo","Longitud sepalo","Resultado"};
-    
-    DefaultTableModel model=new DefaultTableModel(columnas, 0)
-    {
+    DefaultTableModel model = new DefaultTableModel(columnas, 0) {
         @Override
-        public boolean isCellEditable(int row,int column)
-        {
+        public boolean isCellEditable(int row, int column) {
             return false;
         }
     };
@@ -51,33 +46,41 @@ public class ModifyDataset extends javax.swing.JFrame {
         data=datos;
         dataTest=datos;
         initComponents();
+        design();
+        if(!UIControllers.Filename.isBlank())
+        {
+            labelIndication.setText("Archivo cargado: "+UIControllers.Filename);
+        }
+        if(data[0][0]!=null)
+        {
+            datasetTabel(data);
+        }
+        
+    }
+
+    //funcion para diseño general del Jframe
+    private void design()
+    {
+        setFontFamily("Arial");
+        setIconImage(UIControllers.design().getImage());
+        buttonSafe.setEnabled(false);
         Flatlaf();
         widhLeaf.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT,"AnchoP");
         widthStem.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT,"AnchoS");
         LongLeaf.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT,"Long P");
         LongStem.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT," Long S");
-        if(!UIControllers.Filename.isBlank())
-        {
-            labelIndication.setText("Archivo cargado: "+UIControllers.Filename);
-        }
-        realTimeCheck(widhLeaf);
-        realTimeCheck(LongLeaf);
-        realTimeCheck(widthStem);
-        realTimeCheck(LongStem);
-        setFontFamily("Arial");
-        setIconImage(UIControllers.design().getImage());
-        buttonSafe.setEnabled(false);
-        if(data[0][0]!=null)
-        {
-            datasetTabel(data);
-        }
         getRootPane().putClientProperty(FlatClientProperties.TITLE_BAR_BACKGROUND, new Color(102, 153, 255));
         getRootPane().putClientProperty(FlatClientProperties.TITLE_BAR_SHOW_MAXIMIZE,false);
         getRootPane().putClientProperty(FlatClientProperties.TITLE_BAR_SHOW_ICON,true);
         getRootPane().putClientProperty(FlatClientProperties.TITLE_BAR_SHOW_ICONIFFY,true);
         this.setLocationRelativeTo(null);
+        realTimeCheck(widhLeaf);
+        realTimeCheck(LongLeaf);
+        realTimeCheck(widthStem);
+        realTimeCheck(LongStem);
     }
-
+    
+    
     private void datasetTabel(Object[][] datos)
     {
         for (Object[] fila : data)

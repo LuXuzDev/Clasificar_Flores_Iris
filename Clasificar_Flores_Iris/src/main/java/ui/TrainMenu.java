@@ -6,19 +6,14 @@ package ui;
 
 import back_end.Controller;
 import com.formdev.flatlaf.FlatClientProperties;
-import com.formdev.flatlaf.FlatLaf;
-import com.formdev.flatlaf.extras.FlatAnimatedLafChange;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
-import com.formdev.flatlaf.util.FontUtils;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.ComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -27,10 +22,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-/**
- *
- * @author Kris
- */
+
 public class TrainMenu extends javax.swing.JFrame {
 
     /**
@@ -39,26 +31,14 @@ public class TrainMenu extends javax.swing.JFrame {
     private Controller controller;
     
     public TrainMenu() {
-        
-        
         initComponents();
-        Flatlaf();
-        UIControllers.setFontFamily("Arial");
-        setIconImage(UIControllers.design().getImage());
-        getRootPane().putClientProperty(FlatClientProperties.TITLE_BAR_BACKGROUND, new Color(102, 153, 255));
-        getRootPane().putClientProperty(FlatClientProperties.TITLE_BAR_SHOW_MAXIMIZE,false);
-        getRootPane().putClientProperty(FlatClientProperties.TITLE_BAR_SHOW_ICON,true);
-        getRootPane().putClientProperty(FlatClientProperties.TITLE_BAR_SHOW_ICONIFFY,true);
-        this.setLocationRelativeTo(null);
-        if(UIControllers.icon==true)
-        {
-            
+        design();
+        if (UIControllers.icon == true) {
             LabelIcon.setIcon(new FlatSVGIcon("png/notis.svg"));
         }
     }
 
-    public void Flatlaf()
-    {
+    public void Flatlaf() {
         SwingUtilities.invokeLater(() -> {
             try {
                 UIManager.setLookAndFeel(new FlatMacLightLaf());
@@ -68,8 +48,18 @@ public class TrainMenu extends javax.swing.JFrame {
             }
         });
     }
-    
-    
+    //funcion para diseño general del Jframe
+    private void design() {
+        Flatlaf();
+        UIControllers.setFontFamily("Arial");
+        setIconImage(UIControllers.design().getImage());
+        getRootPane().putClientProperty(FlatClientProperties.TITLE_BAR_BACKGROUND, new Color(102, 153, 255));
+        getRootPane().putClientProperty(FlatClientProperties.TITLE_BAR_SHOW_MAXIMIZE, false);
+        getRootPane().putClientProperty(FlatClientProperties.TITLE_BAR_SHOW_ICON, true);
+        getRootPane().putClientProperty(FlatClientProperties.TITLE_BAR_SHOW_ICONIFFY, true);
+        this.setLocationRelativeTo(null);
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -121,7 +111,7 @@ public class TrainMenu extends javax.swing.JFrame {
 
         buttonLoadTrain.setBackground(new java.awt.Color(255, 255, 255));
         buttonLoadTrain.setForeground(new java.awt.Color(0, 0, 0));
-        buttonLoadTrain.setText("Cargar Entrenamiento");
+        buttonLoadTrain.setText("Cargar dataset");
         buttonLoadTrain.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonLoadTrainActionPerformed(evt);
@@ -157,56 +147,48 @@ public class TrainMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonBackActionPerformed
 
     private void buttonLoadTrainActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonLoadTrainActionPerformed
-        //controller = new Controller();
         LabelIcon.setVisible(false);
-        JLabel label= new JLabel();
+        JLabel label = new JLabel();
         label.setForeground(Color.red);
         label.setText("Debe elegir una opcion valida");
         label.setVisible(false);
-        FlatSVGIcon icon=new FlatSVGIcon("png/bluebell.svg");
-        Object [] items={"","pepe","juan"};
-        JComboBox combo= new JComboBox(items);
-        
-        JPanel panel5= new JPanel(new BorderLayout());
-        panel5.add(combo,BorderLayout.SOUTH);
-        panel5.add(label,BorderLayout.NORTH);
+        FlatSVGIcon icon = new FlatSVGIcon("png/bluebell.svg");
+        Object[] items = {"", "pepe", "juan"};
+        JComboBox combo = new JComboBox(items);
+        JPanel panel5 = new JPanel(new BorderLayout());
+        panel5.add(combo, BorderLayout.SOUTH);
+        panel5.add(label, BorderLayout.NORTH);
         combo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String selectedItem=(String) combo.getSelectedItem();
-                if(selectedItem.equals(""))
-                {
+                String selectedItem = (String) combo.getSelectedItem();
+                if (selectedItem.equals("")) {
                     label.setVisible(true);
-                }
-                else
-                {
+                } else {
                     label.setVisible(false);
                 }
             }
         });
-        
-        int option=JOptionPane.showConfirmDialog(null, panel5, "Seleccionar entrenamiento", JOptionPane.OK_OPTION, JOptionPane.INFORMATION_MESSAGE, icon);
-        if(option==JOptionPane.YES_OPTION && combo.getSelectedItem().equals(""))
-        {
-            JOptionPane.showOptionDialog(null, "No se cargo el entrenamiento.Datos incorrectos", "Error", JOptionPane.CLOSED_OPTION, JOptionPane.INFORMATION_MESSAGE, icon, null, null);
+        int option = JOptionPane.showConfirmDialog(null, panel5, "Seleccionar Dataset", JOptionPane.OK_OPTION, JOptionPane.INFORMATION_MESSAGE, icon);
+        if (option == JOptionPane.YES_OPTION && combo.getSelectedItem().equals("")) {
+            JOptionPane.showOptionDialog(null, "No se cargo el dataset.Datos incorrectos", "Error", JOptionPane.CLOSED_OPTION, JOptionPane.INFORMATION_MESSAGE, icon, null, null);
             LabelIndicationTrain.setText("");
             LabelResult.setText("");
-        }
-        else if(option==JOptionPane.YES_OPTION && !combo.getSelectedItem().equals(""))
-        {
-            JOptionPane.showOptionDialog(null, "Datos cargados correctamente", "Entrenamiento", JOptionPane.CLOSED_OPTION, JOptionPane.INFORMATION_MESSAGE, icon, null, null);
-            LabelIndicationTrain.setText("Entrenamientos cargados:");
+        } else if (option == JOptionPane.YES_OPTION && !combo.getSelectedItem().equals("")) {
+            JOptionPane.showOptionDialog(null, "Datos cargados correctamente", "Dataset", JOptionPane.CLOSED_OPTION, JOptionPane.INFORMATION_MESSAGE, icon, null, null);
+            LabelIndicationTrain.setText("Dataset cargados:");
             LabelResult.setText(combo.getSelectedItem().toString());
         }
-        
+
     }//GEN-LAST:event_buttonLoadTrainActionPerformed
 
     private void buttonTrainActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonTrainActionPerformed
-        if(!LabelIcon.isVisible())
-        {
-            //controller.train();
+        FlatSVGIcon icon = new FlatSVGIcon("png/bluebell.svg");
+        if (!LabelIcon.isVisible()) {
+            controller.train();
+        } else {
+            JOptionPane.showOptionDialog(null, "No se puede entrenar debe cargar dataset primero", "Entrenamiento", JOptionPane.CLOSED_OPTION, JOptionPane.INFORMATION_MESSAGE, icon, null, null);
         }
-        
     }//GEN-LAST:event_buttonTrainActionPerformed
 
     /**
