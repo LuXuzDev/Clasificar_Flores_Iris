@@ -60,13 +60,13 @@ public class Trainer extends javax.swing.JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         
-        
+            JLabel label= new JLabel("LUGAR DEL GRAFICO 3");
             JPanel panelGrafico = crearPanelGrafico(1);
             cardPanel.add(panelGrafico, "Grafico 1");
             JPanel panelGrafico2 = crearPanelGrafico(2);
             cardPanel.add(panelGrafico2, "Grafico 2");
             JPanel panelGrafico3 = crearPanelGrafico(3);
-            cardPanel.add(panelGrafico3, "Grafico 3");
+            cardPanel.add(label);
             JPanel panelGrafico4 = crearPanelGrafico(4);
             cardPanel.add(panelGrafico4, "Grafico 4");
             JPanel panelGrafico5 = crearPanelGrafico(5);
