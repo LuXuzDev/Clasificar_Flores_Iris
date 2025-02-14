@@ -4,6 +4,8 @@
  */
 package back_end;
 
+import javax.swing.JList;
+
 /**
  *
  * @author Angel Hernandez
@@ -47,7 +49,7 @@ public class Validator {
     }
     
     
-    private static boolean containsNumber(String input)
+    public static boolean containsNumber(String input)
     {
         boolean number = false;
         char[] array = input.toCharArray();
@@ -59,6 +61,27 @@ public class Validator {
         return number;
     }
     
+    //validacion que revisa si el contador de ficheros sea menor que 0
+    public static boolean checkNumber(int check)
+    {
+        boolean retorno=false;
+        if(check<=0)
+        {
+            retorno = true;
+        }
+        return retorno;
+    }
+    //validacion que revisa si la lista en databasemenu tiene seleccionado algun valor
+    public static boolean checkList(JList list)
+    {
+        boolean retorno=false;
+        if(list.getSelectedValue()!=null)
+        {
+            retorno=true;
+        }
+        
+        return retorno;
+    }
     
     public static boolean checkPassword(String input)
     {
