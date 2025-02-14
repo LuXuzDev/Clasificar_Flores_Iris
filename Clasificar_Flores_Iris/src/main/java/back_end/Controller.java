@@ -29,6 +29,7 @@ public class Controller {
         // Crear Entrenador y Normalizador
         trainner = new Trainer();
         normalizer = new Normalizer();
+        DataBaseController.getFilesInPackage();
 
     }
     

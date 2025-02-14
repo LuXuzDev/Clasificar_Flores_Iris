@@ -31,8 +31,7 @@ public class DataBaseTrainnerController {
         if (directory.exists() && directory.isDirectory()) { 
             File[] files = directory.listFiles();
             if (files != null) {
-                for (File file : files) {
-                    
+                for (File file : files) {   
                     if (file.isFile() && file.getName().endsWith(".dat")) {
                         fileList.add(file);
                         updateFile(file);
@@ -49,7 +48,9 @@ public class DataBaseTrainnerController {
     
     private static void updateFile(File file)
     {
-        if(!trainnigs.contains(file))
+        if(trainnigs.isEmpty())
+            trainnigs.add(file);
+        else if(!trainnigs.contains(file))
             trainnigs.add(file);
     }
 }

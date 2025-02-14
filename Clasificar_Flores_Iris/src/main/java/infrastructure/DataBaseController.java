@@ -43,10 +43,11 @@ public class DataBaseController {
     }
 
     
-    private static void updateFile(File file)
-    {
-        if(!files.contains(file))
+    private static void updateFile(File file) {
+        
+        if (files!= null && !files.contains(file)) 
             files.add(file);
+        
     }
     
     
