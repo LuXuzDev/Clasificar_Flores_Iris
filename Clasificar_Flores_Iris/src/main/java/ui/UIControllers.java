@@ -4,10 +4,13 @@
  */
 package ui;
 
+import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.extras.FlatAnimatedLafChange;
+import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import com.formdev.flatlaf.util.FontUtils;
+import java.awt.Color;
 import java.awt.Component;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -24,6 +27,7 @@ public class UIControllers {
     
     public static boolean icon=false;
     public static ArrayList<String> path= new ArrayList<>();
+    public static int pathNumber;
     public static String Filename="";
     public static int Security=0;
     
@@ -34,6 +38,15 @@ public class UIControllers {
         UIManager.put("defaultFont", newFont);
         FlatLaf.updateUI();
         FlatAnimatedLafChange.hideSnapshotWithAnimation();
+    }
+    
+    public static FlatSVGIcon design()
+    {
+        UIManager.put("TextComponent.arc",99);
+        UIManager.put("Button.arc", 25);
+        FlatSVGIcon icon=new FlatSVGIcon("png/bluebell.svg");
+        
+        return icon;
     }
     
     

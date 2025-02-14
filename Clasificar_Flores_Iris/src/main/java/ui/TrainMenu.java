@@ -11,9 +11,18 @@ import com.formdev.flatlaf.extras.FlatAnimatedLafChange;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import com.formdev.flatlaf.util.FontUtils;
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ComboBoxModel;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -34,15 +43,12 @@ public class TrainMenu extends javax.swing.JFrame {
         
         initComponents();
         Flatlaf();
-        setFontFamily("Arial");
-        UIManager.put("TextComponent.arc",9);
-        UIManager.put("Button.arc", 25);
+        UIControllers.setFontFamily("Arial");
+        setIconImage(UIControllers.design().getImage());
         getRootPane().putClientProperty(FlatClientProperties.TITLE_BAR_BACKGROUND, new Color(102, 153, 255));
         getRootPane().putClientProperty(FlatClientProperties.TITLE_BAR_SHOW_MAXIMIZE,false);
         getRootPane().putClientProperty(FlatClientProperties.TITLE_BAR_SHOW_ICON,true);
         getRootPane().putClientProperty(FlatClientProperties.TITLE_BAR_SHOW_ICONIFFY,true);
-        FlatSVGIcon icon=new FlatSVGIcon("png/bluebell.svg");
-        setIconImage(icon.getImage());
         this.setLocationRelativeTo(null);
         if(UIControllers.icon==true)
         {
@@ -64,15 +70,6 @@ public class TrainMenu extends javax.swing.JFrame {
     }
     
     
-    private void setFontFamily(String fontFamily)
-    {
-        java.awt.Font font = UIManager.getFont("defaultFont");
-        java.awt.Font newFont=FontUtils.getCompositeFont(fontFamily, font.getStyle(),font.getSize());
-        UIManager.put("defaultFont", newFont);
-        FlatLaf.updateUI();
-        FlatAnimatedLafChange.hideSnapshotWithAnimation();
-        
-    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -83,6 +80,8 @@ public class TrainMenu extends javax.swing.JFrame {
         buttonTrain = new javax.swing.JButton();
         buttonLoadTrain = new javax.swing.JButton();
         LabelIcon = new javax.swing.JLabel();
+        LabelIndicationTrain = new javax.swing.JLabel();
+        LabelResult = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Iris");
@@ -108,7 +107,7 @@ public class TrainMenu extends javax.swing.JFrame {
                 buttonEstadisActionPerformed(evt);
             }
         });
-        jPanel1.add(buttonEstadis, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 130, 30));
+        jPanel1.add(buttonEstadis, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 160, 30));
 
         buttonTrain.setBackground(new java.awt.Color(255, 255, 255));
         buttonTrain.setForeground(new java.awt.Color(0, 0, 0));
@@ -118,7 +117,7 @@ public class TrainMenu extends javax.swing.JFrame {
                 buttonTrainActionPerformed(evt);
             }
         });
-        jPanel1.add(buttonTrain, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 130, 30));
+        jPanel1.add(buttonTrain, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 160, 30));
 
         buttonLoadTrain.setBackground(new java.awt.Color(255, 255, 255));
         buttonLoadTrain.setForeground(new java.awt.Color(0, 0, 0));
@@ -130,6 +129,8 @@ public class TrainMenu extends javax.swing.JFrame {
         });
         jPanel1.add(buttonLoadTrain, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 160, 30));
         jPanel1.add(LabelIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 90, 40, 30));
+        jPanel1.add(LabelIndicationTrain, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 40, 160, 30));
+        jPanel1.add(LabelResult, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 90, 160, 20));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -158,6 +159,46 @@ public class TrainMenu extends javax.swing.JFrame {
     private void buttonLoadTrainActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonLoadTrainActionPerformed
         //controller = new Controller();
         LabelIcon.setVisible(false);
+        JLabel label= new JLabel();
+        label.setForeground(Color.red);
+        label.setText("Debe elegir una opcion valida");
+        label.setVisible(false);
+        FlatSVGIcon icon=new FlatSVGIcon("png/bluebell.svg");
+        Object [] items={"","pepe","juan"};
+        JComboBox combo= new JComboBox(items);
+        
+        JPanel panel5= new JPanel(new BorderLayout());
+        panel5.add(combo,BorderLayout.SOUTH);
+        panel5.add(label,BorderLayout.NORTH);
+        combo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String selectedItem=(String) combo.getSelectedItem();
+                if(selectedItem.equals(""))
+                {
+                    label.setVisible(true);
+                }
+                else
+                {
+                    label.setVisible(false);
+                }
+            }
+        });
+        
+        int option=JOptionPane.showConfirmDialog(null, panel5, "Seleccionar entrenamiento", JOptionPane.OK_OPTION, JOptionPane.INFORMATION_MESSAGE, icon);
+        if(option==JOptionPane.YES_OPTION && combo.getSelectedItem().equals(""))
+        {
+            JOptionPane.showOptionDialog(null, "No se cargo el entrenamiento.Datos incorrectos", "Error", JOptionPane.CLOSED_OPTION, JOptionPane.INFORMATION_MESSAGE, icon, null, null);
+            LabelIndicationTrain.setText("");
+            LabelResult.setText("");
+        }
+        else if(option==JOptionPane.YES_OPTION && !combo.getSelectedItem().equals(""))
+        {
+            JOptionPane.showOptionDialog(null, "Datos cargados correctamente", "Entrenamiento", JOptionPane.CLOSED_OPTION, JOptionPane.INFORMATION_MESSAGE, icon, null, null);
+            LabelIndicationTrain.setText("Entrenamientos cargados:");
+            LabelResult.setText(combo.getSelectedItem().toString());
+        }
+        
     }//GEN-LAST:event_buttonLoadTrainActionPerformed
 
     private void buttonTrainActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonTrainActionPerformed
@@ -205,6 +246,8 @@ public class TrainMenu extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel LabelIcon;
+    private javax.swing.JLabel LabelIndicationTrain;
+    private javax.swing.JLabel LabelResult;
     private javax.swing.JButton buttonBack;
     private javax.swing.JButton buttonEstadis;
     private javax.swing.JButton buttonLoadTrain;
