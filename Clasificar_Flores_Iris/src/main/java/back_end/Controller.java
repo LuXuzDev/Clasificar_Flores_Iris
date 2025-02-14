@@ -119,4 +119,11 @@ public class Controller {
          */
         System.out.println("Salida red: " + neuralNetwork.calcularSalidas(normalizer.normalizarEntrada(entrada1)));
     }
+    
+    
+    public void loadFile(String directionURL)
+    {
+        
+        dataBaseController.createFile(directionURL);
+    }
 }

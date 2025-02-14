@@ -13,7 +13,7 @@ import neuralNetwork.NeuralNetwork;
 public class HandleFiles {
 
     
-    public static void newFile(String nombreArchivo) {
+    public static File newFile(String nombreArchivo) {
         File archivo = new File(nombreArchivo);
 
         while (!Validator.isEmptyInput(nombreArchivo) || archivo.exists()) {
@@ -41,6 +41,7 @@ public class HandleFiles {
             // Manejo de excepciones
             System.out.println("Error al crear el archivo: " + e.getMessage());
         }
+        return archivo;
     }
 
     
@@ -54,6 +55,7 @@ public class HandleFiles {
             writer.write(contenido);
             System.out.println("Archivo escrito correctamente: " + nombreArchivo);
         } catch (IOException ex) {
+            IOException e = new IOException(contenido);
             System.err.println("Error al escribir en el archivo: " + ex.getMessage());
         }
     }
@@ -96,16 +98,10 @@ public class HandleFiles {
     
     
     public static void saveObjectToBinaryFile(Object objeto, String nombreArchivo) throws IOException {
-        try (FileOutputStream fileOut = new FileOutputStream(nombreArchivo); 
-                
-            ObjectOutputStream objectOut = new ObjectOutputStream(fileOut)) {
+            FileOutputStream fileOut = new FileOutputStream(nombreArchivo);  
+            ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
             objectOut.writeObject(objeto);
             System.out.println("Objeto guardado correctamente en: " + nombreArchivo);
-
-        } catch (IOException e) {
-            System.err.println("Error al guardar objeto: " + e.getMessage());
-            throw e;
-        }
     }
 
 }

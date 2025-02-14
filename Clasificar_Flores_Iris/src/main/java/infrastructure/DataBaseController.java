@@ -5,6 +5,7 @@
 package infrastructure;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 
@@ -28,5 +29,11 @@ public class DataBaseController {
 
         files.add(file1);
         files.add(file2);   
+    }
+    
+    public void createFile(String directionURL)
+    {
+        File file = HandleFiles.newFile(directionURL);
+        files.add(file);    
     }
 }

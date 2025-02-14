@@ -5,6 +5,7 @@
 package neuralNetwork;
 
 import back_end.TrainerResults;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -12,11 +13,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
-public class NeuralNetwork {
+public class NeuralNetwork implements Serializable{
 
     private final Layer capaEntrada;
     private final Layer capaOculta; // Solo una capa oculta
     private final Layer capaSalida;
+    private static final long serialVersionUID = 1L;
 
     // Constructor modificado para incluir solo una capa oculta
     public NeuralNetwork(int numEntradas, int numNeuronasOculta, int numSalidas) {
