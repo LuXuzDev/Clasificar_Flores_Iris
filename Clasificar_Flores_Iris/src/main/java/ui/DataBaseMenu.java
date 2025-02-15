@@ -32,7 +32,7 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import static ui.UIControllers.path;
+
 
 
 
@@ -49,15 +49,10 @@ public class DataBaseMenu extends javax.swing.JFrame {
     public DataBaseMenu() {
         initComponents();
         design();
-        if(addMouse()==true)
-        {
-           this.dispose();
-            
-        }
-        if(!UIControllers.path.isEmpty())
-        {
-            addStringList(UIControllers.path,UIControllers.pathNumber);
-        }
+        
+        //funcion para llenar la jlist pasame un array de string con los nombres
+        //addStringList(array);
+        
         timer = new Timer(1500, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -98,6 +93,7 @@ public class DataBaseMenu extends javax.swing.JFrame {
                         check = true;
                         String path2 = ListTrain.getSelectedValue().toString();
                         UIControllers.Filename = path2;
+                        //nombre del archivo esta variable da arriba uicontrollers.filename
                         new ModifyDataset(datos).setVisible(true);
                     } else {
                         JOptionPane.showMessageDialog(null, "Debe seleccionar en la lista un dataset para modificar", "Informacion", JOptionPane.INFORMATION_MESSAGE, icon2);
@@ -128,21 +124,21 @@ public class DataBaseMenu extends javax.swing.JFrame {
         });
     }
      //cargar lista de nombres de ficheros para el JList
-     public void addStringList(ArrayList<String> path,int number)
+     public void addStringList(ArrayList<String> path)
      {
          
-         if (ListTrain.getModel() instanceof DefaultListModel) {
+         if (Validator.ListInstanceOf(ListTrain)) {
              listModel = (DefaultListModel<String>) ListTrain.getModel();
          } else {
              listModel = new DefaultListModel<>();
              ListTrain.setModel(listModel);
          }
-         for(int i=number;i<path.size();i++)
+         for(int i=0;i<path.size();i++)
          {
              listModel.add(i, path.get(i));
          }
      }
-     //
+     
       public void createTable(boolean add,String filename)
     {
         if(add==true)
@@ -278,57 +274,51 @@ public class DataBaseMenu extends javax.swing.JFrame {
         FlatSVGIcon icon=new FlatSVGIcon("png/bluebell.svg");
         JFileChooser filetxt = new JFileChooser();
         ArrayList<String> retorno= new ArrayList<>();
-        int opcion = filetxt.showOpenDialog(this);
+        int option = filetxt.showOpenDialog(this);
         valid = false;
-        if (opcion == JFileChooser.APPROVE_OPTION) {
+        if (Validator.aprooveJfilechooser(option)) {
             File file = filetxt.getSelectedFile();
             String FileName = file.getName();
-            if (FileName.endsWith(".data")) {
-                valid = true;
+            
                 String path = filetxt.getSelectedFile().getAbsolutePath();
                 DefaultListModel<String> listModel;
-                if (ListTrain.getModel() instanceof DefaultListModel) {
+                if (Validator.ListInstanceOf(ListTrain)) {
                     listModel = (DefaultListModel<String>) ListTrain.getModel();
                 } else {
                     listModel = new DefaultListModel<>();
                     ListTrain.setModel(listModel);
                 }
-                if (FileName != null) {
+                if (Validator.isEmptyInput(FileName)) {
                     listModel.addElement(FileName);
                     UIControllers.icon = true;
                     LabelSuccess.setVisible(true);
                     LabelSuccess.setText("Archivo cargado");
                     restartTimer();
-                    UIControllers.path.add(FileName);
-                    UIControllers.pathNumber++;
+                    
                 }
                 //aqui va la funcion q devuelve arrayString te mando la ruta del archivo path
-                //retorno=readArchivodat(path);
-            } else {
-                JOptionPane.showMessageDialog(null, "El archivo no es un .data Selecciono un archivo invalido", "Error", JOptionPane.ERROR_MESSAGE,icon);
-            }
+                
+
         } else {
-            JOptionPane.showMessageDialog(null, "No se selecciono ningun archivo", "Error", JOptionPane.ERROR_MESSAGE,icon);
+            JOptionPane.showMessageDialog(null, "No se selecciono ningun archivo", "Error", JOptionPane.ERROR_MESSAGE, icon);
         }
     }//GEN-LAST:event_ButtonLoadActionPerformed
 
     private void ButtonEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonEditActionPerformed
         ArrayList<String> meta=new ArrayList<>();
         FlatSVGIcon icon2=new FlatSVGIcon("png/bluebell.svg");
-        if (!Validator.checkNumber(UIControllers.pathNumber) == true) {
+        
             if (Validator.checkList(ListTrain) == true) {
                 String path2 = ListTrain.getSelectedValue().toString();
-                UIControllers.Filename = path2;
+                //funcion q me pasas un array y relleno la tabla
+                //addStringList(arrayq me pasas tu);
+                //path2=nombredelarchivoseleccionado
                 new ModifyDataset(datos).setVisible(true);
                 this.dispose();
             } else {
                 JOptionPane.showMessageDialog(null, "Debe seleccionar en la lista un dataset para modificar", "Informacion", JOptionPane.INFORMATION_MESSAGE, icon2);
             }
-        }
-        else
-        {
-            JOptionPane.showMessageDialog(null, "No hay dataset para modificar", "Informacion", JOptionPane.INFORMATION_MESSAGE, icon2);
-        }
+        
         
     }//GEN-LAST:event_ButtonEditActionPerformed
 
@@ -341,9 +331,8 @@ public class DataBaseMenu extends javax.swing.JFrame {
             LabelSuccess.setVisible(true);
             LabelSuccess.setText("Archivo cargado");
             restartTimer();
-            UIControllers.path.add(UIControllers.newFilename);
-            addStringList(path, UIControllers.pathNumber);
-            UIControllers.pathNumber++;
+            
+            //variable q tiene el nombre del archivo creado UIControllers.filename
         }
     }//GEN-LAST:event_ButtonCreateActionPerformed
 
@@ -352,35 +341,18 @@ public class DataBaseMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_ListTrainMouseClicked
 
     private void buttonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDeleteActionPerformed
-        FlatSVGIcon icon2=new FlatSVGIcon("png/bluebell.svg");
-        if(Validator.checkNumber(UIControllers.pathNumber))
-        {
-            JOptionPane.showMessageDialog(null, "No hay dataset para eliminar", "Informacion", JOptionPane.INFORMATION_MESSAGE, icon2);
-        }
-        else
-        {
-            if(Validator.checkList(ListTrain)==true)
-        {
+        FlatSVGIcon icon2 = new FlatSVGIcon("png/bluebell.svg");
+
+        if (Validator.checkList(ListTrain) == true) {
             String[] botones = {"Si", "No"};
-            int resultado = JOptionPane.showOptionDialog(null, "Seguro desea eliminar este dataset?", "Eliminar dataset", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, icon2, botones, botones[0]);
-            if (resultado == JOptionPane.YES_OPTION) {
-                int selectedindex = ListTrain.getSelectedIndex();
-                if(selectedindex!=-1)
-                {
-                    listModel.remove(selectedindex);
-                    UIControllers.path.removeLast();
-                    UIControllers.pathNumber--;
-                    addStringList(path,UIControllers.pathNumber);  
-                }
+            int result = JOptionPane.showOptionDialog(null, "Seguro desea eliminar este dataset?", "Eliminar dataset", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, icon2, botones, botones[0]);
+            if (Validator.YesOptionJOption(result) && Validator.checkList(ListTrain)) {
+                String selectedValue = ListTrain.getSelectedValue();
+                //funcion q elimina y actualiza te paso el nombre dela archivo (selectedvalue)
             }
-        }
-        else
-        {
+        } else {
             JOptionPane.showMessageDialog(null, "Debe seleccionar en la lista un dataset para eliminarlo", "Informacion", JOptionPane.INFORMATION_MESSAGE, icon2);
-        
         }
-        }
-        
     }//GEN-LAST:event_buttonDeleteActionPerformed
 
    

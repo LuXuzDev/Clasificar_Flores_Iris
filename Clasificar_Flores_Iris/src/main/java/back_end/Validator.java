@@ -4,7 +4,10 @@
  */
 package back_end;
 
+import javax.swing.DefaultListModel;
+import javax.swing.JFileChooser;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -48,7 +51,38 @@ public class Validator {
         return letter;
     }
     
+    //funcion q valida q el model de un jlist sea instancia de defautlJlistmodel
+    public static boolean ListInstanceOf(JList list)
+    {
+        boolean check=false;
+        if(list.getModel() instanceof DefaultListModel)
+        {
+            check=true;
+        }
+        return check;
+    }
     
+    //funcion para validar q el usuario eligio un archivo
+    public static boolean aprooveJfilechooser(int option)
+    {
+        boolean check=false;
+        if(option == JFileChooser.APPROVE_OPTION)
+        {
+            check=true;
+        }
+        return check;
+    }
+    
+    //funcion para validar en un joption pane q el usuario selecciono si
+    public static boolean YesOptionJOption(int result)
+    {
+        boolean check=false;
+        if(result == JOptionPane.YES_OPTION)
+        {
+            check=true;
+        }
+        return check;
+    }
     public static boolean containsNumber(String input)
     {
         boolean number = false;
