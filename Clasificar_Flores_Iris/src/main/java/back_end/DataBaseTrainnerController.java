@@ -18,20 +18,18 @@ public class DataBaseTrainnerController {
     static String packagePath = "src/main/java/dataBase_Trainings";
     
     
-    public DataBaseTrainnerController()
-    {
+    public DataBaseTrainnerController() {
         trainnigs = new ArrayList<>();
     }
-    
-  public static ArrayList<File> getFileOutputStreams(String directoryPath) {
+
+    public static ArrayList<File> getFileOutputStreams(String directoryPath) {
         ArrayList<File> fileList = new ArrayList<>();
         File directory = new File(directoryPath);
 
-       
-        if (directory.exists() && directory.isDirectory()) { 
+        if (directory.exists() && directory.isDirectory()) {
             File[] files = directory.listFiles();
             if (files != null) {
-                for (File file : files) {   
+                for (File file : files) {
                     if (file.isFile() && file.getName().endsWith(".dat")) {
                         fileList.add(file);
                         updateFile(file);
@@ -45,12 +43,11 @@ public class DataBaseTrainnerController {
         return fileList;
     }
 
-    
-    private static void updateFile(File file)
-    {
-        if(trainnigs.isEmpty())
+    private static void updateFile(File file) {
+        if (trainnigs.isEmpty()) {
             trainnigs.add(file);
-        else if(!trainnigs.contains(file))
+        } else if (!trainnigs.contains(file)) {
             trainnigs.add(file);
+        }
     }
 }
