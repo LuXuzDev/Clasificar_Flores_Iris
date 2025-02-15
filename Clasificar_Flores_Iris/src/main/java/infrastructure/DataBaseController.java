@@ -5,6 +5,7 @@
 package infrastructure;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -51,7 +52,7 @@ public class DataBaseController {
     }
     
     
-    public void createFile(String directionURL)
+    public void createFile(String directionURL) throws IOException
     {
         File file = HandleFiles.newFile(directionURL);
         files.add(file);   
