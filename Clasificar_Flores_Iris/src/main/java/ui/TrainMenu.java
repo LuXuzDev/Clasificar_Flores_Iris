@@ -147,37 +147,16 @@ public class TrainMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonBackActionPerformed
 
     private void buttonLoadTrainActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonLoadTrainActionPerformed
-        LabelIcon.setVisible(false);
-        JLabel label = new JLabel();
-        label.setForeground(Color.red);
-        label.setText("Debe elegir una opcion valida");
-        label.setVisible(false);
-        FlatSVGIcon icon = new FlatSVGIcon("png/bluebell.svg");
-        Object[] items = {"", "pepe", "juan"};
-        JComboBox combo = new JComboBox(items);
-        JPanel panel5 = new JPanel(new BorderLayout());
-        panel5.add(combo, BorderLayout.SOUTH);
-        panel5.add(label, BorderLayout.NORTH);
-        combo.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String selectedItem = (String) combo.getSelectedItem();
-                if (selectedItem.equals("")) {
-                    label.setVisible(true);
-                } else {
-                    label.setVisible(false);
-                }
-            }
-        });
-        int option = JOptionPane.showConfirmDialog(null, panel5, "Seleccionar Dataset", JOptionPane.OK_OPTION, JOptionPane.INFORMATION_MESSAGE, icon);
-        if (option == JOptionPane.YES_OPTION && combo.getSelectedItem().equals("")) {
-            JOptionPane.showOptionDialog(null, "No se cargo el dataset.Datos incorrectos", "Error", JOptionPane.CLOSED_OPTION, JOptionPane.INFORMATION_MESSAGE, icon, null, null);
+        UIControllers.NumberOptionPane=1;
+        new JOptionpane(this,true).setVisible(true);
+        FlatSVGIcon icon=new FlatSVGIcon("png/bluebell.svg");
+        if (UIControllers.JoptionCombo==false) {
             LabelIndicationTrain.setText("");
             LabelResult.setText("");
-        } else if (option == JOptionPane.YES_OPTION && !combo.getSelectedItem().equals("")) {
+        } else if (UIControllers.JoptionCombo==true) {
             JOptionPane.showOptionDialog(null, "Datos cargados correctamente", "Dataset", JOptionPane.CLOSED_OPTION, JOptionPane.INFORMATION_MESSAGE, icon, null, null);
             LabelIndicationTrain.setText("Dataset cargados:");
-            LabelResult.setText(combo.getSelectedItem().toString());
+            LabelResult.setText(UIControllers.ComboboxName);
         }
 
     }//GEN-LAST:event_buttonLoadTrainActionPerformed

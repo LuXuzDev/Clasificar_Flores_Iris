@@ -30,6 +30,11 @@ public class UIControllers {
     public static int pathNumber;
     public static String Filename="";
     public static int Security=0;
+    public static boolean Joption=false;
+    public static String newFilename="";
+    public static boolean JoptionCombo=false;
+    public static String ComboboxName="";
+    public static int NumberOptionPane=0;
     
     public static void setFontFamily(String fontFamily)
     {

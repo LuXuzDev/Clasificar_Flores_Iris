@@ -42,8 +42,7 @@ public class DataBaseMenu extends javax.swing.JFrame {
     private boolean valid=false;
     private static Timer timer;
     private DefaultListModel<String> listModel= new DefaultListModel<>();
-    private static Object [][] datos = new Object[160][5];
-    private static Object [][] datos1 = new Object[160][5];
+    private static ArrayList<String> datos= new ArrayList<>(160);
     private boolean trainCheck=false;
     
  
@@ -334,67 +333,15 @@ public class DataBaseMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_ButtonEditActionPerformed
 
     private void ButtonCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonCreateActionPerformed
-        FlatSVGIcon icon=new FlatSVGIcon("png/bluebell.svg");
-        String juego;
-        JTextField field= new JTextField();
-        JLabel label= new JLabel();
-        label.setText("Debe ingresar el nombre del dataset");
-        label.setForeground(new Color(102, 153, 255));
-        field.getDocument().addDocumentListener(new DocumentListener() {
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                if(Validator.containsNumber(field.getText()))
-                {
-                    field.putClientProperty("JComponent.outline","error");
-                    label.setText("El texto no debe contener numeros");
-                    label.setForeground(Color.red);
-                }
-                else
-                {
-                    field.putClientProperty("JComponent.outline",new Color(102, 153, 255));
-                    label.setText("");
-                }
-            }
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                if(Validator.containsNumber(field.getText()))
-                {
-                    field.putClientProperty("JComponent.outline","error");
-                    label.setText("El texto no debe contener numeros");
-                    label.setForeground(Color.red);
-                }
-                else
-                {
-                    field.putClientProperty("JComponent.outline",new Color(102, 153, 255));
-                    label.setText("");
-                }
-            }
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                if(Validator.containsNumber(field.getText()))
-                {
-                    field.putClientProperty("JComponent.outline","error");
-                    label.setText("El texto no debe contener numeros");
-                    label.setForeground(Color.red);
-                }
-                else
-                {
-                    field.putClientProperty("JComponent.outline",new Color(102, 153, 255));
-                    label.setText("");
-                }
-            }
-        });
-        JPanel panel5= new JPanel(new BorderLayout());
-        panel5.add(field,BorderLayout.CENTER);
-        panel5.add(field,BorderLayout.SOUTH);
-        panel5.add(label,BorderLayout.NORTH);
-        int option=JOptionPane.showConfirmDialog(null, panel5, "Crear dataset", JOptionPane.OK_OPTION, JOptionPane.INFORMATION_MESSAGE, icon);
-        if(option==JOptionPane.YES_OPTION)
+        UIControllers.NumberOptionPane=2;
+        JOptionpane pane = new JOptionpane(this, true);
+        pane.setVisible(true);
+        if(UIControllers.Joption==true)
         {
             LabelSuccess.setVisible(true);
             LabelSuccess.setText("Archivo cargado");
             restartTimer();
-            UIControllers.path.add(field.getText() + ".data");
+            UIControllers.path.add(UIControllers.newFilename);
             addStringList(path, UIControllers.pathNumber);
             UIControllers.pathNumber++;
         }

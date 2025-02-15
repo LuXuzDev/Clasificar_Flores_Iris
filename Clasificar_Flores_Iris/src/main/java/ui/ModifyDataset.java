@@ -30,6 +30,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ModifyDataset extends javax.swing.JFrame {
 
+    //DefaultTableModel model = new DefaultTableModel();
     String[] columnas={"Ancho petalo","Longitud petalo","Ancho sepalo","Longitud sepalo","Resultado"};
     DefaultTableModel model = new DefaultTableModel(columnas, 0) {
         @Override
@@ -37,21 +38,21 @@ public class ModifyDataset extends javax.swing.JFrame {
             return false;
         }
     };
-    private static Object [][] data= new Object[160][5];
-    private static Object [][] dataTest= new Object[160][5];
+    
     private static ArrayList<String> array=new ArrayList<>();
+    private static ArrayList<String> data=new ArrayList<>(160);
     
     
-    public ModifyDataset(Object[][] datos) {
+    public ModifyDataset(ArrayList<String> datos) {
         data=datos;
-        dataTest=datos;
+        data.add("algo,algo,algo,algo,algo");
         initComponents();
         design();
         if(!UIControllers.Filename.isBlank())
         {
             labelIndication.setText("Archivo cargado: "+UIControllers.Filename);
         }
-        if(data[0][0]!=null)
+        if(data.isEmpty() || data.get(0).isBlank())
         {
             datasetTabel(data);
         }
@@ -63,7 +64,7 @@ public class ModifyDataset extends javax.swing.JFrame {
     {
         setFontFamily("Arial");
         setIconImage(UIControllers.design().getImage());
-        buttonSafe.setEnabled(false);
+        datasetTabel(data);
         Flatlaf();
         widhLeaf.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT,"AnchoP");
         widthStem.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT,"AnchoS");
@@ -80,12 +81,13 @@ public class ModifyDataset extends javax.swing.JFrame {
         realTimeCheck(LongStem);
     }
     
-    
-    private void datasetTabel(Object[][] datos)
+    //funcion para añadir cada elemento a la tbala
+    private void datasetTabel(ArrayList<String> arreglo)
     {
-        for (Object[] fila : data)
+        for(int i=0;i<arreglo.size();i++)
         {
-            model.addRow(fila);
+            String [] rowData=arreglo.get(i).split(",");
+            model.addRow(rowData);
         }
     }
     
@@ -111,6 +113,7 @@ public class ModifyDataset extends javax.swing.JFrame {
         
     }
     
+    //funcion para revisar en tiempo real los text field
     private void realTimeCheck(JTextField field)
     {
         field.getDocument().addDocumentListener(new DocumentListener()
@@ -132,6 +135,7 @@ public class ModifyDataset extends javax.swing.JFrame {
     
         });
     }
+    //funcion para poner color a los bordes del texte fiedl
     private void check(JTextField field)
     {
         if (!Validator.isCorrectInputOnlyNumbers(field.getText())) {
@@ -142,13 +146,13 @@ public class ModifyDataset extends javax.swing.JFrame {
             field.putClientProperty("JComponent.outline",new Color(102, 153, 255));
         }
     }
-    
+    //funcion para poner borde de errror al text field
     private void Error(JTextField field)
     {
         field.putClientProperty("JComponent.outline","error");
     }
-    
-    private int lastIndex(Object[][] datos)
+    //funcion para obtener el ultimo valor agregado en el arreglo
+    private int lastIndex(ArrayList<String> arreglo)
     {
         int i=0;
         int j=0;
@@ -156,42 +160,34 @@ public class ModifyDataset extends javax.swing.JFrame {
         boolean end=true;
         
         
-        for(i=0;i<datos.length && end==true;i++)
+        for(i=0;i<arreglo.size() && end==true;i++)
         {
-            for(j=0;j<datos[i].length;j++)
-            {
-                if(datos[i][j]== null)
-                {
-                    retorno=i;
-                    
-                    end=false;
-                }
-            }
+           if(arreglo.get(i).isEmpty() || arreglo.get(i).isBlank())
+           {
+               end=false;
+               retorno=i;
+           }
         }
         return retorno;
     }
-    
-    private Object[][] returnDataset(Object[][] datos)
+    //get de array con la informacion agregada
+    private ArrayList<String> returnDataset(ArrayList<String> array)
     {
-        return datos;
+        return array;
     }
-    
-    private Object[][] addData(int ultimo)
+    //funcion para agregar a el array de datos ,lo q introduce el usuario
+    private ArrayList<String> addData(int ultimo)
     {
         FlatSVGIcon icon2 = new FlatSVGIcon("png/bluebell.svg");
         ultimo = lastIndex(data);
-        data[ultimo][0] = widhLeaf.getText();
-        data[ultimo][1] = LongLeaf.getText();
-        data[ultimo][2] = widthStem.getText();
-        data[ultimo][3] = LongStem.getText();
-        data[ultimo++][4] = ComboBoxIris.getSelectedItem().toString();
+        data.add(widhLeaf.getText()+","+LongLeaf.getText()+","+widthStem.getText()+","+LongStem.getText()+","+ComboBoxIris.getSelectedItem().toString());
         model.setRowCount(0);
         datasetTabel(data);
         if (ultimo == 160) {
             JOptionPane.showMessageDialog(null, "Ya alcanzo el maximo de elementos a agregar en el dataset", "Advertencia", JOptionPane.INFORMATION_MESSAGE, icon2);
             buttonEnter.setEnabled(false);
         }
-        System.out.println(data.length);
+        System.out.println(data.size());
         return data;
     }
     
@@ -212,7 +208,6 @@ public class ModifyDataset extends javax.swing.JFrame {
         labelIndication = new javax.swing.JLabel();
         LongStem = new javax.swing.JTextField();
         ComboBoxIris = new javax.swing.JComboBox<>();
-        buttonSafe = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Iris");
@@ -267,14 +262,6 @@ public class ModifyDataset extends javax.swing.JFrame {
         ComboBoxIris.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ","Iris-setosa", "Iris-versicolor", "Iris-virginica", }));
         PanelPrin.add(ComboBoxIris, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 290, 110, 30));
 
-        buttonSafe.setText("Guardar");
-        buttonSafe.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonSafeActionPerformed(evt);
-            }
-        });
-        PanelPrin.add(buttonSafe, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 220, -1, -1));
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -291,15 +278,14 @@ public class ModifyDataset extends javax.swing.JFrame {
 
     private void buttonEnterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEnterActionPerformed
         
-        //Object[] fila2={widhLeaf.getText(),LongLeaf.getText(),widthStem.getText(),LongStem.getText(),ComboBoxIris.getSelectedItem().toString()};
-        //model.addRow(fila2);
         int ultimo=0;
-        buttonSafe.setEnabled(true);
+        String[] botones = {"Si", "No"};
         FlatSVGIcon icon2=new FlatSVGIcon("png/bluebell.svg");
-        if (data[0][0] == null) {
+        if (data.isEmpty() || data.get(0).isBlank()) {
             if (Validator.isCorrectInputOnlyNumbers(widhLeaf.getText()) && Validator.isCorrectInputOnlyNumbers(widthStem.getText()) && Validator.isCorrectInputOnlyNumbers(LongLeaf.getText()) && Validator.isCorrectInputOnlyNumbers(LongStem.getText()) && ComboBoxIris.getSelectedItem() != " ") {
                 Object[] fila3 = {widhLeaf.getText(), LongLeaf.getText(), widthStem.getText(), LongStem.getText(), ComboBoxIris.getSelectedItem().toString()};
                 model.addRow(fila3);
+                
             } else {
                 JOptionPane.showMessageDialog(null, "Debe Introducir datos correctos para agregar al dataset", "Informacion", JOptionPane.INFORMATION_MESSAGE, icon2);
             }
@@ -307,7 +293,14 @@ public class ModifyDataset extends javax.swing.JFrame {
         else
         {
             if (Validator.isCorrectInputOnlyNumbers(widhLeaf.getText()) && Validator.isCorrectInputOnlyNumbers(widthStem.getText()) && Validator.isCorrectInputOnlyNumbers(LongLeaf.getText()) && Validator.isCorrectInputOnlyNumbers(LongStem.getText()) && ComboBoxIris.getSelectedItem() != " ") {
-                addData(ultimo);
+                int resultado = JOptionPane.showOptionDialog(null, "Desea guardrar los cambios realizados", "Guardar cambios", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, icon2, botones, botones[0]);
+                if (resultado == JOptionPane.YES_OPTION) {
+                    addData(ultimo);
+                    returnDataset(data);
+                } else {
+                    returnDataset(data);
+                }
+                
             } else {
                 JOptionPane.showMessageDialog(null, "Debe Introducir datos correctos para agregar al dataset", "Informacion", JOptionPane.INFORMATION_MESSAGE, icon2);
             }
@@ -327,21 +320,6 @@ public class ModifyDataset extends javax.swing.JFrame {
         new DataBaseMenu().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_buttonBackActionPerformed
-
-    private void buttonSafeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSafeActionPerformed
-        FlatSVGIcon icon2=new FlatSVGIcon("png/bluebell.svg");
-        String [] botones={"Si","No"};
-        int resultado=JOptionPane.showOptionDialog(null, "Desea guardrar los cambios realizados", "Guardar cambios", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, icon2, botones, botones[0]);
-        if(resultado==JOptionPane.YES_OPTION)
-        {
-            returnDataset(data);
-        }
-        else
-        {
-            returnDataset(dataTest);
-        }
-        
-    }//GEN-LAST:event_buttonSafeActionPerformed
 
     /**
      * @param args the command line arguments
@@ -385,7 +363,6 @@ public class ModifyDataset extends javax.swing.JFrame {
     private javax.swing.JPanel PanelPrin;
     private javax.swing.JButton buttonBack;
     private javax.swing.JButton buttonEnter;
-    private javax.swing.JButton buttonSafe;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labelIndication;
     private javax.swing.JTable tableData;

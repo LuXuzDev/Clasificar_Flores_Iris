@@ -150,7 +150,7 @@ public class Trainer extends javax.swing.JFrame {
 
         buttonGraph1.setBackground(new java.awt.Color(255, 255, 255));
         buttonGraph1.setForeground(new java.awt.Color(0, 0, 0));
-        buttonGraph1.setText("Grafico4");
+        buttonGraph1.setText("panel2");
         buttonGraph1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonGraph1ActionPerformed(evt);
@@ -180,7 +180,7 @@ public class Trainer extends javax.swing.JFrame {
 
         buttonGraph4.setBackground(new java.awt.Color(255, 255, 255));
         buttonGraph4.setForeground(new java.awt.Color(0, 0, 0));
-        buttonGraph4.setText("Grafico3");
+        buttonGraph4.setText("panel");
         buttonGraph4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonGraph4ActionPerformed(evt);
