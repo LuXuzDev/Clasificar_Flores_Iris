@@ -34,7 +34,7 @@ public class JOptionpane extends javax.swing.JDialog {
     {
         FlatSVGIcon icon=new FlatSVGIcon("png/bluebell.svg");
         LabelIcon.setIcon(icon);
-        this.setSize(377, 151);
+        this.setSize(347, 151);
         UIControllers.setFontFamily("Arial");
         setIconImage(UIControllers.design().getImage());
         Flatlaf();
@@ -75,18 +75,18 @@ public class JOptionpane extends javax.swing.JDialog {
         jPanel1.add(LabelIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 70, 80));
 
         jButton1.setText("No");
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 80, -1, -1));
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 80, -1, -1));
 
         jButton2.setText("Si");
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 80, -1, -1));
-        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 30, 190, 30));
+        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 80, -1, -1));
+        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 30, 190, 30));
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 0, 190, 20));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 358, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
