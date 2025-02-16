@@ -4,337 +4,65 @@
  */
 package neuralNetwork;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Angel Hernandez
  */
 public class Trainer {
-    private double [][] dataSet;
-    private int [] salida;
+    private  double [][] dataSet;
+    private  int [] salida;
     
     
-    public Trainer(){
-        llenarDataSet();
-    }
     
-    private void llenarDataSet() {
-        dataSet = new double[150][4]; 
-        salida = new int[150]; 
-
-        dataSet[0] = new double[]{5.1,3.5,1.4,0.2};
-        salida[0] = 0;
-        dataSet[1] = new double[]{4.9,3.0,1.4,0.2};
-        salida[1] = 0;
-        dataSet[2] = new double[]{4.7,3.2,1.3,0.2};
-        salida[2] = 0;
-        dataSet[3] = new double[]{4.6,3.1,1.5,0.2};
-        salida[3] = 0;
-        dataSet[4] = new double[]{5.0,3.6,1.4,0.2};
-        salida[4] = 0;
-        dataSet[5] = new double[]{5.4,3.9,1.7,0.4};
-        salida[5] = 0;
-        dataSet[6] = new double[]{4.6,3.4,1.4,0.3};
-        salida[6] = 0;
-        dataSet[7] = new double[]{5.0,3.4,1.5,0.2};
-        salida[7] = 0;
-        dataSet[8] = new double[]{4.4,2.9,1.4,0.2};
-        salida[8] = 0;
-        dataSet[9] = new double[]{4.9,3.1,1.5,0.1};
-        salida[9] = 0;
-        dataSet[10] = new double[]{5.4,3.7,1.5,0.2};
-        salida[10] = 0;
-        dataSet[11] = new double[]{4.8,3.4,1.6,0.2};
-        salida[11] = 0;
-        dataSet[12] = new double[]{4.8,3.0,1.4,0.1};
-        salida[12] = 0;
-        dataSet[13] = new double[]{4.3,3.0,1.1,0.1};
-        salida[13] = 0;
-        dataSet[14] = new double[]{5.8,4.0,1.2,0.2};
-        salida[14] =0;
-        dataSet[15] = new double[]{5.7,4.4,1.5,0.4};
-        salida[15] = 0;
-        dataSet[16] = new double[]{5.4,3.9,1.3,0.4};
-        salida[16] = 0;
-        dataSet[17] = new double[]{5.1,3.5,1.4,0.3};
-        salida[17] = 0;
-        dataSet[18] = new double[]{5.7,3.8,1.7,0.3};
-        salida[18] = 0;
-        dataSet[19] = new double[]{5.1,3.8,1.5,0.3};
-        salida[19] = 0;
-        dataSet[20] = new double[]{5.4,3.4,1.7,0.2};
-        salida[20] = 0;
-        dataSet[21] = new double[]{5.1,3.7,1.5,0.4};
-        salida[21] = 0;
-        dataSet[22] = new double[]{4.6,3.6,1.0,0.2};
-        salida[22] = 0;
-        dataSet[23] = new double[]{5.1,3.3,1.7,0.5};
-        salida[23] = 0;
-        dataSet[24] = new double[]{4.8,3.4,1.9,0.2};
-        salida[24] = 0;
-        dataSet[25] = new double[]{5.0,3.0,1.6,0.2};
-        salida[25] = 0;
-        dataSet[26] = new double[]{5.0,3.4,1.6,0.4};
-        salida[26] = 0;
-        dataSet[27] = new double[]{5.2,3.5,1.5,0.2};
-        salida[27] = 0;
-        dataSet[28] = new double[]{5.2,3.4,1.4,0.2};
-        salida[28] = 0;
-        dataSet[29] = new double[]{4.7,3.2,1.6,0.2};
-        salida[29] = 0;
-        dataSet[30] = new double[]{4.8,3.1,1.6,0.2};
-        salida[30] = 0;
-        dataSet[31] = new double[]{5.4,3.4,1.5,0.4};
-        salida[31] = 0;
-        dataSet[32] = new double[]{5.2,4.1,1.5,0.1};
-        salida[32] = 0;
-        dataSet[33] = new double[]{5.5,4.2,1.4,0.2};
-        salida[33] = 0;
-        dataSet[34] = new double[]{4.9,3.1,1.5,0.1};
-        salida[34] = 0;
-        dataSet[35] = new double[]{5.0,3.2,1.2,0.2};
-        salida[35] = 0;
-        dataSet[36] = new double[]{5.5,3.5,1.3,0.2};
-        salida[36] = 0;
-        dataSet[37] = new double[]{4.9,3.1,1.5,0.1};
-        salida[37] = 0;
-        dataSet[38] = new double[]{4.4,3.0,1.3,0.2};
-        salida[38] = 0;
-        dataSet[39] = new double[]{5.1,3.4,1.5,0.2};
-        salida[39] = 0;
-        dataSet[40] = new double[]{5.0,3.5,1.3,0.3};
-        salida[40] = 0;
-        dataSet[41] = new double[]{4.5,2.3,1.3,0.3};
-        salida[41] = 0;
-        dataSet[42] = new double[]{4.4,3.2,1.3,0.2};
-        salida[42] = 0;
-        dataSet[43] = new double[]{5.0,3.5,1.6,0.6};
-        salida[43] = 0;
-        dataSet[44] = new double[]{5.1,3.8,1.9,0.4};
-        salida[44] = 0;
-        dataSet[45] = new double[]{4.8,3.0,1.4,0.3};
-        salida[45] = 0;
-        dataSet[46] = new double[]{5.1,3.8,1.6,0.2};
-        salida[46] = 0;
-        dataSet[47] = new double[]{4.6,3.2,1.4,0.2};
-        salida[47] = 0;
-        dataSet[48] = new double[]{5.3,3.7,1.5,0.2};
-        salida[48] = 0;
-        dataSet[49] = new double[]{5.0,3.3,1.4,0.2};
-        salida[49] = 0;
-        
-        
-        dataSet[50] = new double[]{7.0,3.2,4.7,1.4};
-        salida[50] = 1;
-        dataSet[51] = new double[]{6.4,3.2,4.5,1.5};
-        salida[51] = 1;
-        dataSet[52] = new double[]{6.9,3.1,4.9,1.5};
-        salida[52] = 1;
-        dataSet[53] = new double[]{5.5,2.3,4.0,1.3};
-        salida[53] = 1;
-        dataSet[54] = new double[]{6.5,2.8,4.6,1.5};
-        salida[54] = 1;
-        dataSet[55] = new double[]{5.7,2.8,4.5,1.3};
-        salida[55] = 1;
-        dataSet[56] = new double[]{6.3,3.3,4.7,1.6};
-        salida[56] = 1;
-        dataSet[57] = new double[]{4.9,2.4,3.3,1.0};
-        salida[57] = 1;
-        dataSet[58] = new double[]{6.6,2.9,4.6,1.3};
-        salida[58] = 1;
-        dataSet[59] = new double[]{5.2,2.7,3.9,1.4};
-        salida[59] = 1;
-        dataSet[60] = new double[]{5.0,2.0,3.5,1.0};
-        salida[60] = 1;
-        dataSet[61] = new double[]{5.9,3.0,4.2,1.5};
-        salida[61] = 1;
-        dataSet[62] = new double[]{6.0,2.2,4.0,1.0};
-        salida[62] = 1;
-        dataSet[63] = new double[]{6.1,2.9,4.7,1.4};
-        salida[63] = 1;
-        dataSet[64] = new double[]{5.6,2.9,3.6,1.3};
-        salida[64] = 1;
-        dataSet[65] = new double[]{6.7,3.1,4.4,1.4};
-        salida[65] = 1;
-        dataSet[66] = new double[]{5.6,3.0,4.5,1.5};
-        salida[66] = 1;
-        dataSet[67] = new double[]{5.8,2.7,4.1,1.0};
-        salida[67] = 1;
-        dataSet[68] = new double[]{6.2,2.2,4.5,1.5};
-        salida[68] = 1;
-        dataSet[69] = new double[]{5.6,2.5,3.9,1.1};
-        salida[69] = 1;
-        dataSet[70] = new double[]{5.9,3.2,4.8,1.8};
-        salida[70] = 1;
-        dataSet[71] = new double[]{6.1,2.8,4.0,1.3};
-        salida[71] = 1;
-        dataSet[72] = new double[]{6.3,2.5,4.9,1.5};
-        salida[72] = 1;
-        dataSet[73] = new double[]{6.1,2.8,4.7,1.2};
-        salida[73] = 1;
-        dataSet[74] = new double[]{6.4,2.9,4.3,1.3};
-        salida[74] = 1;
-        dataSet[75] = new double[]{6.6,3.0,4.4,1.4};
-        salida[75] = 1;
-        dataSet[76] = new double[]{6.8,2.8,4.8,1.4};
-        salida[76] = 1;
-        dataSet[77] = new double[]{6.7,3.0,5.0,1.7};
-        salida[77] = 1;
-        dataSet[78] = new double[]{6.0,2.9,4.5,1.5};
-        salida[78] = 1;
-        dataSet[79] = new double[]{5.7,2.6,3.5,1.0};
-        salida[79] = 1;
-        dataSet[80] = new double[]{5.5,2.4,3.8,1.1};
-        salida[80] = 1;
-        dataSet[81] = new double[]{5.5,2.4,3.7,1.0};
-        salida[81] = 1;
-        dataSet[82] = new double[]{5.8,2.7,3.9,1.2};
-        salida[82] = 1;
-        dataSet[83] = new double[]{6.0,2.7,5.1,1.6};
-        salida[83] = 1;
-        dataSet[84] = new double[]{5.4,3.0,4.5,1.5};
-        salida[84] = 1;
-        dataSet[85] = new double[]{6.0,3.4,4.5,1.6};
-        salida[85] = 1;
-        dataSet[86] = new double[]{6.7,3.1,4.7,1.5};
-        salida[86] = 1;
-        dataSet[87] = new double[]{6.3,2.3,4.4,1.3};
-        salida[87] = 1;
-        dataSet[88] = new double[]{5.6,3.0,4.1,1.3};
-        salida[88] = 1;
-        dataSet[89] = new double[]{5.5,2.5,4.0,1.3};
-        salida[89] = 1;
-        dataSet[90] = new double[]{5.5,2.6,4.4,1.2};
-        salida[90] = 1;
-        dataSet[91] = new double[]{6.1,3.0,4.6,1.4};
-        salida[91] = 1;
-        dataSet[92] = new double[]{5.8,2.6,4.0,1.2};
-        salida[92] = 1;
-        dataSet[93] = new double[]{5.0,2.3,3.3,1.0};
-        salida[93] = 1;
-        dataSet[94] = new double[]{5.6,2.7,4.2,1.3};
-        salida[94] = 1;
-        dataSet[95] = new double[]{5.7,3.0,4.2,1.2};
-        salida[95] = 1;
-        dataSet[96] = new double[]{5.7,2.9,4.2,1.3};
-        salida[96] = 1;
-        dataSet[97] = new double[]{6.2,2.9,4.3,1.3};
-        salida[97] = 1;
-        dataSet[98] = new double[]{5.1,2.5,3.0,1.1};
-        salida[98] = 1;
-        dataSet[99] = new double[]{5.7,2.8,4.1,1.3};
-        salida[99] = 1;
-
-        
-        dataSet[100] = new double[]{6.3,3.3,6.0,2.5};
-        salida[100] = 2;
-        dataSet[101] = new double[]{5.8,2.7,5.1,1.9};
-        salida[101] = 2;
-        dataSet[102] = new double[]{7.1,3.0,5.9,2.1};
-        salida[102] = 2;
-        dataSet[103] = new double[]{6.3,2.9,5.6,1.8};
-        salida[103] = 2;
-        dataSet[104] = new double[]{6.5,3.0,5.8,2.2};
-        salida[104] = 2;
-        dataSet[105] = new double[]{7.6,3.0,6.6,2.1};
-        salida[105] = 2;
-        dataSet[106] = new double[]{7.3,2.9,6.3,1.8};
-        salida[106] = 2;
-        dataSet[107] = new double[]{6.7,2.5,5.8,1.8};
-        salida[107] = 2;
-        dataSet[108] = new double[]{7.2,3.6,6.1,2.5};
-        salida[108] = 2;
-        dataSet[109] = new double[]{6.5,3.2,5.1,2.0};
-        salida[109] = 2;
-        dataSet[110] = new double[]{6.4,2.7,5.3,1.9};
-        salida[110] = 2;
-        dataSet[111] = new double[]{6.8,3.0,5.5,2.1};
-        salida[111] = 2;
-        dataSet[112] = new double[]{5.7,2.5,5.0,2.0};
-        salida[112] = 2;
-        dataSet[113] = new double[]{5.8,2.8,5.1,2.4};
-        salida[113] = 2;
-        dataSet[114] = new double[]{6.4,3.2,5.3,2.3};
-        salida[114] = 2;
-        dataSet[115] = new double[]{6.5,3.0,5.5,1.8};
-        salida[115] = 2;
-        dataSet[116] = new double[]{7.7,3.8,6.7,2.2};
-        salida[116] = 2;
-        dataSet[117] = new double[]{7.7,2.6,6.9,2.3};
-        salida[117] = 2;
-        dataSet[118] = new double[]{6.0,2.2,5.0,1.5};
-        salida[118] = 2;
-        dataSet[119] = new double[]{6.9,3.2,5.7,2.3};
-        salida[119] = 2;
-        dataSet[120] = new double[]{5.6,2.8,4.9,2.0};
-        salida[120] = 2;
-        dataSet[121] = new double[]{7.7,2.8,6.7,2.0};
-        salida[121] = 2;
-        dataSet[122] = new double[]{6.3,2.7,4.9,1.8};
-        salida[122] = 2;
-        dataSet[123] = new double[]{6.7,3.3,5.7,2.1};
-        salida[123] = 2;
-        dataSet[124] = new double[]{7.2,3.2,6.0,1.8};
-        salida[124] = 2;
-        dataSet[125] = new double[]{6.2,2.8,4.8,1.8};
-        salida[125] = 2;
-        dataSet[126] = new double[]{6.1,3.0,4.9,1.8};
-        salida[126] = 2;
-        dataSet[127] = new double[]{6.4,2.8,5.6,2.1};
-        salida[127] = 2;
-        dataSet[128] = new double[]{7.2,3.0,5.8,1.6};
-        salida[128] = 2;
-        dataSet[129] = new double[]{7.4,2.8,6.1,1.9};
-        salida[129] = 2;
-        dataSet[130] = new double[]{7.9,3.8,6.4,2.0};
-        salida[130] = 2;
-        dataSet[131] = new double[]{6.4,2.8,5.6,2.2};
-        salida[131] = 2;
-        dataSet[132] = new double[]{6.3,2.8,5.1,1.5};
-        salida[132] = 2;
-        dataSet[133] = new double[]{6.1,2.6,5.6,1.4};
-        salida[133] = 2;
-        dataSet[134] = new double[]{6.1,2.6,5.6,1.4};
-        salida[134] = 2;
-        dataSet[135] = new double[]{7.7,3.0,6.1,2.3};
-        salida[135] = 2;
-        dataSet[136] = new double[]{6.3,3.4,5.6,2.4};
-        salida[136] = 2;
-        dataSet[137] = new double[]{6.4,3.1,5.5,1.8};
-        salida[137] = 2;
-        dataSet[138] = new double[]{6.0,3.0,4.8,1.8};
-        salida[138] = 2;
-        dataSet[139] = new double[]{6.9,3.1,5.4,2.1};
-        salida[139] = 2;
-        dataSet[140] = new double[]{6.7,3.1,5.6,2.4};
-        salida[140] = 2;
-        dataSet[141] = new double[]{6.9,3.1,5.1,2.3};
-        salida[141] = 2;
-        dataSet[142] = new double[]{5.8,2.7,5.1,1.9};
-        salida[142] = 2;
-        dataSet[143] = new double[]{6.8,3.2,5.9,2.3};
-        salida[143] = 2;
-        dataSet[144] = new double[]{6.7,3.3,5.7,2.5};
-        salida[144] = 2;
-        dataSet[145] = new double[]{6.7,3.0,5.2,2.3};
-        salida[145] = 2;
-        dataSet[146] = new double[]{6.3,2.5,5.0,1.9};
-        salida[146] = 2;
-        dataSet[147] = new double[]{6.5,3.0,5.2,2.0};
-        salida[147] = 2;
-        dataSet[148] = new double[]{6.2,3.4,5.4,2.3};
-        salida[148] = 2;
-        dataSet[149] = new double[]{5.9,3.0,5.1,1.8};
-        salida[149] = 2;
-    }
-
     public double [][] getDataSet()
     {
         return dataSet;
     }
     
+
     
     public int [] getDataSetSalida()
     {
         return salida;
+    }
+    
+    public void processInput(ArrayList<String> data) {
+        // Crear un arreglo bidimensional para los números
+        dataSet = new double[data.size()][]; // Inicializa el arreglo con el tamaño del ArrayList
+        salida = new int[data.size()]; // Arreglo para clasificaciones
+
+        // Recorrer cada entrada en el ArrayList
+        for (int i = 0; i < data.size(); i++) {
+            String input = data.get(i); // Obtener la entrada actual
+            String[] parts = input.split(","); // Dividir la cadena por comas
+
+            // Crear un arreglo para los números de la entrada actual
+            dataSet[i] = new double[parts.length - 1]; // El último elemento es la clasificación
+
+            // Convertir los números de String a double
+            for (int j = 0; j < dataSet[i].length; j++) {
+                dataSet[i][j] = Double.parseDouble(parts[j]); // Convertir cada parte a double
+            }
+
+            // Asignar la clasificación
+            String classificationString = parts[parts.length - 1]; // Obtener la clasificación
+            salida[i] = getClassification(classificationString); // Convertir a int
+        }
+    }
+
+    // Método para convertir la clasificación de String a int
+    private  int getClassification(String classification) {
+        switch (classification) {
+            case "iris-setosa":
+                return 0;
+            case "iris-virginica":
+                return 1;
+            case "iris-versicolor":
+                return 2;
+            default:
+                throw new IllegalArgumentException("Clasificación desconocida: " + classification);
+        }
     }
 }

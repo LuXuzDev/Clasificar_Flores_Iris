@@ -19,8 +19,10 @@ import neuralNetwork.Trainer;
 public class Controller {
     private static Controller instance; // Instancia única de Controller
     private static NeuralNetwork neuralNetwork;
+    private static TrainerResults trainnerResults;
     private final Trainer trainner;
     private final Normalizer normalizer;
+    private File dataSetLoaded;
 
     // Constructor privado para evitar instanciación externa
     private Controller() {
@@ -59,6 +61,7 @@ public class Controller {
         return inputs;
     }
 
+    
     private String classifierOutput(int output) {
         String flowerType = "Iris-Setosa";
         
@@ -69,11 +72,22 @@ public class Controller {
         return flowerType;
     }
 
+    
     private double stringToDouble(String num) {
         return Double.parseDouble(num);
     }
 
-    public TrainerResults train() {
+    
+    public TrainerResults train() throws Exception {
+        
+        //Validar Datos
+        if(dataSetLoaded==null)
+            throw new Exception("No hay dataSet cargados");
+    
+        trainner.processInput(DataBaseController.fileContent(dataSetLoaded.getName()));
+        
+        
+        //Normalizar Datos
         normalizer.ajustar(trainner.getDataSet());
         double[][] dataSet = normalizer.normalizar(trainner.getDataSet());
 
@@ -106,25 +120,52 @@ public class Controller {
         return names;
     }
 
+    
     public void createFile(String name) throws IOException {
         DataBaseController.createFile(name);
     }
 
+    
     public void deleteFile(String name) throws Exception {
         DataBaseController.deleteFile(name);
     }
 
+    
     public void loadFile(String path) {
         DataBaseController.loadFile(path);
     }
 
+    
     public ArrayList<String> fileContent(String name) throws Exception {
         return DataBaseController.fileContent(name);
     }
+    
     
     public ArrayList<String> editFile(String line,String name) throws Exception
     {
         DataBaseController.editFile(line, name);
         return fileContent(name);
     }
+
+    
+    public static TrainerResults getTrainnerResults() {
+        return trainnerResults;
+    }
+
+    
+    public static void setTrainnerResults(TrainerResults trainnerResults) {
+        Controller.trainnerResults = trainnerResults;
+    }
+
+    
+    public File getDataSetLoaded() {
+        return dataSetLoaded;
+    }
+
+    
+    public void setDataSetLoaded(String dataSetName) throws Exception {
+        File file = DataBaseController.findFile(dataSetName);
+        Validator.existFile(file);
+        dataSetLoaded = file;
+    }  
 }

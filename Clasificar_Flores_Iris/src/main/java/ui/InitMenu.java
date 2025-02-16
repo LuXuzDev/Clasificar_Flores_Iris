@@ -36,7 +36,6 @@ public class InitMenu extends javax.swing.JFrame {
     //funcion para diseño general del Jframe
     private void design()
     {
-        Controller.getInstance().train();
         Flatlaf();
         UIControllers.setFontFamily("Arial");
         setIconImage(UIControllers.design().getImage());

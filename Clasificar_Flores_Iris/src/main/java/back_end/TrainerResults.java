@@ -4,13 +4,14 @@
  */
 package back_end;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  *
  * @author Angel Hernandez
  */
-public class TrainerResults {
+public class TrainerResults implements Serializable{
     
     //Attributes
     private double acurracyTotal;
@@ -18,6 +19,7 @@ public class TrainerResults {
     private ArrayList<Double> errorEntrenamiento;
     private ArrayList<String> metricasEpoca;
     private ArrayList<Double> acurracyClass;
+    private static final long serialVersionUID = 2L;
 
     
     

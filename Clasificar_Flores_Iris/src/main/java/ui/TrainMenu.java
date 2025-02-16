@@ -29,7 +29,6 @@ public class TrainMenu extends javax.swing.JFrame {
     /**
      * Creates new form TrainMenu
      */
-    private Controller controller;
     
     public TrainMenu() {
         initComponents();
@@ -182,7 +181,6 @@ public class TrainMenu extends javax.swing.JFrame {
     private void buttonTrainActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonTrainActionPerformed
         FlatSVGIcon icon = new FlatSVGIcon("png/bluebell.svg");
         if (!Validator.isEmptyInput(LabelIndicationTrain.getText())) {
-            //controller.train();
             LabelResult.setText("Entrenamiento cargado: "+UIControllers.ComboboxName);
         } else {
             JOptionPane.showOptionDialog(null, "No se puede entrenar debe cargar dataset primero", "Entrenamiento", JOptionPane.CLOSED_OPTION, JOptionPane.INFORMATION_MESSAGE, icon, null, null);
