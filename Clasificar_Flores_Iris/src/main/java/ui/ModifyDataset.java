@@ -39,19 +39,16 @@ public class ModifyDataset extends javax.swing.JFrame {
         }
     };
     
-    private static ArrayList<String> array=new ArrayList<>();
+   
     private static ArrayList<String> data=new ArrayList<>(160);
     
     
     public ModifyDataset(ArrayList<String> datos) {
         data=datos;
-        data.add("algo,algo,algo,algo,algo");
         initComponents();
         design();
-        if(!UIControllers.Filename.isBlank())
-        {
-            labelIndication.setText("Archivo cargado: "+UIControllers.Filename);
-        }
+        //haz una funcion q me devuelva el string q es el nombre del archivo seleecionado para mostrar en el label de abajo
+        //labelIndication.setText("Archivo cargado: "+);
         if(data.isEmpty() || data.get(0).isBlank())
         {
             datasetTabel(data);
@@ -82,7 +79,7 @@ public class ModifyDataset extends javax.swing.JFrame {
     }
     
     //funcion para añadir cada elemento a la tbala
-    private void datasetTabel(ArrayList<String> arreglo)
+    public void datasetTabel(ArrayList<String> arreglo)
     {
         for(int i=0;i<arreglo.size();i++)
         {

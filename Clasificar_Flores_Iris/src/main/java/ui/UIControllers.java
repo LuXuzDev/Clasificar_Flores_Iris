@@ -26,8 +26,6 @@ import ui.InitMenu;
 public class UIControllers {
     
     public static boolean icon=false;
-    public static ArrayList<String> path= new ArrayList<>();
-    public static int pathNumber;
     public static String Filename="";
     public static int Security=0;
     public static boolean Joption=false;
