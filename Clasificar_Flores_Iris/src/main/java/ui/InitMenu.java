@@ -7,41 +7,19 @@ package ui;
 import back_end.Controller;
 import back_end.Validator;
 import com.formdev.flatlaf.FlatClientProperties;
-import com.formdev.flatlaf.FlatLaf;
-import com.formdev.flatlaf.FlatLightLaf;
-import com.formdev.flatlaf.extras.FlatAnimatedLafChange;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
-import com.formdev.flatlaf.util.FontUtils;
-
 import java.awt.Color;
-import java.awt.Font;
-import java.awt.GraphicsEnvironment;
-import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JProgressBar;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
-import javax.swing.Timer;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import neuralNetwork.NeuralNetwork;
-import neuralNetwork.Normalizer;
-import neuralNetwork.Trainer;
 
 
 public class InitMenu extends javax.swing.JFrame {
@@ -53,35 +31,26 @@ public class InitMenu extends javax.swing.JFrame {
     
   
     public InitMenu() {
-        
-        controller = new Controller();
         initComponents();
         design();
-        controller.train();
-        
-        
-
-        
     }
     
-    
+    //funcion para diseño general del Jframe
     private void design()
     {
+        controller = new Controller();
+        controller.train();
         Flatlaf();
-        
         UIControllers.setFontFamily("Arial");
         setIconImage(UIControllers.design().getImage());
         this.setLocationRelativeTo(null);
-        
         ProgressBar.setStringPainted(true);
         ProgressBar.setVisible(false);
-        
         JprogressbarLabel.setVisible(false);
-        
-         FieldAnchoPetalo.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT,"Ancho Petalo");
+        FieldAncho.Petalo.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT,"Ancho Petalo");
         FieldAnchoSepalo.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT,"Ancho Sepalo");
         FieldLongitudPetalo.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT,"Longitud Petalo");
-        FieldLongitudSepalo.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT," Longitud Sepalo");
+        FieldLongitudSepalo.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT,"Longitud Sepalo");
         FieldAnchoPetalo.putClientProperty(FlatClientProperties.TEXT_FIELD_SHOW_CLEAR_BUTTON,true);
         FieldAnchoSepalo.putClientProperty(FlatClientProperties.TEXT_FIELD_SHOW_CLEAR_BUTTON,true);
         FieldLongitudPetalo.putClientProperty(FlatClientProperties.TEXT_FIELD_SHOW_CLEAR_BUTTON,true);
@@ -96,47 +65,40 @@ public class InitMenu extends javax.swing.JFrame {
         realTimeCheck(FieldLongitudSepalo);  
     }
      
-    
+    //funcion para dar el color rojo de back al textfield
     private void Error(JTextField field)
     {
         field.putClientProperty("JComponent.outline","error");
     }
     
-    
+    //funcion para revisar en tiempo real un jtextfield
     private void realTimeCheck(JTextField field)
     {
-        field.getDocument().addDocumentListener(new DocumentListener()
-        {
+        field.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
                 check(field);
             }
-
             @Override
             public void changedUpdate(DocumentEvent e) {
                 check(field);
             }
-
             @Override
             public void removeUpdate(DocumentEvent e) {
                 check(field);
             }
-    
         });
     }
-    
-    
+
+    //funcion para revisar el jText field y poner el background 
     private void check(JTextField field)
     {
         if (!Validator.isCorrectInputOnlyNumbers(field.getText())) {
             Error(field);
-        }
-        else
-        {
-            field.putClientProperty("JComponent.outline",new Color(102, 153, 255));
+        } else {
+            field.putClientProperty("JComponent.outline", new Color(102, 153, 255));
         }
     }
-    
     
     //funcion para verificar si todos estan llenos y empezar el analisis automatico
     public boolean checkAndStart()
@@ -343,15 +305,12 @@ public class InitMenu extends javax.swing.JFrame {
 
     private void ButtonTrainActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonTrainActionPerformed
         UIControllers.Security=2;
-        SecurityPassword secu2= new SecurityPassword(this,true);
-       secu2.setVisible(true);
-        
+        new SecurityPassword(this,true).setVisible(true);
     }//GEN-LAST:event_ButtonTrainActionPerformed
 
     private void buttonDatabaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDatabaseActionPerformed
-       UIControllers.Security=1;
-        SecurityPassword secu= new SecurityPassword(this,true);
-       secu.setVisible(true);
+        UIControllers.Security=1;
+        new SecurityPassword(this,true).setVisible(true);
     }//GEN-LAST:event_buttonDatabaseActionPerformed
 
     private void FieldInputsKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_FieldInputsKeyReleased
@@ -360,16 +319,12 @@ public class InitMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_FieldInputsKeyReleased
 
     private void buttonAnalizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAnalizeActionPerformed
-        
-        FlatSVGIcon icon=new FlatSVGIcon("png/bluebell.svg");
-        if(checkAndStart()==true)
-        {
+        FlatSVGIcon icon = new FlatSVGIcon("png/bluebell.svg");
+        if (checkAndStart() == true) {
             JprogressbarLabel.setVisible(true);
             ProgressBar.setVisible(true);
             startProgress(ProgressBar);
-        }
-        else
-        {
+        } else {
             JOptionPane.showMessageDialog(null, "Debe Introducir datos correctos para analizar", "Informacion", JOptionPane.INFORMATION_MESSAGE, icon);
         }
     }//GEN-LAST:event_buttonAnalizeActionPerformed

@@ -5,20 +5,15 @@
 package ui;
 
 import com.formdev.flatlaf.FlatClientProperties;
-import com.formdev.flatlaf.FlatLaf;
-import com.formdev.flatlaf.extras.FlatAnimatedLafChange;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
-import com.formdev.flatlaf.util.FontUtils;
 import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.Random;
@@ -28,113 +23,71 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import org.jfree.chart.ChartPanel;
-import org.jfree.chart.annotations.XYTextAnnotation;
-import org.jfree.chart.plot.CategoryPlot;
-import org.jfree.data.category.DefaultCategoryDataset;
+
 
 
 public class Trainer extends javax.swing.JFrame {
-    /**
-     * Creates new form Trainer
-     */
     
-    //private CardLayout cardLayout;
-    //JPanel cardPanel;
-    JFreeChart chart;
+    private JFreeChart chart;
+    
     public Trainer() {
         initComponents();
+        design();
+    }
+    
+    //funcion para el diseño del jrame
+    private void design ()
+    {
+        //UIControllers.setFontFamily("Arial");
         Flatlaf();
-        //setFontFamily("Arial");
         UIManager.put("TextComponent.arc",99);
         UIManager.put("Button.arc", 25);
-        
+        setTitle("Gráficos Iris");
+        setSize(610, 340);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
         getRootPane().putClientProperty(FlatClientProperties.TITLE_BAR_BACKGROUND, new Color(102, 153, 255));
         getRootPane().putClientProperty(FlatClientProperties.TITLE_BAR_SHOW_MAXIMIZE,false);
         getRootPane().putClientProperty(FlatClientProperties.TITLE_BAR_SHOW_ICON,true);
         getRootPane().putClientProperty(FlatClientProperties.TITLE_BAR_SHOW_ICONIFFY,true);
-        FlatSVGIcon icon=new FlatSVGIcon("png/bluebell.svg");
-        setIconImage(icon.getImage());
-        setTitle("Gráficos Iris");
-        setSize(610, 340);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
-        
-            JLabel label= new JLabel("LUGAR DEL GRAFICO 3");
-            JPanel panelGrafico = crearPanelGrafico(1);
-            cardPanel.add(panelGrafico, "Grafico 1");
-            JPanel panelGrafico2 = crearPanelGrafico(2);
-            cardPanel.add(panelGrafico2, "Grafico 2");
-            JPanel panelGrafico3 = crearPanelGrafico(3);
-            cardPanel.add(label);
-            JPanel panelGrafico4 = crearPanelGrafico(4);
-            cardPanel.add(panelGrafico4, "Grafico 4");
-            JPanel panelGrafico5 = crearPanelGrafico(5);
-            cardPanel.add(panelGrafico5, "Grafico 5");
-        
-        
-
-        // Panel para el gráfico
-       
-
-        // Agregar botones al panel de botones
-        
-
-        // Crear y agregar el gráfico al panel fuego
-        
-
-        // Acción para ampliar el gráfico
-        /*zoomButton.addActionListener(e -> {
-            JFrame zoomFrame = new JFrame("Gráfico Ampliado");
-            zoomFrame.setSize(800, 600);
-            zoomFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            JPanel zoomPanel = new JPanel(new BorderLayout());
-            zoomFrame.add(zoomPanel);
-            createChart(zoomPanel);
-            zoomFrame.setVisible(true);
-        });*/
+        UIControllers.design();
+        JPanel blankPanel1 = new JPanel();
+        JPanel blankPanel2 = new JPanel();
+        blankPanel1.setBackground(Color.white);
+        blankPanel2.setBackground(Color.white);
+        JPanel panelGrafico = crearPanelGrafico(1);
+        cardPanel.add(panelGrafico, "Grafico 1");
+        JPanel panelGrafico2 = crearPanelGrafico(2);
+        cardPanel.add(panelGrafico2, "Grafico 2");
+        cardPanel.add(blankPanel1);
+        cardPanel.add(blankPanel2);
     }
+    
+    
      public void Flatlaf()
     {
         SwingUtilities.invokeLater(() -> {
             try {
                 UIManager.setLookAndFeel(new FlatMacLightLaf());
                 SwingUtilities.updateComponentTreeUI(this);
-                /*placeHolder("     Ancho del petalo", FieldAnchoPetalo);
-                placeHolder("   Longitud del sepalo", FieldLongitudSepalo);
-                placeHolder("     Ancho del sepalo", FieldAnchoSepalo);
-                placeHolder("   Longitud del petalo", FieldLongitudPetalo);
-*/
+                
             } catch (UnsupportedLookAndFeelException ex) {
                 Logger.getLogger(Trainer.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
     }
-     
-     private void setFontFamily(String fontFamily)
-    {
-        java.awt.Font font = UIManager.getFont("defaultFont");
-        java.awt.Font newFont=FontUtils.getCompositeFont(fontFamily, font.getStyle(),font.getSize());
-        UIManager.put("defaultFont", newFont);
-        FlatLaf.updateUI();
-        FlatAnimatedLafChange.hideSnapshotWithAnimation();
-        
-    }
-     
+     //crear los graficos de prueba
      private JPanel crearPanelGrafico(int numeroGrafico) {
         // Crear una serie de datos
         XYSeries series = new XYSeries("Datos");
-
         // Generar datos aleatorios para el gráfico
         Random rand = new Random(numeroGrafico); // Semilla para gráficos diferentes
         for (int i = 0; i < 10; i++) {
             series.add(i, rand.nextDouble() * 100);
         }
-
         // Crear un conjunto de datos
         XYSeriesCollection dataset = new XYSeriesCollection();
         dataset.addSeries(series);
-
         // Crear el gráfico de líneas
         JFreeChart chart = ChartFactory.createXYLineChart(
                 "Gráfico " + numeroGrafico, // Título
@@ -146,56 +99,24 @@ public class Trainer extends javax.swing.JFrame {
                 true,
                 false
         );
-
-         // Método para añadir anotaciones (etiquetas) al gráfico
-
-    
-
+        // Método para añadir anotaciones (etiquetas) al gráfico
         // Personalizar el gráfico
         XYPlot plot = chart.getXYPlot();
-        addAnnotations(plot, numeroGrafico);
         plot.setBackgroundPaint(Color.WHITE); // Fondo blanco
         plot.setDomainGridlinePaint(Color.LIGHT_GRAY); // Líneas de la cuadrícula
         plot.setRangeGridlinePaint(Color.LIGHT_GRAY);
-
         XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
         renderer.setSeriesPaint(0, Color.BLUE); // Línea azul
         plot.setRenderer(renderer);
-
         // Crear un panel para el gráfico
         ChartPanel chartPanel = new ChartPanel(chart);
         chartPanel.setPreferredSize(new Dimension(540, 280));
-        
-        JPanel panel= new JPanel(new BorderLayout());
+        JPanel panel = new JPanel(new BorderLayout());
         panel.add(chartPanel, BorderLayout.CENTER);
         return panel;
-        
-        
     }
      
-     private static void addAnnotations(XYPlot plot, int graphNumber) {
-        XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer) plot.getRenderer();
-
-        // Añadir etiquetas personalizadas
-        switch (graphNumber) {
-            case 1:
-                System.out.println("graph 1");
-                renderer.addAnnotation(new XYTextAnnotation("Info Gráfico 1 (50%)", 5, 50));
-                break;
-            case 2:
-                System.out.println("graph 2");
-                renderer.addAnnotation(new XYTextAnnotation("Info Gráfico 2 (75%)", 5, 200));
-                break;
-            case 3:
-                System.out.println("graph 3");
-                renderer.addAnnotation(new XYTextAnnotation("Info Gráfico 3 (90%)", 5, 500));
-                break;
-            case 4:
-                System.out.println("graph 4");
-                renderer.addAnnotation(new XYTextAnnotation("Info Gráfico 4 (100%)", 5, 1000));
-                break;
-        }
-    }
+     
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -229,7 +150,7 @@ public class Trainer extends javax.swing.JFrame {
 
         buttonGraph1.setBackground(new java.awt.Color(255, 255, 255));
         buttonGraph1.setForeground(new java.awt.Color(0, 0, 0));
-        buttonGraph1.setText("Grafico4");
+        buttonGraph1.setText("panel2");
         buttonGraph1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonGraph1ActionPerformed(evt);
@@ -259,7 +180,7 @@ public class Trainer extends javax.swing.JFrame {
 
         buttonGraph4.setBackground(new java.awt.Color(255, 255, 255));
         buttonGraph4.setForeground(new java.awt.Color(0, 0, 0));
-        buttonGraph4.setText("Grafico3");
+        buttonGraph4.setText("panel");
         buttonGraph4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonGraph4ActionPerformed(evt);
@@ -286,28 +207,21 @@ public class Trainer extends javax.swing.JFrame {
     private void buttonGraph2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonGraph2ActionPerformed
        CardLayout c1= (CardLayout)(cardPanel.getLayout());
         c1.show(cardPanel, "Grafico 1");
-        
-        
-        System.out.println("annadiendo grafico 1");
     }//GEN-LAST:event_buttonGraph2ActionPerformed
 
     private void buttonGraph3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonGraph3ActionPerformed
         CardLayout c2= (CardLayout)(cardPanel.getLayout());
         c2.show(cardPanel, "Grafico 2");
-        System.out.println("annadiendo grafico 2");
-        
     }//GEN-LAST:event_buttonGraph3ActionPerformed
 
     private void buttonGraph4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonGraph4ActionPerformed
         CardLayout c3= (CardLayout)(cardPanel.getLayout());
-        c3.show(cardPanel, "Grafico 3");
-        System.out.println("annadiendo grafico 3");
+        c3.show(cardPanel,"");
     }//GEN-LAST:event_buttonGraph4ActionPerformed
 
     private void buttonGraph1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonGraph1ActionPerformed
         CardLayout c4= (CardLayout)(cardPanel.getLayout());
-        c4.show(cardPanel, "Grafico 4");
-        System.out.println("annadiendo grafico 4");
+        c4.show(cardPanel, "");
     }//GEN-LAST:event_buttonGraph1ActionPerformed
 
     private void buttonBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBackActionPerformed
