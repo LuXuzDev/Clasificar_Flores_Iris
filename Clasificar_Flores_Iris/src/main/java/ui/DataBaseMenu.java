@@ -100,6 +100,7 @@ public class DataBaseMenu extends javax.swing.JFrame {
                         UIControllers.Filename = path2;
                         //nombre del archivo esta variable da arriba uicontrollers.filename
                         new ModifyDataset(datos).setVisible(true);
+                        
                     } else {
                         JOptionPane.showMessageDialog(null, "Debe seleccionar en la lista un dataset para modificar", "Informacion", JOptionPane.INFORMATION_MESSAGE, icon2);
                     }
@@ -327,7 +328,9 @@ public class DataBaseMenu extends javax.swing.JFrame {
                 //addStringList(arrayq me pasas tu);
             try {
                 System.out.println("Path2" +path2);
+                UIControllers.Filename=path2;
                 new ModifyDataset(Controller.getInstance().fileContent(path2)).setVisible(true);
+                
                 this.dispose();
             } catch (Exception ex) {
                 Logger.getLogger(DataBaseMenu.class.getName()).log(Level.SEVERE, null, ex);

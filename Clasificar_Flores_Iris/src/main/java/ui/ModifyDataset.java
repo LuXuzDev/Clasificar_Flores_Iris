@@ -30,7 +30,6 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ModifyDataset extends javax.swing.JFrame {
 
-    //DefaultTableModel model = new DefaultTableModel();
     String[] columnas={"Ancho petalo","Longitud petalo","Ancho sepalo","Longitud sepalo","Resultado"};
     DefaultTableModel model = new DefaultTableModel(columnas, 0) {
         @Override
@@ -47,8 +46,7 @@ public class ModifyDataset extends javax.swing.JFrame {
         data=datos;
         initComponents();
         design();
-        //haz una funcion q me devuelva el string q es el nombre del archivo seleecionado para mostrar en el label de abajo
-        //labelIndication.setText("Archivo cargado: "+);
+        labelIndication.setText("Archivo cargado: "+UIControllers.Filename);
         if(data.isEmpty() || data.get(0).isBlank())
         {
             datasetTabel(data);
@@ -275,14 +273,16 @@ public class ModifyDataset extends javax.swing.JFrame {
 
     private void buttonEnterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEnterActionPerformed
         
-        int ultimo=0;
+        int ultimo=data.size();
         String[] botones = {"Si", "No"};
         FlatSVGIcon icon2=new FlatSVGIcon("png/bluebell.svg");
         if (data.isEmpty() || data.get(0).isBlank()) {
             if (Validator.isCorrectInputOnlyNumbers(widhLeaf.getText()) && Validator.isCorrectInputOnlyNumbers(widthStem.getText()) && Validator.isCorrectInputOnlyNumbers(LongLeaf.getText()) && Validator.isCorrectInputOnlyNumbers(LongStem.getText()) && ComboBoxIris.getSelectedItem() != " ") {
-                Object[] fila3 = {widhLeaf.getText(), LongLeaf.getText(), widthStem.getText(), LongStem.getText(), ComboBoxIris.getSelectedItem().toString()};
-                model.addRow(fila3);
-                
+                //esto es el caso si la tabla esta vacia 
+                //UIcontrollers.filename=nombre del archivo
+                //data=array
+                //la funcion de rellenar tabla
+                JOptionPane.showMessageDialog(null, "Datos guardados exitosamente", "Informacion", JOptionPane.INFORMATION_MESSAGE, icon2);
             } else {
                 JOptionPane.showMessageDialog(null, "Debe Introducir datos correctos para agregar al dataset", "Informacion", JOptionPane.INFORMATION_MESSAGE, icon2);
             }
@@ -292,10 +292,20 @@ public class ModifyDataset extends javax.swing.JFrame {
             if (Validator.isCorrectInputOnlyNumbers(widhLeaf.getText()) && Validator.isCorrectInputOnlyNumbers(widthStem.getText()) && Validator.isCorrectInputOnlyNumbers(LongLeaf.getText()) && Validator.isCorrectInputOnlyNumbers(LongStem.getText()) && ComboBoxIris.getSelectedItem() != " ") {
                 int resultado = JOptionPane.showOptionDialog(null, "Desea guardrar los cambios realizados", "Guardar cambios", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, icon2, botones, botones[0]);
                 if (resultado == JOptionPane.YES_OPTION) {
-                    addData(ultimo);
-                    returnDataset(data);
+                    if(Validator.MaxTam(data)==true)
+                    {
+                        JOptionPane.showMessageDialog(null, "Este es el ultimo cambio que puede guadar.Solo hasta 10 modificaciones", "Informacion", JOptionPane.INFORMATION_MESSAGE, icon2);
+                    }
+                    else
+                    {
+                        //esto es el caso si la tabla tiene elemtnos 
+                        //UIcontrollers.filename=nombre del archivo
+                        //data=arraydevalores
+                        //la funcion de rellenar tabla
+                        JOptionPane.showMessageDialog(null, "Datos guardados exitosamente", "Informacion", JOptionPane.INFORMATION_MESSAGE, icon2);
+                    }
                 } else {
-                    returnDataset(data);
+                    JOptionPane.showMessageDialog(null, "No se guardaron los cambios", "Informacion", JOptionPane.INFORMATION_MESSAGE, icon2);
                 }
                 
             } else {
