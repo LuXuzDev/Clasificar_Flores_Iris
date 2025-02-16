@@ -144,7 +144,8 @@ public class JOptionpane extends javax.swing.JDialog {
                 UIManager.setLookAndFeel(new FlatMacLightLaf());
                 SwingUtilities.updateComponentTreeUI(this);
             } catch (UnsupportedLookAndFeelException ex) {
-                Logger.getLogger(InitMenu.class.getName()).log(Level.SEVERE, null, ex);
+                //funcion q mamda joption pane con el string como mensaje deljoption pane
+                //UIControllers.JOptioncatch(String);
             }
         });
     }

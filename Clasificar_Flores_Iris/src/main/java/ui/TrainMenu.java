@@ -5,6 +5,7 @@
 package ui;
 
 import back_end.Controller;
+import back_end.Validator;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
@@ -44,7 +45,8 @@ public class TrainMenu extends javax.swing.JFrame {
                 UIManager.setLookAndFeel(new FlatMacLightLaf());
                 SwingUtilities.updateComponentTreeUI(this);
             } catch (UnsupportedLookAndFeelException ex) {
-                Logger.getLogger(TrainMenu.class.getName()).log(Level.SEVERE, null, ex);
+                //funcion q mamda joption pane con el string como mensaje deljoption pane
+                //UIControllers.JOptioncatch(String);
             }
         });
     }
@@ -68,10 +70,11 @@ public class TrainMenu extends javax.swing.JFrame {
         buttonBack = new javax.swing.JButton();
         buttonEstadis = new javax.swing.JButton();
         buttonTrain = new javax.swing.JButton();
-        buttonLoadTrain = new javax.swing.JButton();
+        buttonLoadDataset = new javax.swing.JButton();
         LabelIcon = new javax.swing.JLabel();
         LabelIndicationTrain = new javax.swing.JLabel();
         LabelResult = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Iris");
@@ -109,18 +112,34 @@ public class TrainMenu extends javax.swing.JFrame {
         });
         jPanel1.add(buttonTrain, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 160, 30));
 
-        buttonLoadTrain.setBackground(new java.awt.Color(255, 255, 255));
-        buttonLoadTrain.setForeground(new java.awt.Color(0, 0, 0));
-        buttonLoadTrain.setText("Cargar dataset");
-        buttonLoadTrain.addActionListener(new java.awt.event.ActionListener() {
+        buttonLoadDataset.setBackground(new java.awt.Color(255, 255, 255));
+        buttonLoadDataset.setForeground(new java.awt.Color(0, 0, 0));
+        buttonLoadDataset.setText("Cargar dataset");
+        buttonLoadDataset.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonLoadTrainActionPerformed(evt);
+                buttonLoadDatasetActionPerformed(evt);
             }
         });
-        jPanel1.add(buttonLoadTrain, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 160, 30));
+        jPanel1.add(buttonLoadDataset, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 160, 30));
         jPanel1.add(LabelIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 90, 40, 30));
-        jPanel1.add(LabelIndicationTrain, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 40, 160, 30));
-        jPanel1.add(LabelResult, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 90, 160, 20));
+
+        LabelIndicationTrain.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        LabelIndicationTrain.setForeground(new java.awt.Color(102, 153, 255));
+        LabelIndicationTrain.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jPanel1.add(LabelIndicationTrain, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 40, 160, 20));
+
+        LabelResult.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        LabelResult.setForeground(new java.awt.Color(102, 153, 255));
+        LabelResult.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jPanel1.add(LabelResult, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 70, 160, 20));
+
+        jButton1.setText("Cargar Entrenamiento");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 140, 160, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -146,7 +165,7 @@ public class TrainMenu extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_buttonBackActionPerformed
 
-    private void buttonLoadTrainActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonLoadTrainActionPerformed
+    private void buttonLoadDatasetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonLoadDatasetActionPerformed
         UIControllers.NumberOptionPane=1;
         new JOptionpane(this,true).setVisible(true);
         FlatSVGIcon icon=new FlatSVGIcon("png/bluebell.svg");
@@ -155,20 +174,32 @@ public class TrainMenu extends javax.swing.JFrame {
             LabelResult.setText("");
         } else if (UIControllers.JoptionCombo==true) {
             JOptionPane.showOptionDialog(null, "Datos cargados correctamente", "Dataset", JOptionPane.CLOSED_OPTION, JOptionPane.INFORMATION_MESSAGE, icon, null, null);
-            LabelIndicationTrain.setText("Dataset cargados:");
-            LabelResult.setText(UIControllers.ComboboxName);
+            LabelIndicationTrain.setText("Dataset Cargado: "+UIControllers.ComboboxName);
         }
 
-    }//GEN-LAST:event_buttonLoadTrainActionPerformed
+    }//GEN-LAST:event_buttonLoadDatasetActionPerformed
 
     private void buttonTrainActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonTrainActionPerformed
         FlatSVGIcon icon = new FlatSVGIcon("png/bluebell.svg");
-        if (!LabelIcon.isVisible()) {
-            controller.train();
+        if (!Validator.isEmptyInput(LabelIndicationTrain.getText())) {
+            //controller.train();
+            LabelResult.setText("Entrenamiento cargado: "+UIControllers.ComboboxName);
         } else {
             JOptionPane.showOptionDialog(null, "No se puede entrenar debe cargar dataset primero", "Entrenamiento", JOptionPane.CLOSED_OPTION, JOptionPane.INFORMATION_MESSAGE, icon, null, null);
         }
     }//GEN-LAST:event_buttonTrainActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        FlatSVGIcon icon = new FlatSVGIcon("png/bluebell.svg");
+        if(!Validator.isEmptyInput(LabelIndicationTrain.getText()) && !Validator.isEmptyInput(LabelResult.getText()))
+        {
+            JOptionPane.showOptionDialog(null, "No se puede cargar entrenamiento debe cargar dataset y entrenar primero", "Cargar entrenamiento", JOptionPane.CLOSED_OPTION, JOptionPane.INFORMATION_MESSAGE, icon, null, null);
+        }
+        else
+        {
+            JOptionPane.showOptionDialog(null, "Entrenamiento cargado correctamente", "Cargar entrenamiento", JOptionPane.CLOSED_OPTION, JOptionPane.INFORMATION_MESSAGE, icon, null, null);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -211,8 +242,9 @@ public class TrainMenu extends javax.swing.JFrame {
     private javax.swing.JLabel LabelResult;
     private javax.swing.JButton buttonBack;
     private javax.swing.JButton buttonEstadis;
-    private javax.swing.JButton buttonLoadTrain;
+    private javax.swing.JButton buttonLoadDataset;
     private javax.swing.JButton buttonTrain;
+    private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }

@@ -93,7 +93,8 @@ public class ModifyDataset extends javax.swing.JFrame {
                 UIManager.setLookAndFeel(new FlatMacLightLaf());
                 SwingUtilities.updateComponentTreeUI(this);
             } catch (UnsupportedLookAndFeelException ex) {
-                Logger.getLogger(InitMenu.class.getName()).log(Level.SEVERE, null, ex);
+                //funcion q mamda joption pane con el string como mensaje deljoption pane
+                //UIControllers.JOptioncatch(String);
             }
         });
     }
@@ -146,26 +147,7 @@ public class ModifyDataset extends javax.swing.JFrame {
     {
         field.putClientProperty("JComponent.outline","error");
     }
-    //funcion para obtener el ultimo valor agregado en el arreglo
-    private int lastIndex(ArrayList<String> arreglo)
-    {
-        int i=0;
-        int j=0;
-        int retorno=0;
-        boolean end=true;
-        
-        
-        for(i=0;i<arreglo.size() && end==true;i++)
-        {
-           if(arreglo.get(i).isEmpty() || arreglo.get(i).isBlank())
-           {
-               end=false;
-               retorno=i;
-           }
-        }
-        return retorno;
-    }
-    
+ 
     //get de array con la informacion agregada
     private ArrayList<String> returnDataset(ArrayList<String> array)
     {
@@ -176,14 +158,9 @@ public class ModifyDataset extends javax.swing.JFrame {
     private ArrayList<String> addData(int ultimo)
     {
         FlatSVGIcon icon2 = new FlatSVGIcon("png/bluebell.svg");
-        ultimo = lastIndex(data);
         data.add(widhLeaf.getText()+","+LongLeaf.getText()+","+widthStem.getText()+","+LongStem.getText()+","+ComboBoxIris.getSelectedItem().toString());
         model.setRowCount(0);
         datasetTabel(data);
-        if (ultimo == 160) {
-            JOptionPane.showMessageDialog(null, "Ya alcanzo el maximo de elementos a agregar en el dataset", "Advertencia", JOptionPane.INFORMATION_MESSAGE, icon2);
-            buttonEnter.setEnabled(false);
-        }
         System.out.println(data.size());
         return data;
     }
@@ -297,6 +274,7 @@ public class ModifyDataset extends javax.swing.JFrame {
                     if(Validator.MaxTam(data)==true)
                     {
                         JOptionPane.showMessageDialog(null, "Este es el ultimo cambio que puede guadar.Solo hasta 10 modificaciones", "Informacion", JOptionPane.INFORMATION_MESSAGE, icon2);
+                        buttonEnter.setEnabled(false);
                     }
                     else
                     {

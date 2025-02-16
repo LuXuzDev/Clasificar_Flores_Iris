@@ -72,7 +72,8 @@ public class Trainer extends javax.swing.JFrame {
                 SwingUtilities.updateComponentTreeUI(this);
                 
             } catch (UnsupportedLookAndFeelException ex) {
-                Logger.getLogger(Trainer.class.getName()).log(Level.SEVERE, null, ex);
+                //funcion q mamda joption pane con el string como mensaje deljoption pane
+                //UIControllers.JOptioncatch(String);
             }
         });
     }
