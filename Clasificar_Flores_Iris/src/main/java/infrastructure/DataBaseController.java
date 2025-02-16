@@ -5,7 +5,7 @@
 package infrastructure;
 
 import java.io.File;
-import java.net.URISyntaxException;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -13,20 +13,49 @@ import java.util.ArrayList;
  * @author Angel Hernandez
  */
 public class DataBaseController {
-    private ArrayList<File> files;
-
+    private static ArrayList<File> files;
+    static String packagePath = "src/main/java/dataBase_DataSet";
     
     public DataBaseController()
     {
-        files=new ArrayList<>();
-        String filePath1 = "C:\\Users\\Angel Hernandez\\Documents\\WorkSpace\\JAVA\\Clasificar_Flores_Iris\\Clasificar_Flores_Iris\\src\\main\\java\\dataBase\\irsi.data";
-        String filePath2 = "C:\\Users\\Angel Hernandez\\Documents\\WorkSpace\\JAVA\\Clasificar_Flores_Iris\\Clasificar_Flores_Iris\\src\\main\\java\\dataBase\\pruebaAdrian.data";
-
+        files = new ArrayList<>();
         
-        File file1 = new File(filePath1);
-        File file2 = new File(filePath2);
+    }
+    
 
-        files.add(file1);
-        files.add(file2);   
+    public static ArrayList<File> getFilesInPackage() {
+        ArrayList<File> fileList = new ArrayList<>();
+        File directory = new File(packagePath);
+
+        if (directory.exists() && directory.isDirectory()) {
+            File[] filesInPackage = directory.listFiles();
+            if (filesInPackage != null) {
+                for (File file : filesInPackage) {
+                    if (file.isFile()) {
+                        fileList.add(file);
+                        updateFile(file);
+                    }
+                }
+            }
+        }
+        else
+            System.out.println("El directorio no existe");
+        return fileList;
+    }
+
+    
+    private static void updateFile(File file) {
+        
+        if (files!= null && !files.contains(file)) 
+            files.add(file);
+        
+    }
+    
+    
+    public void createFile(String directionURL) throws IOException
+    {
+        File file = HandleFiles.newFile(directionURL);
+        files.add(file);   
+        System.out.println("Archivo creado");
     }
 }

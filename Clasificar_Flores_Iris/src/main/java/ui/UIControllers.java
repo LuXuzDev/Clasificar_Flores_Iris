@@ -43,7 +43,6 @@ public class UIControllers {
         UIManager.put("defaultFont", newFont);
         FlatLaf.updateUI();
         FlatAnimatedLafChange.hideSnapshotWithAnimation();
-        
     }
     
     public static FlatSVGIcon design()
