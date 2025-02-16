@@ -7,13 +7,16 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import back_end.Validator;
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import java.util.List;
 import neuralNetwork.NeuralNetwork;
 
 public class HandleFiles {
     
-final static String RUTA_DATA_BASE = "D:/Documents/GitHub/Clasificar_Flores_Iris/Clasificar_Flores_Iris/src/main/java/dataBase/";
-final static String RUTA_TRAINNER = "D:/Documents/GitHub/Clasificar_Flores_Iris/Clasificar_Flores_Iris/src/main/java/dataBase_Trainings";
+private final static String RUTA_DATA_BASE = "src/main/java/dataBase_DataSet/";
+private final static String RUTA_TRAINNER = "src/main/java/dataBase_Trainings/";
+
+
   public static File newFile(String fileName) throws IOException {
         
         PrintWriter salida = null;
@@ -79,6 +82,19 @@ final static String RUTA_TRAINNER = "D:/Documents/GitHub/Clasificar_Flores_Iris/
         } catch (IOException ex) {
             System.err.println("Error al eliminar el archivo: " + RUTA_DATA_BASE + ex.getMessage());
             throw ex;
+        }
+    }
+    
+    public static void copyFile(String sourcePath) {
+        Path source = Paths.get(sourcePath);
+        Path target = Paths.get(RUTA_DATA_BASE + source.getFileName());
+        
+        try {
+            Files.copy(source, target, REPLACE_EXISTING);
+            System.out.println("Archivo copiado exitosamente");
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Error al copiar el archivo: " );
         }
     }
 

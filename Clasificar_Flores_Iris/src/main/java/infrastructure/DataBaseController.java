@@ -13,13 +13,12 @@ import java.util.ArrayList;
  * @author Angel Hernandez
  */
 public class DataBaseController {
-    private static ArrayList<File> files;
+    private static ArrayList<File> files  = new ArrayList<>();;
     static String packagePath = "src/main/java/dataBase_DataSet";
     
     public DataBaseController()
     {
-        files = new ArrayList<>();
-        
+
     }
     
 
@@ -51,11 +50,59 @@ public class DataBaseController {
         
     }
     
+    public static File findFile(String name) {
+        int i = 0;
+
+        boolean founded = false;
+        File file = null;
+        while (i < files.size() && !founded) {
+            if (!files.get(i).getName().equals(name)) i++;
+            else {
+                founded = true;
+                file = files.get(i);
+            }
+        }
+        return file;
+    }
     
-    public void createFile(String directionURL) throws IOException
+    
+    public static void createFile(String name) throws IOException
     {
-        File file = HandleFiles.newFile(directionURL);
+        System.out.println("Creando archivo");
+        File file = HandleFiles.newFile(name);
         files.add(file);   
-        System.out.println("Archivo creado");
+        System.out.println("Archivo creado "+ file.getPath() );
+    }
+    
+    
+    public static void deleteFile(String name) throws Exception
+    {
+        File file = findFile(name);
+        if(file==null)
+            throw new Exception("El archivo no existe");
+        
+        HandleFiles.deleteFiles(name);
+    }
+    
+    public static void loadFile(String path)
+    {
+        HandleFiles.copyFile(path);
+    }
+    
+    public static ArrayList<String> fileContent(String name) throws Exception
+    {
+        File file = findFile(name);
+        if(file==null)
+            throw new Exception("El archivo no existe");
+        return HandleFiles.readFiles(name);
+    }
+    
+    public static ArrayList<String> editFile(String line,String name) throws Exception  
+    {
+        File file = findFile(name);
+        if(file==null)
+            throw new Exception("El archivo no existe");
+        HandleFiles.writerFiles(name, line);
+        return HandleFiles.readFiles(name);
     }
 }

@@ -4,6 +4,7 @@
  */
 package ui;
 
+import back_end.Controller;
 import back_end.Validator;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
@@ -16,6 +17,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -44,12 +46,15 @@ public class DataBaseMenu extends javax.swing.JFrame {
     private DefaultListModel<String> listModel= new DefaultListModel<>();
     private static ArrayList<String> datos= new ArrayList<>(160);
     private boolean trainCheck=false;
+
     
  
     public DataBaseMenu() {
         initComponents();
         design();
         
+         
+        addStringList(Controller.getInstance().loadedFilesName());
         //funcion para llenar la jlist pasame un array de string con los nombres
         //addStringList(array);
         
@@ -123,23 +128,30 @@ public class DataBaseMenu extends javax.swing.JFrame {
             }
         });
     }
-     //cargar lista de nombres de ficheros para el JList
-     public void addStringList(ArrayList<String> path)
-     {
-         
-         if (Validator.ListInstanceOf(ListTrain)) {
-             listModel = (DefaultListModel<String>) ListTrain.getModel();
-         } else {
-             listModel = new DefaultListModel<>();
-             ListTrain.setModel(listModel);
-         }
-         for(int i=0;i<path.size();i++)
-         {
-             listModel.add(i, path.get(i));
-         }
-     }
      
-      public void createTable(boolean add,String filename)
+     
+     //cargar lista de nombres de ficheros para el JList
+     public void addStringList(ArrayList<String> path) {
+
+        // Verifica si ListTrain tiene un modelo de lista
+        if (Validator.ListInstanceOf(ListTrain)) {
+            listModel = (DefaultListModel<String>) ListTrain.getModel();
+        } else {
+            listModel = new DefaultListModel<>();
+            ListTrain.setModel(listModel);
+        }
+
+        // Vacía el modelo de lista antes de cargar nuevos elementos
+        listModel.clear();
+
+        // Agrega los nuevos elementos desde la lista path
+        for (int i = 0; i < path.size(); i++) {
+            listModel.add(i, path.get(i));
+        }
+    }
+     
+     
+    public void createTable(boolean add,String filename)
     {
         if(add==true)
         {
@@ -297,7 +309,8 @@ public class DataBaseMenu extends javax.swing.JFrame {
                     
                 }
                 //aqui va la funcion q devuelve arrayString te mando la ruta del archivo path
-                
+                Controller.getInstance().loadFile(path);
+                addStringList(Controller.getInstance().loadedFilesName());
 
         } else {
             JOptionPane.showMessageDialog(null, "No se selecciono ningun archivo", "Error", JOptionPane.ERROR_MESSAGE, icon);
@@ -312,9 +325,15 @@ public class DataBaseMenu extends javax.swing.JFrame {
                 String path2 = ListTrain.getSelectedValue().toString();
                 //funcion q me pasas un array y relleno la tabla
                 //addStringList(arrayq me pasas tu);
-                //path2=nombredelarchivoseleccionado
-                new ModifyDataset(datos).setVisible(true);
+            try {
+                System.out.println("Path2" +path2);
+                new ModifyDataset(Controller.getInstance().fileContent(path2)).setVisible(true);
                 this.dispose();
+            } catch (Exception ex) {
+                Logger.getLogger(DataBaseMenu.class.getName()).log(Level.SEVERE, null, ex);
+            }
+                //path2=nombredelarchivoseleccionado
+               
             } else {
                 JOptionPane.showMessageDialog(null, "Debe seleccionar en la lista un dataset para modificar", "Informacion", JOptionPane.INFORMATION_MESSAGE, icon2);
             }
@@ -332,7 +351,13 @@ public class DataBaseMenu extends javax.swing.JFrame {
             LabelSuccess.setText("Archivo cargado");
             restartTimer();
             
-            //variable q tiene el nombre del archivo creado UIControllers.filename
+            try {
+                //variable q tiene el nombre del archivo creado UIControllers.filename
+                Controller.getInstance().createFile(UIControllers.Filename);
+                addStringList(Controller.getInstance().loadedFilesName());
+            } catch (IOException ex) {
+                System.out.println("Captura la excepcion");
+            }
         }
     }//GEN-LAST:event_ButtonCreateActionPerformed
 
@@ -349,6 +374,12 @@ public class DataBaseMenu extends javax.swing.JFrame {
             if (Validator.YesOptionJOption(result) && Validator.checkList(ListTrain)) {
                 String selectedValue = ListTrain.getSelectedValue();
                 //funcion q elimina y actualiza te paso el nombre dela archivo (selectedvalue)
+                try {
+                    Controller.getInstance().deleteFile(selectedValue);
+                    addStringList(Controller.getInstance().loadedFilesName());
+                } catch (Exception ex) {
+                    Logger.getLogger(DataBaseMenu.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         } else {
             JOptionPane.showMessageDialog(null, "Debe seleccionar en la lista un dataset para eliminarlo", "Informacion", JOptionPane.INFORMATION_MESSAGE, icon2);

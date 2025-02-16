@@ -25,9 +25,7 @@ import javax.swing.event.DocumentListener;
 public class InitMenu extends javax.swing.JFrame {
 
 
-    //Attributes
-   private Controller controller;
-    
+
     
   
     public InitMenu() {
@@ -38,8 +36,7 @@ public class InitMenu extends javax.swing.JFrame {
     //funcion para diseño general del Jframe
     private void design()
     {
-        controller = new Controller();
-        controller.train();
+        Controller.getInstance().train();
         Flatlaf();
         UIControllers.setFontFamily("Arial");
         setIconImage(UIControllers.design().getImage());
@@ -135,7 +132,7 @@ public class InitMenu extends javax.swing.JFrame {
                     }
                     SwingUtilities.invokeLater(()->restart());
                     
-                    jLabel_Resultado.setText(controller.flowerType(FieldLongitudSepalo.getText(),FieldAnchoSepalo.getText()
+                    jLabel_Resultado.setText(Controller.getInstance().flowerType(FieldLongitudSepalo.getText(),FieldAnchoSepalo.getText()
                                                 ,FieldLongitudPetalo.getText(), FieldAnchoPetalo.getText()));
                 }
             }).start();
