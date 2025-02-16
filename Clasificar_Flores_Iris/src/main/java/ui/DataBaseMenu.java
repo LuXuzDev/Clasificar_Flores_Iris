@@ -118,6 +118,7 @@ public class DataBaseMenu extends javax.swing.JFrame {
     
      public void Flatlaf()
     {
+        
         SwingUtilities.invokeLater(() -> {
             try {
                 UIManager.setLookAndFeel(new FlatMacLightLaf());
@@ -125,7 +126,8 @@ public class DataBaseMenu extends javax.swing.JFrame {
                 
 
             } catch (UnsupportedLookAndFeelException ex) {
-                Logger.getLogger(DataBaseMenu.class.getName()).log(Level.SEVERE, null, ex);
+                //funcion q mamda joption pane con el string como mensaje deljoption pane
+                //UIControllers.JOptioncatch(String);
             }
         });
     }
@@ -330,15 +332,15 @@ public class DataBaseMenu extends javax.swing.JFrame {
                 System.out.println("Path2" +path2);
                 UIControllers.Filename=path2;
                 new ModifyDataset(Controller.getInstance().fileContent(path2)).setVisible(true);
-                
                 this.dispose();
             } catch (Exception ex) {
-                Logger.getLogger(DataBaseMenu.class.getName()).log(Level.SEVERE, null, ex);
+                //funcion q mamda joption pane con el string como mensaje deljoption pane
+                //UIControllers.JOptioncatch(String);
             }
                 //path2=nombredelarchivoseleccionado
                
             } else {
-                JOptionPane.showMessageDialog(null, "Debe seleccionar en la lista un dataset para modificar", "Informacion", JOptionPane.INFORMATION_MESSAGE, icon2);
+                JOptionPane.showMessageDialog(null, "Debe seleccionar en la lista un dataset para modificar", "Error", JOptionPane.INFORMATION_MESSAGE, icon2);
             }
         
         
@@ -346,6 +348,7 @@ public class DataBaseMenu extends javax.swing.JFrame {
 
     private void ButtonCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonCreateActionPerformed
         UIControllers.NumberOptionPane=2;
+        FlatSVGIcon icon2=new FlatSVGIcon("png/bluebell.svg");
         JOptionpane pane = new JOptionpane(this, true);
         pane.setVisible(true);
         if(UIControllers.Joption==true)
@@ -360,7 +363,8 @@ public class DataBaseMenu extends javax.swing.JFrame {
                 Controller.getInstance().createFile(UIControllers.Filename);
                 addStringList(Controller.getInstance().loadedFilesName());
             } catch (IOException ex) {
-                System.out.println("Captura la excepcion");
+                //funcion q mamda joption pane con el string como mensaje deljoption pane
+                //UIControllers.JOptioncatch(String);
             }
         }
     }//GEN-LAST:event_ButtonCreateActionPerformed
@@ -382,7 +386,8 @@ public class DataBaseMenu extends javax.swing.JFrame {
                     Controller.getInstance().deleteFile(selectedValue);
                     addStringList(Controller.getInstance().loadedFilesName());
                 } catch (Exception ex) {
-                    Logger.getLogger(DataBaseMenu.class.getName()).log(Level.SEVERE, null, ex);
+                    //funcion q mamda joption pane con el string como mensaje deljoption pane
+                    //UIControllers.JOptioncatch(String);
                 }
             }
         } else {

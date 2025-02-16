@@ -87,7 +87,7 @@ public class InitMenu extends javax.swing.JFrame {
         });
     }
 
-    //funcion para revisar el jText field y poner el background ..
+    //funcion para revisar el jText field y poner el background 
     private void check(JTextField field)
     {
         if (!Validator.isCorrectInputOnlyNumbers(field.getText())) {
@@ -166,7 +166,8 @@ public class InitMenu extends javax.swing.JFrame {
                 UIManager.setLookAndFeel(new FlatMacLightLaf());
                 SwingUtilities.updateComponentTreeUI(this);
             } catch (UnsupportedLookAndFeelException ex) {
-                Logger.getLogger(InitMenu.class.getName()).log(Level.SEVERE, null, ex);
+                //funcion q mamda joption pane con el string como mensaje deljoption pane
+                //UIControllers.JOptioncatch(String);
             }
         });
     }

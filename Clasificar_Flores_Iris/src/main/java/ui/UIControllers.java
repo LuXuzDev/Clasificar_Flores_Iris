@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -52,6 +53,11 @@ public class UIControllers {
         return icon;
     }
     
+    public static void JOptioncatch(String error)
+    {
+        FlatSVGIcon icon2 = new FlatSVGIcon("png/bluebell.svg");
+        JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.INFORMATION_MESSAGE, icon2);
+    }
     
 }
 
