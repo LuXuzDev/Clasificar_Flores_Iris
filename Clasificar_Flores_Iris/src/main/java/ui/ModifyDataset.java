@@ -165,11 +165,13 @@ public class ModifyDataset extends javax.swing.JFrame {
         }
         return retorno;
     }
+    
     //get de array con la informacion agregada
     private ArrayList<String> returnDataset(ArrayList<String> array)
     {
         return array;
     }
+    
     //funcion para agregar a el array de datos ,lo q introduce el usuario
     private ArrayList<String> addData(int ultimo)
     {

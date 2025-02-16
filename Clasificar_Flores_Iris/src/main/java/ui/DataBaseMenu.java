@@ -356,6 +356,7 @@ public class DataBaseMenu extends javax.swing.JFrame {
             
             try {
                 //variable q tiene el nombre del archivo creado UIControllers.filename
+                UIControllers.Filename = UIControllers.newFilename;
                 Controller.getInstance().createFile(UIControllers.Filename);
                 addStringList(Controller.getInstance().loadedFilesName());
             } catch (IOException ex) {
