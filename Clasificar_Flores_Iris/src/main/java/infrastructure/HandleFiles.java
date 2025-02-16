@@ -13,7 +13,7 @@ import neuralNetwork.NeuralNetwork;
 public class HandleFiles {
     
 final static String RUTA_DATA_BASE = "D:/Documents/GitHub/Clasificar_Flores_Iris/Clasificar_Flores_Iris/src/main/java/dataBase/";
-final static String RUTA_TRAINNER = "D:/Documents/GitHub/Clasificar_Flores_Iris/Clasificar_Flores_Iris/src/test/java/";
+final static String RUTA_TRAINNER = "D:/Documents/GitHub/Clasificar_Flores_Iris/Clasificar_Flores_Iris/src/main/java/dataBase_Trainings";
   public static File newFile(String fileName) throws IOException {
         
         PrintWriter salida = null;
