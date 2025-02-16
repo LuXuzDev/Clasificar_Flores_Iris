@@ -22,9 +22,9 @@ public class DataBaseTrainnerController {
         trainnigs = new ArrayList<>();
     }
 
-    public static ArrayList<File> getFileOutputStreams(String directoryPath) {
+    public static ArrayList<File> getFileOutputStreams() {
         ArrayList<File> fileList = new ArrayList<>();
-        File directory = new File(directoryPath);
+        File directory = new File(packagePath);
 
         if (directory.exists() && directory.isDirectory()) {
             File[] files = directory.listFiles();
@@ -39,10 +39,10 @@ public class DataBaseTrainnerController {
         } else {
             System.out.println("El directorio no existe o no es un directorio válido.");
         }
-
         return fileList;
     }
 
+    
     private static void updateFile(File file) {
         if (trainnigs.isEmpty()) {
             trainnigs.add(file);
