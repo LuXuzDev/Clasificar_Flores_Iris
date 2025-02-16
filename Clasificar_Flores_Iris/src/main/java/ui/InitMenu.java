@@ -87,7 +87,7 @@ public class InitMenu extends javax.swing.JFrame {
         });
     }
 
-    //funcion para revisar el jText field y poner el background 
+    //funcion para revisar el jText field y poner el background ..
     private void check(JTextField field)
     {
         if (!Validator.isCorrectInputOnlyNumbers(field.getText())) {
