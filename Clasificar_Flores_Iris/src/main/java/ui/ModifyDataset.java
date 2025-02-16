@@ -4,6 +4,7 @@
  */
 package ui;
 
+import back_end.Controller;
 import back_end.Validator;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.FlatLaf;
@@ -251,7 +252,7 @@ public class ModifyDataset extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonEnterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEnterActionPerformed
-        
+        //Controller.getInstance().editFile(line, name);
         int ultimo=data.size();
         String[] botones = {"Si", "No"};
         FlatSVGIcon icon2=new FlatSVGIcon("png/bluebell.svg");
@@ -261,6 +262,7 @@ public class ModifyDataset extends javax.swing.JFrame {
                 //UIcontrollers.filename=nombre del archivo
                 //data=array
                 //la funcion de rellenar tabla
+                
                 JOptionPane.showMessageDialog(null, "Datos guardados exitosamente", "Informacion", JOptionPane.INFORMATION_MESSAGE, icon2);
             } else {
                 JOptionPane.showMessageDialog(null, "Debe Introducir datos correctos para agregar al dataset", "Informacion", JOptionPane.INFORMATION_MESSAGE, icon2);

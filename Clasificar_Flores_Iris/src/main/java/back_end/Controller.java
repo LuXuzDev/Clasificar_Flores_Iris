@@ -121,4 +121,10 @@ public class Controller {
     public ArrayList<String> fileContent(String name) throws Exception {
         return DataBaseController.fileContent(name);
     }
+    
+    public ArrayList<String> editFile(String line,String name) throws Exception
+    {
+        DataBaseController.editFile(line, name);
+        return fileContent(name);
+    }
 }
