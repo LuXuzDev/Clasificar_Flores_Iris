@@ -180,6 +180,12 @@ public class TrainMenu extends javax.swing.JFrame {
 
     private void buttonTrainActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonTrainActionPerformed
         FlatSVGIcon icon = new FlatSVGIcon("png/bluebell.svg");
+        try {
+            Controller.getInstance().train();
+        } catch (Exception ex) {
+            Logger.getLogger(TrainMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         if (!Validator.isEmptyInput(LabelIndicationTrain.getText())) {
             LabelResult.setText("Entrenamiento cargado: "+UIControllers.ComboboxName);
         } else {
