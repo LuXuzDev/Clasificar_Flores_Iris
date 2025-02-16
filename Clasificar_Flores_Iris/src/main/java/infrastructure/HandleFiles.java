@@ -22,7 +22,6 @@ private final static String RUTA_TRAINNER = "src/main/java/dataBase_Trainings/";
         PrintWriter salida = null;
 
          try {
-             
             File archivo = new File(RUTA_DATA_BASE + fileName);
 
             salida = new PrintWriter(archivo);

@@ -4,6 +4,7 @@
  */
 package infrastructure;
 
+import back_end.Validator;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -65,43 +66,32 @@ public class DataBaseController {
         return file;
     }
     
-    
-    public static void createFile(String name) throws IOException
-    {
+    public static void createFile(String name) throws IOException {
         System.out.println("Creando archivo");
         File file = HandleFiles.newFile(name);
-        files.add(file);   
-        System.out.println("Archivo creado "+ file.getPath() );
+        files.add(file);
+        System.out.println("Archivo creado " + file.getPath());
     }
-    
-    
-    public static void deleteFile(String name) throws Exception
-    {
+
+    public static void deleteFile(String name) throws Exception {
         File file = findFile(name);
-        if(file==null)
-            throw new Exception("El archivo no existe");
-        
+        Validator.existFile(file);
         HandleFiles.deleteFiles(name);
     }
-    
-    public static void loadFile(String path)
-    {
+
+    public static void loadFile(String path) {
         HandleFiles.copyFile(path);
     }
-    
-    public static ArrayList<String> fileContent(String name) throws Exception
-    {
+
+    public static ArrayList<String> fileContent(String name) throws Exception {
         File file = findFile(name);
-        if(file==null)
-            throw new Exception("El archivo no existe");
+        Validator.existFile(file);
         return HandleFiles.readFiles(name);
     }
-    
-    public static ArrayList<String> editFile(String line,String name) throws Exception  
-    {
+
+    public static ArrayList<String> editFile(String line, String name) throws Exception {
         File file = findFile(name);
-        if(file==null)
-            throw new Exception("El archivo no existe");
+        Validator.existFile(file);
         HandleFiles.writerFiles(name, line);
         return HandleFiles.readFiles(name);
     }

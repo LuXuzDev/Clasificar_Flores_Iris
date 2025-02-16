@@ -73,7 +73,7 @@ public class Controller {
         return Double.parseDouble(num);
     }
 
-    public void train() {
+    public TrainerResults train() {
         normalizer.ajustar(trainner.getDataSet());
         double[][] dataSet = normalizer.normalizar(trainner.getDataSet());
 
@@ -93,6 +93,7 @@ public class Controller {
         entrada1.add(0.2);
 
         System.out.println("Salida red: " + neuralNetwork.calcularSalidas(normalizer.normalizarEntrada(entrada1)));
+        return results;
     }
 
     public ArrayList<String> loadedFilesName() {

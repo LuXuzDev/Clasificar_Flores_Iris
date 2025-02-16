@@ -3,12 +3,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package back_end;
-
-import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
+import java.io.File;
+import java.util.ArrayList;
 
 /**
  *
@@ -95,6 +95,7 @@ public class Validator {
         }
         return check;
     }
+    
     public static boolean containsNumber(String input)
     {
         boolean number = false;
@@ -117,6 +118,7 @@ public class Validator {
         }
         return retorno;
     }
+    
     //validacion que revisa si la lista en databasemenu tiene seleccionado algun valor
     public static boolean checkList(JList list)
     {
@@ -135,5 +137,12 @@ public class Validator {
         if(!input.equals(password))
             isCorrect=false;
         return isCorrect;
+    }
+    
+    public static File existFile(File file) throws Exception
+    {
+        if(file==null)
+            throw new Exception("El archivo no existe");
+        return file;
     }
 }
