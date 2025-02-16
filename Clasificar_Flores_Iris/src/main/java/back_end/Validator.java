@@ -4,6 +4,7 @@
  */
 package back_end;
 
+import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.JList;
@@ -73,6 +74,17 @@ public class Validator {
         return check;
     }
     
+    //esta es la funciom
+    //funcion para validar el maximo de archivos modificados en el dataset
+    public static boolean MaxTam(ArrayList<String> array)
+    {
+        boolean check=false;
+        if((array.size()+1)==160)
+        {
+            check=true;
+        }
+        return check;
+    }
     //funcion para validar en un joption pane q el usuario selecciono si
     public static boolean YesOptionJOption(int result)
     {
