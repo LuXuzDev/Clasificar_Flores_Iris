@@ -4,6 +4,7 @@
  */
 package ui;
 
+import back_end.Validator;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
@@ -20,7 +21,6 @@ import java.util.ArrayList;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.table.DefaultTableModel;
 import org.jfree.chart.ChartPanel;
 
 
@@ -28,8 +28,7 @@ import org.jfree.chart.ChartPanel;
 
 public class Trainer extends javax.swing.JFrame {
     
-    DefaultTableModel model;
-    ArrayList<String> arreglo= new ArrayList<>();
+    private DefaultListModel<String> listModel= new DefaultListModel<>();
     
     public Trainer() {
         initComponents();
@@ -41,7 +40,6 @@ public class Trainer extends javax.swing.JFrame {
     //funcion para el diseño del jrame
     private void design ()
     {
-        //UIControllers.setFontFamily("Arial");
         Flatlaf();
         UIManager.put("TextComponent.arc",99);
         UIManager.put("Button.arc", 25);
@@ -54,11 +52,13 @@ public class Trainer extends javax.swing.JFrame {
         getRootPane().putClientProperty(FlatClientProperties.TITLE_BAR_SHOW_ICON,true);
         getRootPane().putClientProperty(FlatClientProperties.TITLE_BAR_SHOW_ICONIFFY,true);
         UIControllers.design();
-        
-        
-        
+        UIControllers.setFontFamily("Arial");
+        setIconImage(UIControllers.design().getImage());
         JPanel panelGrafico = crearPanelGrafico();
         cardPanel.add(panelGrafico, "Grafico 1");
+        
+        //funcion para rellenar el jlist
+        //addStringList(arreglo);
     }
     
     
@@ -115,21 +115,24 @@ public class Trainer extends javax.swing.JFrame {
         return panel;
     }
      
-     public void datasetTabel(ArrayList<String> arreglo)
-    {
-        
-        String[]array= new String[arreglo.size()];
-        array=arreglo.toArray(array);
-        String[][]tableData = new String[array.length][1];
-        for(int i=0;i<array.length;i++)
-        {
-            tableData[i][0]=array[i];
-            
+      //cargar lista de nombres de ficheros para el JList
+     public void addStringList(ArrayList<String> path) {
+
+        // Verifica si ListTrain tiene un modelo de lista
+        if (Validator.ListInstanceOf(ListData)) {
+            listModel = (DefaultListModel<String>) ListData.getModel();
+        } else {
+            listModel = new DefaultListModel<>();
+            ListData.setModel(listModel);
         }
-        model.addRow(tableData);
-        model= new DefaultTableModel(tableData,new String[]{"pepito"});
-        model.addRow(tableData);
-        
+
+        // Vacía el modelo de lista antes de cargar nuevos elementos
+        listModel.clear();
+
+        // Agrega los nuevos elementos desde la lista path
+        for (int i = 0; i < path.size(); i++) {
+            listModel.add(i, path.get(i));
+        }
     }
      
      
@@ -140,9 +143,9 @@ public class Trainer extends javax.swing.JFrame {
 
         panePrinc = new javax.swing.JPanel();
         paneMetricas = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable(model);
         labelIndicationMetricas = new javax.swing.JLabel();
+        ScrollList = new javax.swing.JScrollPane();
+        ListData = new javax.swing.JList<>();
         paneLabels = new javax.swing.JPanel();
         LabelAccuracy = new javax.swing.JLabel();
         LabelSetosa = new javax.swing.JLabel();
@@ -153,9 +156,9 @@ public class Trainer extends javax.swing.JFrame {
         LabelacurracyTotal = new javax.swing.JLabel();
         cardPanel = new javax.swing.JPanel();
         buttonPanel = new javax.swing.JPanel();
-        buttonGraph2 = new javax.swing.JButton();
-        buttonGraph3 = new javax.swing.JButton();
-        buttonGraph4 = new javax.swing.JButton();
+        buttonGraph = new javax.swing.JButton();
+        buttonMetrics = new javax.swing.JButton();
+        buttonInfo = new javax.swing.JButton();
         buttonBack = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -171,15 +174,15 @@ public class Trainer extends javax.swing.JFrame {
         paneMetricas.setBackground(new java.awt.Color(255, 255, 255));
         paneMetricas.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jScrollPane1.setViewportView(jTable1);
-
-        paneMetricas.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(32, 70, 440, 190));
-
         labelIndicationMetricas.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         labelIndicationMetricas.setForeground(new java.awt.Color(102, 153, 255));
         labelIndicationMetricas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelIndicationMetricas.setText("Datos Metricas");
         paneMetricas.add(labelIndicationMetricas, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 30, 300, 30));
+
+        ScrollList.setViewportView(ListData);
+
+        paneMetricas.add(ScrollList, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 70, 370, -1));
 
         panePrinc.add(paneMetricas, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 520, -1));
 
@@ -230,35 +233,35 @@ public class Trainer extends javax.swing.JFrame {
         buttonPanel.setBackground(new java.awt.Color(255, 255, 255));
         buttonPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        buttonGraph2.setBackground(new java.awt.Color(255, 255, 255));
-        buttonGraph2.setForeground(new java.awt.Color(0, 0, 0));
-        buttonGraph2.setText("Grafico");
-        buttonGraph2.addActionListener(new java.awt.event.ActionListener() {
+        buttonGraph.setBackground(new java.awt.Color(255, 255, 255));
+        buttonGraph.setForeground(new java.awt.Color(0, 0, 0));
+        buttonGraph.setText("Grafico");
+        buttonGraph.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonGraph2ActionPerformed(evt);
+                buttonGraphActionPerformed(evt);
             }
         });
-        buttonPanel.add(buttonGraph2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
+        buttonPanel.add(buttonGraph, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
 
-        buttonGraph3.setBackground(new java.awt.Color(255, 255, 255));
-        buttonGraph3.setForeground(new java.awt.Color(0, 0, 0));
-        buttonGraph3.setText("Metricas");
-        buttonGraph3.addActionListener(new java.awt.event.ActionListener() {
+        buttonMetrics.setBackground(new java.awt.Color(255, 255, 255));
+        buttonMetrics.setForeground(new java.awt.Color(0, 0, 0));
+        buttonMetrics.setText("Metricas");
+        buttonMetrics.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonGraph3ActionPerformed(evt);
+                buttonMetricsActionPerformed(evt);
             }
         });
-        buttonPanel.add(buttonGraph3, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 10, -1, -1));
+        buttonPanel.add(buttonMetrics, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 10, -1, -1));
 
-        buttonGraph4.setBackground(new java.awt.Color(255, 255, 255));
-        buttonGraph4.setForeground(new java.awt.Color(0, 0, 0));
-        buttonGraph4.setText("Informacion");
-        buttonGraph4.addActionListener(new java.awt.event.ActionListener() {
+        buttonInfo.setBackground(new java.awt.Color(255, 255, 255));
+        buttonInfo.setForeground(new java.awt.Color(0, 0, 0));
+        buttonInfo.setText("Informacion");
+        buttonInfo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonGraph4ActionPerformed(evt);
+                buttonInfoActionPerformed(evt);
             }
         });
-        buttonPanel.add(buttonGraph4, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 10, -1, -1));
+        buttonPanel.add(buttonInfo, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 10, -1, -1));
 
         panePrinc.add(buttonPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 260, 600, 70));
 
@@ -276,29 +279,26 @@ public class Trainer extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void buttonGraph2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonGraph2ActionPerformed
+    private void buttonGraphActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonGraphActionPerformed
         cardPanel.setVisible(true);
         paneMetricas.setVisible(false);
         paneLabels.setVisible(false);
-       CardLayout c1= (CardLayout)(cardPanel.getLayout());
-       c1.show(cardPanel, "Grafico 1");
-    }//GEN-LAST:event_buttonGraph2ActionPerformed
+        CardLayout c1= (CardLayout)(cardPanel.getLayout());
+        c1.show(cardPanel, "Grafico 1");
+    }//GEN-LAST:event_buttonGraphActionPerformed
 
-    private void buttonGraph3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonGraph3ActionPerformed
-        
-        
-        datasetTabel(arreglo);
+    private void buttonMetricsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonMetricsActionPerformed
         cardPanel.setVisible(false);
         paneMetricas.setVisible(true);
         paneLabels.setVisible(false);
-    }//GEN-LAST:event_buttonGraph3ActionPerformed
+    }//GEN-LAST:event_buttonMetricsActionPerformed
 
-    private void buttonGraph4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonGraph4ActionPerformed
+    private void buttonInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonInfoActionPerformed
         UIControllers.NamesLabelsTrainer(Labelepoch, LabelAccuracy, LabelError, LabelSetosa, LabelVirgi, Labelversi);
         cardPanel.setVisible(false);
         paneMetricas.setVisible(false);
         paneLabels.setVisible(true);
-    }//GEN-LAST:event_buttonGraph4ActionPerformed
+    }//GEN-LAST:event_buttonInfoActionPerformed
 
     private void buttonBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBackActionPerformed
         new TrainMenu().setVisible(true);
@@ -322,14 +322,14 @@ public static void main(String args[]) {
     private javax.swing.JLabel LabelacurracyTotal;
     private javax.swing.JLabel Labelepoch;
     private javax.swing.JLabel Labelversi;
+    private javax.swing.JList<String> ListData;
+    private javax.swing.JScrollPane ScrollList;
     private javax.swing.JButton buttonBack;
-    private javax.swing.JButton buttonGraph2;
-    private javax.swing.JButton buttonGraph3;
-    private javax.swing.JButton buttonGraph4;
+    private javax.swing.JButton buttonGraph;
+    private javax.swing.JButton buttonInfo;
+    private javax.swing.JButton buttonMetrics;
     private javax.swing.JPanel buttonPanel;
     private javax.swing.JPanel cardPanel;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel labelIndicationMetricas;
     private javax.swing.JPanel paneLabels;
     private javax.swing.JPanel paneMetricas;
