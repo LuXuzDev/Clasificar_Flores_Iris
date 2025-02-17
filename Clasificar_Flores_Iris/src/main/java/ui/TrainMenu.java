@@ -5,6 +5,7 @@
 package ui;
 
 import back_end.Controller;
+import back_end.TrainerResults;
 import back_end.Validator;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
@@ -126,7 +127,7 @@ public class TrainMenu extends javax.swing.JFrame {
         LabelResult.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         LabelResult.setForeground(new java.awt.Color(102, 153, 255));
         LabelResult.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jPanel1.add(LabelResult, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 70, 160, 20));
+        jPanel1.add(LabelResult, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 70, 210, 20));
 
         jButton1.setText("Cargar Entrenamiento");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -175,38 +176,32 @@ public class TrainMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonLoadDatasetActionPerformed
 
     private void buttonTrainActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonTrainActionPerformed
-        UIControllers.NumberOptionPane=3;
-        new JOptionpane(this,true).setVisible(true);
-        FlatSVGIcon icon=new FlatSVGIcon("png/bluebell.svg");
-        if (UIControllers.JoptionTrainMenu==false) {
-            UIControllers.JOptioncatch("No se guardo el entrenamiento");
-        } else if (UIControllers.JoptionTrainMenu==true) {
-            JOptionPane.showOptionDialog(null, "Datos cargados correctamente", "Dataset", JOptionPane.CLOSED_OPTION, JOptionPane.INFORMATION_MESSAGE, icon, null, null);
-            LabelResult.setText("Entrenamiento cargado: "+UIControllers.TrainName);
-        }
+        UIControllers.NumberOptionPane = 3;
+
+        FlatSVGIcon icon = new FlatSVGIcon("png/bluebell.svg");
+
         try {
-            Controller.getInstance().train();
+            Validator.loadedDataSet();
+            TrainerResults results = Controller.getInstance().train();
+            UIControllers.trainer = results;
+            new JOptionpane(this, true).setVisible(true);
+            
+            if (UIControllers.JoptionTrainMenu == false) {
+                UIControllers.JOptioncatch("No se guardo el entrenamiento");
+            } else if (UIControllers.JoptionTrainMenu == true) {
+                JOptionPane.showOptionDialog(null, "Datos guardados correctamente", "Dataset", JOptionPane.CLOSED_OPTION, JOptionPane.INFORMATION_MESSAGE, icon, null, null);
+                LabelResult.setText("Entrenamiento cargado: " + UIControllers.TrainName);
+            }
+
         } catch (Exception ex) {
             UIControllers.JOptioncatch(ex.getMessage());
         }
-        
-        if (!Validator.isEmptyInput(LabelIndicationTrain.getText())) {
-            LabelResult.setText("Entrenamiento cargado: "+UIControllers.ComboboxName);
-        } else {
-            JOptionPane.showOptionDialog(null, "No se puede entrenar debe cargar dataset primero", "Entrenamiento", JOptionPane.CLOSED_OPTION, JOptionPane.INFORMATION_MESSAGE, icon, null, null);
-        }
     }//GEN-LAST:event_buttonTrainActionPerformed
 
+    
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         FlatSVGIcon icon = new FlatSVGIcon("png/bluebell.svg");
-        if(!Validator.isEmptyInput(LabelIndicationTrain.getText()) && !Validator.isEmptyInput(LabelResult.getText()))
-        {
-            JOptionPane.showOptionDialog(null, "No se puede cargar entrenamiento debe cargar dataset y entrenar primero", "Cargar entrenamiento", JOptionPane.CLOSED_OPTION, JOptionPane.INFORMATION_MESSAGE, icon, null, null);
-        }
-        else
-        {
-            JOptionPane.showOptionDialog(null, "Entrenamiento cargado correctamente", "Cargar entrenamiento", JOptionPane.CLOSED_OPTION, JOptionPane.INFORMATION_MESSAGE, icon, null, null);
-        }
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
