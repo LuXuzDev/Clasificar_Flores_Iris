@@ -20,7 +20,7 @@ public class Controller {
     private static Controller instance; // Instancia única de Controller
     private static NeuralNetwork neuralNetwork;
     private static TrainerResults trainnerResults;
-    private final Trainer trainner;
+    private final Trainer trainer;
     private final Normalizer normalizer;
     private File dataSetLoaded;
 
@@ -29,7 +29,7 @@ public class Controller {
         neuralNetwork = new NeuralNetwork(4, 50, 3);
         
         // Crear Entrenador y Normalizador
-        trainner = new Trainer();
+        trainer = new Trainer();
         normalizer = new Normalizer();
         DataBaseController.getFilesInPackage();
     }
@@ -84,19 +84,19 @@ public class Controller {
         if(dataSetLoaded==null)
             throw new Exception("No hay dataSet cargados");
     
-        trainner.processInput(DataBaseController.fileContent(dataSetLoaded.getName()));
+        trainer.processInput(DataBaseController.fileContent(dataSetLoaded.getName()));
         
         
         //Normalizar Datos
-        normalizer.ajustar(trainner.getDataSet());
-        double[][] dataSet = normalizer.normalizar(trainner.getDataSet());
+        normalizer.ajustar(trainer.getDataSet());
+        double[][] dataSet = normalizer.normalizar(trainer.getDataSet());
 
         // Imprimir el conjunto de datos normalizado
         System.out.println("Conjunto de datos normalizado:");
 
         // Entrenar la red neuronal
         System.out.println("Entrenando...");
-        TrainerResults results = neuralNetwork.entrenar(dataSet, trainner.getDataSetSalida(), 0.0001, 2500, 0.05);
+        TrainerResults results = neuralNetwork.entrenar(dataSet, trainer.getDataSetSalida(), 0.0001, 2500, 0.05);
         System.out.println(results);
 
         // Ejemplo de entradas
