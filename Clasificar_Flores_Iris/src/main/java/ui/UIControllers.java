@@ -33,6 +33,10 @@ public class UIControllers {
     public static boolean JoptionTrainMenu=false;
     public static TrainerResults trainer;
     
+    public static String SetDatasetName="";
+    public static String SetTrainName="";
+    public static boolean SetDataset=false;
+    
     public static void setFontFamily(String fontFamily)
     {
         java.awt.Font font = UIManager.getFont("defaultFont");
