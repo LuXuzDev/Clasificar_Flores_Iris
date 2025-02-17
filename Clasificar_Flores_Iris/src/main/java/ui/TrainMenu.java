@@ -197,9 +197,15 @@ public class TrainMenu extends javax.swing.JFrame {
             
             if (UIControllers.JoptionTrainMenu == false) {
                 UIControllers.JOptioncatch("No se guardo el entrenamiento");
+                
                 UIControllers.trainer=null;
                 Controller.setNeuralNetwork(new NeuralNetwork(4, 50, 3));
-            } else if (UIControllers.JoptionTrainMenu == true) {
+            } 
+            else if (UIControllers.JoptionTrainMenu == true) 
+            {
+                
+                Controller.getInstance().saveTrain(UIControllers.TrainName);
+
                 JOptionPane.showOptionDialog(null, "Datos guardados correctamente", "Dataset", JOptionPane.CLOSED_OPTION, JOptionPane.INFORMATION_MESSAGE, icon, null, null);
                 LabelResult.setText("Entrenamiento cargado: " + UIControllers.TrainName);
                 Controller.getInstance().setLoaded(true);
@@ -216,11 +222,15 @@ public class TrainMenu extends javax.swing.JFrame {
         UIControllers.JoptionCombo=false;
         UIControllers.NumberOptionPane=1;
         new JOptionpane(this,true).setVisible(true);
+        
         if (UIControllers.JoptionCombo == false) {
             UIControllers.JOptioncatch("No se cargo el entrenamiento");
-        } else if (UIControllers.JoptionCombo == true) {
+        } 
+        else if (UIControllers.JoptionCombo == true) 
+        {
             JOptionPane.showOptionDialog(null, "Entrenamiento cargado ", "Entrenamiento", JOptionPane.CLOSED_OPTION, JOptionPane.INFORMATION_MESSAGE, icon, null, null);
             LabelResult.setText("Entrenamiento cargado: " + UIControllers.ComboboxName);
+            Controller.getInstance().loadFile(UIControllers.ComboboxName);
         }
         
     }//GEN-LAST:event_buttonLoadtrainActionPerformed

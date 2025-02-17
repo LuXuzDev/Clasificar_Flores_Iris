@@ -17,7 +17,7 @@ import neuralNetwork.NeuralNetwork;
  */
 public class DataBaseTrainnerController {
     private static ArrayList<File> trainnigs;
-    static String packagePath = "src/main/java/dataBase_Trainings";
+    static String packagePath = "src/main/java/dataBase_Trainings/";
     
     
     public DataBaseTrainnerController() {
@@ -54,13 +54,13 @@ public class DataBaseTrainnerController {
     }
     
     
-    public void saveTrain(NeuralNetwork neuralNetwork,TrainerResults trainnerResults,String name) throws IOException
+    public static void saveTrain(NeuralNetwork neuralNetwork,TrainerResults trainnerResults,String name) throws IOException
     {
         HandleFiles.saveObjectsToBinaryFile(neuralNetwork, trainnerResults, name);
     }
     
     
-    public NeuralNetwork getBinaryNeuralNetwork(String name) throws IOException, ClassNotFoundException
+    public static NeuralNetwork getBinaryNeuralNetwork(String name) throws IOException, ClassNotFoundException
     {
         Object[] binaryFile = HandleFiles.readObjectsFromBinaryFile(name);
         NeuralNetwork temp = (NeuralNetwork)binaryFile[0];
@@ -68,7 +68,7 @@ public class DataBaseTrainnerController {
     }
     
     
-    public TrainerResults getBinaryTrainnerResults(String name) throws IOException, ClassNotFoundException
+    public static TrainerResults getBinaryTrainnerResults(String name) throws IOException, ClassNotFoundException
     {
         Object[] binaryFile = HandleFiles.readObjectsFromBinaryFile(name);
         TrainerResults temp = (TrainerResults)binaryFile[1];

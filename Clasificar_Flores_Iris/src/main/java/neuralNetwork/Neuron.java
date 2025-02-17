@@ -4,10 +4,11 @@
  */
 package neuralNetwork;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Neuron {
+public class Neuron implements Serializable{
     
     public ArrayList<Double> weights; // Pesos de la neurona
     private double bias;

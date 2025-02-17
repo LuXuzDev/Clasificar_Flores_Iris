@@ -4,6 +4,7 @@
  */
 package neuralNetwork;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -12,7 +13,7 @@ import java.util.ArrayList;
  */
 import java.util.ArrayList;
 
-public class Layer {
+public class Layer implements Serializable{
     public ArrayList<Neuron> neuronas;
     private boolean isOutputLayer; // Indica si es la capa de salida
 

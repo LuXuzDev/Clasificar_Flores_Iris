@@ -193,6 +193,18 @@ public class Controller {
     }
 
     
+    public void saveTrain (String name) throws IOException
+    {
+        DataBaseTrainnerController.saveTrain(neuralNetwork, trainnerResults, name);
+    }
+    
+    public void loadTrain(String name) throws IOException, ClassNotFoundException
+    {
+        trainnerResults = DataBaseTrainnerController.getBinaryTrainnerResults(name);
+        neuralNetwork = DataBaseTrainnerController.getBinaryNeuralNetwork(name);
+    }
+    
+    
     public void setDataSetLoaded(String dataSetName) throws Exception {
         File file = DataBaseController.findFile(dataSetName);
         Validator.existFile(file);
