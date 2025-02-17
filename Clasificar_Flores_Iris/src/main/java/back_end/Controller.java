@@ -110,6 +110,7 @@ public class Controller {
         entrada1.add(0.2);
 
         System.out.println("Salida red: " + neuralNetwork.calcularSalidas(normalizer.normalizarEntrada(entrada1)));
+        trainnerResults=results;
         return results;
     }
 
@@ -202,6 +203,18 @@ public class Controller {
     {
         trainnerResults = DataBaseTrainnerController.getBinaryTrainnerResults(name);
         neuralNetwork = DataBaseTrainnerController.getBinaryNeuralNetwork(name);
+        
+         if (neuralNetwork != null) {
+                System.out.println("NeuralNetwork cargado correctamente.");
+            } else {
+                System.out.println("NeuralNetwork es null.");
+            }
+
+            if (trainnerResults != null) {
+                System.out.println("TrainerResults cargado correctamente.");
+            } else {
+                System.out.println("TrainerResults es null.");
+            }
     }
     
     

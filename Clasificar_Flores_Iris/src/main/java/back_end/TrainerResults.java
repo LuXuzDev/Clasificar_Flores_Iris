@@ -19,7 +19,7 @@ public class TrainerResults implements Serializable{
     private ArrayList<Double> errorEntrenamiento;
     private ArrayList<String> metricasEpoca;
     private ArrayList<Double> acurracyClass;
-    private static final long serialVersionUID = 2L;
+    private static final long serialVersionUID = 1L;
 
     
     
@@ -33,8 +33,14 @@ public class TrainerResults implements Serializable{
         this.metricasEpoca=metricasEpoca;
         this.acurracyClass=acurracyClass;
     }
-    
-    
+  
+    public TrainerResults() {
+        this.acurracyTotal = 0.0;
+        this.epoch = 0;
+        this.errorEntrenamiento = new ArrayList<>();
+        this.metricasEpoca = new ArrayList<>();
+        this.acurracyClass = new ArrayList<>();
+    }
 
 
     

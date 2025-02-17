@@ -208,6 +208,7 @@ public class TrainMenu extends javax.swing.JFrame {
         try {
             Validator.loadedDataSet();
             TrainerResults results = Controller.getInstance().train();
+            
             UIControllers.trainer = results;
             new JOptionpane(this, true).setVisible(true);
             
@@ -249,6 +250,8 @@ public class TrainMenu extends javax.swing.JFrame {
             try {
                 Controller.getInstance().loadTrain(UIControllers.ComboboxName);
                 Controller.getInstance().setLoaded(true);
+                System.out.println("TRAINNER " +Controller.getTrainnerResults().getEpoch());
+                UIControllers.trainer = Controller.getTrainnerResults();
             } catch (IOException ex) {
                 UIControllers.JOptioncatch(ex.getMessage());
             } catch (ClassNotFoundException ex) {

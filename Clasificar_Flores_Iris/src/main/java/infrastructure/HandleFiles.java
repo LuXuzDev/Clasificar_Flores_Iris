@@ -100,12 +100,9 @@ public class HandleFiles {
 
     
     public static void saveObjectsToBinaryFile(Object objeto1, Object objeto2, String fileName) throws IOException {
-        try (FileOutputStream fileOut = new FileOutputStream(RUTA_TRAINNER + fileName); ObjectOutputStream objectOut = new ObjectOutputStream(fileOut)) {
-
-            
+        try (FileOutputStream fileOut = new FileOutputStream(RUTA_TRAINNER + fileName); ObjectOutputStream objectOut = new ObjectOutputStream(fileOut)) {    
             objectOut.writeObject(objeto1);
             objectOut.writeObject(objeto2);
-
             System.out.println("Objetos guardado correctamente en: " + RUTA_TRAINNER + fileName);
         } catch (IOException e) {
             System.err.println("Error al guardar los objetos en el archivo: " + e.getMessage());
@@ -116,17 +113,16 @@ public class HandleFiles {
     
     public static Object[] readObjectsFromBinaryFile(String fileName) throws IOException, ClassNotFoundException {
         Object[] objects = new Object[2];
-        try (FileInputStream fileIn = new FileInputStream(RUTA_TRAINNER + fileName); ObjectInputStream objectIn = new ObjectInputStream(fileIn)) {
+        try (FileInputStream fileIn = new FileInputStream(RUTA_TRAINNER + fileName);
+             ObjectInputStream objectIn = new ObjectInputStream(fileIn)) {
 
             objects[0] = objectIn.readObject();
             objects[1] = objectIn.readObject();
-
             return objects;
 
         } catch (IOException e) {
             System.err.println("Error al leer los objetos del archivo: " + e.getMessage());
             throw e;
-            //Se  utiliza el metodo de una clase sin realizar casteo
         } catch (ClassNotFoundException e) {
             System.err.println("Clase no encontrada: " + e.getMessage());
             throw e;

@@ -32,7 +32,7 @@ public class DataBaseTrainnerController {
             File[] files = directory.listFiles();
             if (files != null) {
                 for (File file : files) {
-                    if (file.isFile() && file.getName().endsWith(".data")) {
+                    if (file.isFile() && file.getName().endsWith(".dat")) {
                         fileList.add(file);
                         updateFile(file);
                     }
