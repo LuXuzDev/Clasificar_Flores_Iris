@@ -17,6 +17,7 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import neuralNetwork.NeuralNetwork;
 
 
 public class TrainMenu extends javax.swing.JFrame {
@@ -152,8 +153,13 @@ public class TrainMenu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonEstadisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEstadisActionPerformed
-        new Trainer().setVisible(true);
-        this.dispose();
+        try {
+            Validator.loadedTrainner();
+            new Trainer().setVisible(true);
+            this.dispose();
+        } catch (Exception ex) {
+            UIControllers.JOptioncatch(ex.getMessage());
+        }
     }//GEN-LAST:event_buttonEstadisActionPerformed
 
     private void buttonBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBackActionPerformed
@@ -193,6 +199,8 @@ public class TrainMenu extends javax.swing.JFrame {
             
             if (UIControllers.JoptionTrainMenu == false) {
                 UIControllers.JOptioncatch("No se guardo el entrenamiento");
+                UIControllers.trainer=null;
+                Controller.setNeuralNetwork(new NeuralNetwork(4, 50, 3));
             } else if (UIControllers.JoptionTrainMenu == true) {
                 JOptionPane.showOptionDialog(null, "Datos guardados correctamente", "Dataset", JOptionPane.CLOSED_OPTION, JOptionPane.INFORMATION_MESSAGE, icon, null, null);
                 LabelResult.setText("Entrenamiento cargado: " + UIControllers.TrainName);

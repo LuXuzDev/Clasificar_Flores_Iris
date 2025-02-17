@@ -164,4 +164,10 @@ public class Validator {
         if(Controller.getInstance().getDataSetLoaded()==null)
             throw new Exception("No hay data-set cargado");
     }
+    
+    public static void loadedTrainner() throws Exception
+    {
+        if(Controller.getInstance().getTrainerResultsLoaded()==null)
+            throw new Exception("No hay entrenamiento cargado");
+    }
 }
