@@ -217,7 +217,6 @@ public class Controller {
             }
     }
     
-    
     public void setDataSetLoaded(String dataSetName) throws Exception {
         File file = DataBaseController.findFile(dataSetName);
         Validator.existFile(file);
