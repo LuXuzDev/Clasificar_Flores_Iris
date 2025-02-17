@@ -63,6 +63,14 @@ public class JOptionpane extends javax.swing.JDialog {
             PanelComboBox.setVisible(false);
             PanelTextField.setVisible(false);
         }
+        else if(UIControllers.NumberOptionPane==4)
+        {
+            this.setTitle("Seleccionar entrenamiento");
+            UIControllers.updateComboBox(Controller.getInstance().loadedTrainnersName(), ComboBoxDialog);
+            PanelComboBox.setVisible(true);
+            PanelTextField.setVisible(false);
+            PanelTrainMenu.setVisible(false);
+        }
         design();
     }
 
@@ -252,15 +260,15 @@ public class JOptionpane extends javax.swing.JDialog {
 
         LabelEpocas.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         LabelEpocas.setText("Epocas: ");
-        PanelTrainMenu.add(LabelEpocas, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 110, -1));
+        PanelTrainMenu.add(LabelEpocas, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 130, -1));
 
         LabelError.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         LabelError.setText("Error: ");
-        PanelTrainMenu.add(LabelError, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 110, -1));
+        PanelTrainMenu.add(LabelError, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 130, -1));
 
         LabelAccuracy.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         LabelAccuracy.setText("Metricas: ");
-        PanelTrainMenu.add(LabelAccuracy, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 110, -1));
+        PanelTrainMenu.add(LabelAccuracy, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 130, -1));
 
         buttonSave.setBackground(new java.awt.Color(0, 153, 255));
         buttonSave.setForeground(new java.awt.Color(255, 255, 255));

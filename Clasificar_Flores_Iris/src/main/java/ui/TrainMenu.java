@@ -47,8 +47,16 @@ public class TrainMenu extends javax.swing.JFrame {
     }
     //funcion para diseño general del Jframe
     private void design() {
-        LabelIndicationTrain.setText("Dataset Cargado: ");
-        LabelResult.setText("Entrenamiento cargado: ");
+        if(UIControllers.SetDataset==false)
+        {
+            LabelIndicationTrain.setText("Dataset Cargado: ");
+            LabelResult.setText("Entrenamiento cargado: ");
+        }
+        else
+        {
+            LabelIndicationTrain.setText(UIControllers.SetDatasetName);
+            LabelResult.setText(UIControllers.SetTrainName);
+        }
         Flatlaf();
         UIControllers.setFontFamily("Arial");
         setIconImage(UIControllers.design().getImage());
@@ -153,6 +161,8 @@ public class TrainMenu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonEstadisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEstadisActionPerformed
+        UIControllers.SetDatasetName=LabelIndicationTrain.getText();
+        UIControllers.SetTrainName=LabelResult.getText();
         try {
             Validator.loadedTrainner();
             new Trainer().setVisible(true);
@@ -163,6 +173,9 @@ public class TrainMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonEstadisActionPerformed
 
     private void buttonBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBackActionPerformed
+        UIControllers.SetDatasetName=LabelIndicationTrain.getText();
+        UIControllers.SetTrainName=LabelResult.getText();
+        UIControllers.SetDataset=true;
         new InitMenu().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_buttonBackActionPerformed
@@ -215,7 +228,7 @@ public class TrainMenu extends javax.swing.JFrame {
     private void buttonLoadtrainActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonLoadtrainActionPerformed
         FlatSVGIcon icon = new FlatSVGIcon("png/bluebell.svg");
         UIControllers.JoptionCombo=false;
-        UIControllers.NumberOptionPane=1;
+        UIControllers.NumberOptionPane=4;
         new JOptionpane(this,true).setVisible(true);
         if (UIControllers.JoptionCombo == false) {
             UIControllers.JOptioncatch("No se cargo el entrenamiento");

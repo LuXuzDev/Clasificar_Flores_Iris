@@ -52,7 +52,9 @@ public class Trainer extends javax.swing.JFrame {
         getRootPane().putClientProperty(FlatClientProperties.TITLE_BAR_SHOW_ICONIFFY,true);
         UIControllers.design();
         JPanel blankPanel1 = new JPanel();
-        JPanel blankPanel2 = new JPanel();
+        JPanel blankPanel2 = new JPanel(new BorderLayout());
+        JTable table=new JTable();
+        table.setVisible(true);
         blankPanel1.setBackground(Color.white);
         blankPanel2.setBackground(Color.white);
         JPanel panelGrafico = crearPanelGrafico();
@@ -149,7 +151,7 @@ public class Trainer extends javax.swing.JFrame {
 
         buttonGraph2.setBackground(new java.awt.Color(255, 255, 255));
         buttonGraph2.setForeground(new java.awt.Color(0, 0, 0));
-        buttonGraph2.setText("Grafico1");
+        buttonGraph2.setText("Grafico");
         buttonGraph2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonGraph2ActionPerformed(evt);
@@ -159,7 +161,7 @@ public class Trainer extends javax.swing.JFrame {
 
         buttonGraph3.setBackground(new java.awt.Color(255, 255, 255));
         buttonGraph3.setForeground(new java.awt.Color(0, 0, 0));
-        buttonGraph3.setText("Panel2");
+        buttonGraph3.setText("Metricas");
         buttonGraph3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonGraph3ActionPerformed(evt);
@@ -169,7 +171,7 @@ public class Trainer extends javax.swing.JFrame {
 
         buttonGraph4.setBackground(new java.awt.Color(255, 255, 255));
         buttonGraph4.setForeground(new java.awt.Color(0, 0, 0));
-        buttonGraph4.setText("panel");
+        buttonGraph4.setText("Ver mas");
         buttonGraph4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonGraph4ActionPerformed(evt);
