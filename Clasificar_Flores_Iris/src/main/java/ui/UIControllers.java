@@ -64,8 +64,8 @@ public class UIControllers {
     public static void NamesLabelsTrainMenu(JLabel epoch,JLabel accuracy,JLabel error)
     {
         epoch.setText("Epocas: "+trainer.getEpoch());
-        accuracy.setText("Precision: "+trainer.getAcurracyTotal()+"%");
-        error.setText("Error: "+trainer.getErrorEntrenamiento().getLast());
+        accuracy.setText("Precision: "+Math.round(trainer.getAcurracyTotal()*100)+"%");
+        error.setText("Error: "+Math.round(trainer.getErrorEntrenamiento().getLast()));
     }
     
     public static void updateComboBox(ArrayList<String> names,JComboBox<String> comboBox)

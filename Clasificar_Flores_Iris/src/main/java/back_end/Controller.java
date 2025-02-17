@@ -24,9 +24,11 @@ public class Controller {
     private final Trainer trainer;
     private final Normalizer normalizer;
     private File dataSetLoaded;
+    private boolean loaded;
 
     // Constructor privado para evitar instanciación externa
     private Controller() {
+        loaded=false;
         neuralNetwork = new NeuralNetwork(4, 50, 3);
         
         // Crear Entrenador y Normalizador
@@ -180,6 +182,14 @@ public class Controller {
         
     public TrainerResults getTrainerResultsLoaded() {
         return trainnerResults;
+    }
+
+    public boolean isLoaded() {
+        return loaded;
+    }
+
+    public void setLoaded(boolean loaded) {
+        this.loaded = loaded;
     }
 
     

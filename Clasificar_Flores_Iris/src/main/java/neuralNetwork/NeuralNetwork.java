@@ -59,7 +59,7 @@ public class NeuralNetwork implements Serializable{
         ArrayList<String> metricas = new ArrayList<String>();
         ArrayList<Double> errorEntrenamiento = new ArrayList<Double>();
         double mejorError = Double.MAX_VALUE;
-        int paciencia = 150;
+        int paciencia = 75;
         int contador = 0;
         int lastEpoch = 0;
         

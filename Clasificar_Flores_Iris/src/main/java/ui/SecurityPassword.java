@@ -9,8 +9,6 @@ import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
@@ -23,7 +21,6 @@ import javax.swing.UnsupportedLookAndFeelException;
 public class SecurityPassword extends javax.swing.JDialog {
 
     private JFrame parentFrame;
-    private static ArrayList<String> array=new ArrayList<>();
     
     public SecurityPassword(java.awt.Frame parent, boolean modal) {
         super(parent, modal);

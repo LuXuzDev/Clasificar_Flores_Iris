@@ -167,7 +167,7 @@ public class Validator {
     
     public static void loadedTrainner() throws Exception
     {
-        if(Controller.getInstance().getTrainerResultsLoaded()==null)
+        if(!Controller.getInstance().isLoaded())
             throw new Exception("No hay entrenamiento cargado");
     }
 }

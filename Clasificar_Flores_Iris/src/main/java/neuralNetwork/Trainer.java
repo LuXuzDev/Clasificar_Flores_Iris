@@ -28,8 +28,9 @@ public class Trainer {
         return salida;
     }
     
-    public void processInput(ArrayList<String> data) {
+    public void processInput(ArrayList<String> data) throws Exception {
         // Crear un arreglo bidimensional para los números
+        try{
         dataSet = new double[data.size()-1][]; // Inicializa el arreglo con el tamaño del ArrayList
         salida = new int[data.size()-1]; // Arreglo para clasificaciones
 
@@ -50,6 +51,10 @@ public class Trainer {
             // Asignar la clasificación
             String classificationString = parts[parts.length - 1]; // Obtener la clasificación
             salida[i] = getClassification(classificationString); // Convertir a int
+            }
+        }catch(Exception e)
+        {
+            throw new Exception("Error al leer el data-set");
         }
     }
 
