@@ -5,6 +5,7 @@
 package back_end;
 
 import infrastructure.DataBaseController;
+import infrastructure.DataBaseTrainnerController;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -122,7 +123,7 @@ public class Controller {
 
     
     public ArrayList<String> loadedTrainnersName() {
-        ArrayList<File> files = DataBaseController.getFilesInPackage();
+        ArrayList<File> files = DataBaseTrainnerController.getFileOutputStreams();
         ArrayList<String> names = new ArrayList<>();
 
         for (File f : files) {
