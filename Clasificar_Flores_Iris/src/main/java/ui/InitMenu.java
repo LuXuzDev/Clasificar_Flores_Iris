@@ -317,7 +317,7 @@ public class InitMenu extends javax.swing.JFrame {
         FlatSVGIcon icon = new FlatSVGIcon("png/bluebell.svg");
         try {
             Validator.loadedTrainner();
-            Controller.
+
             if (checkAndStart() == true) {
                 JprogressbarLabel.setVisible(true);
                 ProgressBar.setVisible(true);
