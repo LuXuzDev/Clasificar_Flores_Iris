@@ -16,7 +16,7 @@ public class Normalizer {
     private double[] maximos;
 
     public void ajustar(double[][] dataSet) {
-        int numAtributos = dataSet[0].length; // Última columna es la clase
+        int numAtributos = dataSet[0].length;
         minimos = new double[numAtributos];
         maximos = new double[numAtributos];
 
@@ -40,13 +40,6 @@ public class Normalizer {
     }
     
     public ArrayList<Double> normalizarEntrada(ArrayList<Double> dataSet) {
-        minimos = new double[5];
-        maximos = new double[5];
-        for (int i = 0; i < 5; i++) {
-            minimos[i] = Double.MAX_VALUE;
-            maximos[i] = Double.MIN_VALUE;
-        }
-        
         ArrayList<Double> dataSetNormalizado = new ArrayList<>(dataSet.size());
 
         // Inicializar la lista con ceros o valores predeterminados

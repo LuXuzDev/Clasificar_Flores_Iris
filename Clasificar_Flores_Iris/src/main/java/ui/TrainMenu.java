@@ -132,12 +132,12 @@ public class TrainMenu extends javax.swing.JFrame {
         LabelIndicationTrain.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         LabelIndicationTrain.setForeground(new java.awt.Color(102, 153, 255));
         LabelIndicationTrain.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jPanel1.add(LabelIndicationTrain, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 40, 260, 20));
+        jPanel1.add(LabelIndicationTrain, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 240, 340, 20));
 
         LabelResult.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         LabelResult.setForeground(new java.awt.Color(102, 153, 255));
         LabelResult.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jPanel1.add(LabelResult, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 70, 280, 20));
+        jPanel1.add(LabelResult, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 270, 360, 20));
 
         buttonLoadtrain.setText("Cargar Entrenamiento");
         buttonLoadtrain.addActionListener(new java.awt.event.ActionListener() {

@@ -57,8 +57,8 @@ public class Trainer extends javax.swing.JFrame {
         
         
         
-        //JPanel panelGrafico = crearPanelGrafico();
-        //cardPanel.add(panelGrafico, "Grafico 1");
+        JPanel panelGrafico = crearPanelGrafico();
+        cardPanel.add(panelGrafico, "Grafico 1");
     }
     
     
@@ -219,7 +219,7 @@ public class Trainer extends javax.swing.JFrame {
         LabelacurracyTotal.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         LabelacurracyTotal.setForeground(new java.awt.Color(102, 153, 255));
         LabelacurracyTotal.setText("Precision por clase :");
-        paneLabels.add(LabelacurracyTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 50, 130, 20));
+        paneLabels.add(LabelacurracyTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 50, 180, 20));
 
         panePrinc.add(paneLabels, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 510, 250));
 

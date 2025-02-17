@@ -70,12 +70,12 @@ public class UIControllers {
     
     public static void NamesLabelsTrainer(JLabel epoch,JLabel accuracy,JLabel error,JLabel setosa,JLabel virgi,JLabel versi)
     {
-        epoch.setText(""+trainer.getEpoch());
-        accuracy.setText("Precision: "+trainer.getAcurracyTotal()+"%");
-        error.setText("Error: "+trainer.getErrorEntrenamiento().getLast());
-        setosa.setText(""+trainer.getAcurracyClass().get(0)*100 +"%");
-        virgi.setText(""+trainer.getAcurracyClass().get(1)*100 +"%");
-        versi.setText(""+trainer.getAcurracyClass().get(2)*100 +"%");
+        epoch.setText("Epocas: "+trainer.getEpoch());
+        accuracy.setText("Precision: "+Math.round(trainer.getAcurracyTotal()*100)+"%");
+        error.setText("Error: "+Math.round(trainer.getErrorEntrenamiento().getLast()));
+        setosa.setText("Setosa: "+Math.round(trainer.getAcurracyClass().get(0)*100 )+"%");
+        virgi.setText("Virginica: "+Math.rint(trainer.getAcurracyClass().get(1)*100) +"%");
+        versi.setText("Versicolor: "+Math.round(trainer.getAcurracyClass().get(2)*100) +"%");
     }
             
     public static void updateComboBox(ArrayList<String> names,JComboBox<String> comboBox)

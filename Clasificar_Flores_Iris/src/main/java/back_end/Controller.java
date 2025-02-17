@@ -22,7 +22,11 @@ public class Controller {
     private static NeuralNetwork neuralNetwork;
     private static TrainerResults trainnerResults;
     private final Trainer trainer;
-    private final Normalizer normalizer;
+    private static Normalizer normalizer;
+
+    public static Normalizer getNormalizer() {
+        return normalizer;
+    }
     private File dataSetLoaded;
     private boolean loaded;
 
