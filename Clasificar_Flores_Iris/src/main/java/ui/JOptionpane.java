@@ -4,6 +4,7 @@
  */
 package ui;
 
+import back_end.Controller;
 import back_end.TrainerResults;
 import back_end.Validator;
 import com.formdev.flatlaf.FlatClientProperties;
@@ -41,6 +42,7 @@ public class JOptionpane extends javax.swing.JDialog {
         if(UIControllers.NumberOptionPane==1)
         {
             this.setTitle("Seleccionar dataset");
+            UIControllers.updateComboBox(Controller.getInstance().loadedFilesName(), ComboBoxDialog);
             PanelComboBox.setVisible(true);
             PanelTextField.setVisible(false);
             PanelTrainMenu.setVisible(false);
@@ -55,6 +57,7 @@ public class JOptionpane extends javax.swing.JDialog {
         else if(UIControllers.NumberOptionPane==3)
         {
             this.setTitle("Crear entrenamiento");
+            UIControllers.NamesLabelsTrainMenu(LabelEpocas, LabelAccuracy, LabelError);
             PanelTrainMenu.setVisible(true);
             PanelComboBox.setVisible(false);
             PanelTextField.setVisible(false);
@@ -81,7 +84,6 @@ public class JOptionpane extends javax.swing.JDialog {
         this.setLocationRelativeTo(null);
         
         //TrainmenuMetricas
-        UIControllers.NamesLabelsTrainMenu(LabelEpocas, LabelAccuracy, LabelError);
         LabelCaution.setText("El nombre solo contiene letras");
         LabelCaution.setForeground(Color.red);
         LabelCaution.setText("Ingrese el nombre");
@@ -283,7 +285,6 @@ public class JOptionpane extends javax.swing.JDialog {
         PanelComboBox.setBackground(new java.awt.Color(255, 255, 255));
         PanelComboBox.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        ComboBoxDialog.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "Pepe", "Juan" }));
         ComboBoxDialog.setSelectedItem("");
         PanelComboBox.add(ComboBoxDialog, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 40, 170, 40));
 

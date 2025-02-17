@@ -30,14 +30,15 @@ public class Trainer {
     
     public void processInput(ArrayList<String> data) {
         // Crear un arreglo bidimensional para los números
-        dataSet = new double[data.size()][]; // Inicializa el arreglo con el tamaño del ArrayList
-        salida = new int[data.size()]; // Arreglo para clasificaciones
+        dataSet = new double[data.size()-1][]; // Inicializa el arreglo con el tamaño del ArrayList
+        salida = new int[data.size()-1]; // Arreglo para clasificaciones
 
         // Recorrer cada entrada en el ArrayList
-        for (int i = 0; i < data.size(); i++) {
+        for (int i = 0; i < data.size()-1; i++) {
             String input = data.get(i); // Obtener la entrada actual
             String[] parts = input.split(","); // Dividir la cadena por comas
 
+ 
             // Crear un arreglo para los números de la entrada actual
             dataSet[i] = new double[parts.length - 1]; // El último elemento es la clasificación
 
@@ -54,7 +55,7 @@ public class Trainer {
 
     // Método para convertir la clasificación de String a int
     private  int getClassification(String classification) {
-        switch (classification) {
+        switch (classification.toLowerCase()) {
             case "iris-setosa":
                 return 0;
             case "iris-virginica":

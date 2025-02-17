@@ -10,6 +10,8 @@ import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.extras.FlatAnimatedLafChange;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.formdev.flatlaf.util.FontUtils;
+import java.util.ArrayList;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
@@ -60,6 +62,13 @@ public class UIControllers {
         epoch.setText("Epocas: "+trainer.getEpoch());
         accuracy.setText("Precision: "+trainer.getAcurracyTotal()+"%");
         error.setText("Error: "+trainer.getErrorEntrenamiento().getLast());
+    }
+    
+    public static void updateComboBox(ArrayList<String> names,JComboBox<String> comboBox)
+    {
+        for (String n : names) {
+            comboBox.addItem(n);
+        }
     }
 }
 
