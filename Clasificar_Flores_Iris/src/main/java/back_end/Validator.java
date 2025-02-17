@@ -34,6 +34,16 @@ public class Validator {
     }
     
     
+    public static boolean isCorrectInputOnlyLetter(String input)
+    {
+        boolean correct=true;
+        if(isEmptyInput(input) || containsNumber(input) || containsEspecialCharacters(input))
+            correct=false;
+
+        return correct;
+    }
+    
+    
     public static boolean isEmptyInput(String input){return input.trim().isEmpty();}
     
     
@@ -52,6 +62,11 @@ public class Validator {
         return letter;
     }
     
+    private static boolean containsEspecialCharacters(String input) {
+        String regex = ".*[^a-zA-Z0-9].*";
+        return input.matches(regex);
+    }
+
     //funcion q valida q el model de un jlist sea instancia de defautlJlistmodel
     public static boolean ListInstanceOf(JList list)
     {
