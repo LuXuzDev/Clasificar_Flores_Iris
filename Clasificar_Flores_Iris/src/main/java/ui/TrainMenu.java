@@ -249,6 +249,7 @@ public class TrainMenu extends javax.swing.JFrame {
             try {
                 Controller.getInstance().loadTrain(UIControllers.ComboboxName);
                 Controller.getInstance().setLoaded(true);
+                
             } catch (IOException ex) {
                 UIControllers.JOptioncatch(ex.getMessage());
             } catch (ClassNotFoundException ex) {

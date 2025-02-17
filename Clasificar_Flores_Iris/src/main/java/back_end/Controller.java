@@ -204,7 +204,6 @@ public class Controller {
         neuralNetwork = DataBaseTrainnerController.getBinaryNeuralNetwork(name);
     }
     
-    
     public void setDataSetLoaded(String dataSetName) throws Exception {
         File file = DataBaseController.findFile(dataSetName);
         Validator.existFile(file);
