@@ -80,6 +80,7 @@ public class ModifyDataset extends javax.swing.JFrame {
     //funcion para añadir cada elemento a la tbala
     public void datasetTabel(ArrayList<String> arreglo)
     {
+        model.setRowCount(0);
         for(int i=0;i<arreglo.size();i++)
         {
             String [] rowData=arreglo.get(i).split(",");
@@ -251,7 +252,6 @@ public class ModifyDataset extends javax.swing.JFrame {
         {
             int resultado = JOptionPane.showOptionDialog(null, "Desea guardrar los cambios realizados", "Guardar cambios", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, icon2, botones, botones[0]);
             if (resultado == JOptionPane.YES_OPTION) {
-                
                 try {
                     Validator.MaxTam(data);
                     line=widhLeaf.getText()+","+widthStem.getText()+","+LongLeaf.getText()+","+LongStem.getText()+","+ComboBoxIris.getSelectedItem();

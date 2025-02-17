@@ -78,7 +78,6 @@ public class Validator {
     //validar el maximo de archivos modificados en el dataset
     public static void MaxTam(ArrayList<String> array) throws Exception
     {
-        
         if((array.size()+1)>=160)
             throw new Exception("Alcanzo el limite de modificaciones");
     }

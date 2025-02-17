@@ -42,8 +42,9 @@ public class HandleFiles {
     
     public static void writerFiles(String fileName, String contenido) throws IOException {
 
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(RUTA_DATA_BASE+fileName,true))) {
             writer.write(contenido);
+            writer.newLine();
             System.out.println("Archivo escrito correctamente: " + fileName);
         } catch (IOException ex) {
             IOException e = new IOException(contenido);
