@@ -90,10 +90,10 @@ public class JOptionpane extends javax.swing.JDialog {
         FieldPrin.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
-                if(Validator.containsNumber(FieldPrin.getText()))
+                if(!Validator.isCorrectInputOnlyLetter(FieldPrin.getText()))
                 {
                     FieldPrin.putClientProperty("JComponent.outline","error");
-                    Labelprin.setText("El texto no debe contener numeros");
+                    Labelprin.setText("El texto debe contener letras");
                     Labelprin.setForeground(Color.red);
                 }
                 else

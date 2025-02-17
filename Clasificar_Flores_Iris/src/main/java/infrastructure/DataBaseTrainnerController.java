@@ -5,9 +5,11 @@
 package infrastructure;
 
 
+import back_end.TrainerResults;
 import java.io.File;
-import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
+import neuralNetwork.NeuralNetwork;
 
 /**
  *
@@ -30,7 +32,7 @@ public class DataBaseTrainnerController {
             File[] files = directory.listFiles();
             if (files != null) {
                 for (File file : files) {
-                    if (file.isFile() && file.getName().endsWith(".dat")) {
+                    if (file.isFile() && file.getName().endsWith(".data")) {
                         fileList.add(file);
                         updateFile(file);
                     }
@@ -49,5 +51,27 @@ public class DataBaseTrainnerController {
         } else if (!trainnigs.contains(file)) {
             trainnigs.add(file);
         }
+    }
+    
+    
+    public void saveTrain(NeuralNetwork neuralNetwork,TrainerResults trainnerResults,String name) throws IOException
+    {
+        HandleFiles.saveObjectsToBinaryFile(neuralNetwork, trainnerResults, name);
+    }
+    
+    
+    public NeuralNetwork getBinaryNeuralNetwork(String name) throws IOException, ClassNotFoundException
+    {
+        Object[] binaryFile = HandleFiles.readObjectsFromBinaryFile(name);
+        NeuralNetwork temp = (NeuralNetwork)binaryFile[0];
+        return temp;
+    }
+    
+    
+    public TrainerResults getBinaryTrainnerResults(String name) throws IOException, ClassNotFoundException
+    {
+        Object[] binaryFile = HandleFiles.readObjectsFromBinaryFile(name);
+        TrainerResults temp = (TrainerResults)binaryFile[1];
+        return temp;
     }
 }
