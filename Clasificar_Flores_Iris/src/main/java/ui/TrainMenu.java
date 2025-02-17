@@ -71,7 +71,7 @@ public class TrainMenu extends javax.swing.JFrame {
         LabelIcon = new javax.swing.JLabel();
         LabelIndicationTrain = new javax.swing.JLabel();
         LabelResult = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        buttonLoadtrain = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Iris");
@@ -130,13 +130,13 @@ public class TrainMenu extends javax.swing.JFrame {
         LabelResult.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jPanel1.add(LabelResult, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 70, 280, 20));
 
-        jButton1.setText("Cargar Entrenamiento");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        buttonLoadtrain.setText("Cargar Entrenamiento");
+        buttonLoadtrain.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                buttonLoadtrainActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 140, 160, 30));
+        jPanel1.add(buttonLoadtrain, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 140, 160, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -169,11 +169,11 @@ public class TrainMenu extends javax.swing.JFrame {
 
     private void buttonLoadDatasetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonLoadDatasetActionPerformed
         UIControllers.NumberOptionPane=1;
+        UIControllers.JoptionCombo=false;
         new JOptionpane(this,true).setVisible(true);
         FlatSVGIcon icon=new FlatSVGIcon("png/bluebell.svg");
         if (UIControllers.JoptionCombo==false) {
-            LabelIndicationTrain.setText("");
-            LabelResult.setText("");
+            UIControllers.JOptioncatch("No se guardo el dataset");
         } else if (UIControllers.JoptionCombo==true) {
             JOptionPane.showOptionDialog(null, "Datos cargados correctamente", "Dataset", JOptionPane.CLOSED_OPTION, JOptionPane.INFORMATION_MESSAGE, icon, null, null);
             try {
@@ -212,10 +212,19 @@ public class TrainMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonTrainActionPerformed
 
     
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void buttonLoadtrainActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonLoadtrainActionPerformed
         FlatSVGIcon icon = new FlatSVGIcon("png/bluebell.svg");
+        UIControllers.JoptionCombo=false;
+        UIControllers.NumberOptionPane=1;
+        new JOptionpane(this,true).setVisible(true);
+        if (UIControllers.JoptionCombo == false) {
+            UIControllers.JOptioncatch("No se cargo el entrenamiento");
+        } else if (UIControllers.JoptionCombo == true) {
+            JOptionPane.showOptionDialog(null, "Entrenamiento cargado ", "Entrenamiento", JOptionPane.CLOSED_OPTION, JOptionPane.INFORMATION_MESSAGE, icon, null, null);
+            LabelResult.setText("Entrenamiento cargado: " + UIControllers.ComboboxName);
+        }
         
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_buttonLoadtrainActionPerformed
 
     /**
      * @param args the command line arguments
@@ -259,8 +268,8 @@ public class TrainMenu extends javax.swing.JFrame {
     private javax.swing.JButton buttonBack;
     private javax.swing.JButton buttonEstadis;
     private javax.swing.JButton buttonLoadDataset;
+    private javax.swing.JButton buttonLoadtrain;
     private javax.swing.JButton buttonTrain;
-    private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }

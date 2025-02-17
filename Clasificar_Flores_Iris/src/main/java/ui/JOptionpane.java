@@ -56,6 +56,7 @@ public class JOptionpane extends javax.swing.JDialog {
         }
         else if(UIControllers.NumberOptionPane==3)
         {
+            UIControllers.NamesLabelsTrainMenu(LabelEpocas, LabelAccuracy, LabelError);
             this.setTitle("Crear entrenamiento");
             UIControllers.NamesLabelsTrainMenu(LabelEpocas, LabelAccuracy, LabelError);
             PanelTrainMenu.setVisible(true);
@@ -379,17 +380,10 @@ public class JOptionpane extends javax.swing.JDialog {
 
     private void buttonYesComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonYesComboActionPerformed
         FlatSVGIcon icon=new FlatSVGIcon("png/bluebell.svg");
-        if(ComboBoxDialog.getSelectedItem().equals(" "))
-        {
-            this.dispose();
-            JOptionPane.showOptionDialog(null, "No se cargo el dataset.Datos incorrectos", "Error", JOptionPane.CLOSED_OPTION, JOptionPane.INFORMATION_MESSAGE, icon, null, null); 
-        }
-        else
-        {
             this.dispose();
             UIControllers.JoptionCombo=true;
             UIControllers.ComboboxName=ComboBoxDialog.getSelectedItem().toString();
-        }
+       
     }//GEN-LAST:event_buttonYesComboActionPerformed
 
     private void buttonNOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonNOActionPerformed
@@ -402,10 +396,10 @@ public class JOptionpane extends javax.swing.JDialog {
 
     private void buttonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSaveActionPerformed
         FlatSVGIcon icon=new FlatSVGIcon("png/bluebell.svg");
-        if (!Validator.containsNumber(FieldNameTrain.getText()) && !Validator.isEmptyInput(FieldNameTrain.getText())) {
+        if (!Validator.isCorrectInputOnlyLetter(FieldNameTrain.getText()) && !Validator.isEmptyInput(FieldNameTrain.getText())) {
+            this.dispose();
             UIControllers.JoptionTrainMenu=true;
             UIControllers.TrainName=FieldNameTrain.getText();
-            this.dispose();
         }
         else
         {
