@@ -14,6 +14,8 @@ import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import com.formdev.flatlaf.util.FontUtils;
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
@@ -153,16 +155,6 @@ public class ModifyDataset extends javax.swing.JFrame {
         return array;
     }
     
-    //funcion para agregar a el array de datos ,lo q introduce el usuario
-    private ArrayList<String> addData(int ultimo)
-    {
-        FlatSVGIcon icon2 = new FlatSVGIcon("png/bluebell.svg");
-        data.add(widhLeaf.getText()+","+LongLeaf.getText()+","+widthStem.getText()+","+LongStem.getText()+","+ComboBoxIris.getSelectedItem().toString());
-        model.setRowCount(0);
-        datasetTabel(data);
-        System.out.println(data.size());
-        return data;
-    }
     
     
     
@@ -250,57 +242,40 @@ public class ModifyDataset extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonEnterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEnterActionPerformed
-        //Controller.getInstance().editFile(line, name);
-        int ultimo=data.size();
+        String line ="";
         String[] botones = {"Si", "No"};
-        FlatSVGIcon icon2=new FlatSVGIcon("png/bluebell.svg");
-        if (data.isEmpty() || data.get(0).isBlank()) {
-            if (Validator.isCorrectInputOnlyNumbers(widhLeaf.getText()) && Validator.isCorrectInputOnlyNumbers(widthStem.getText()) && Validator.isCorrectInputOnlyNumbers(LongLeaf.getText()) && Validator.isCorrectInputOnlyNumbers(LongStem.getText()) && ComboBoxIris.getSelectedItem() != " ") {
-                //esto es el caso si la tabla esta vacia 
-                //UIcontrollers.filename=nombre del archivo
-                //data=array
-                //la funcion de rellenar tabla
-                
-                JOptionPane.showMessageDialog(null, "Datos guardados exitosamente", "Informacion", JOptionPane.INFORMATION_MESSAGE, icon2);
-            } else {
-                JOptionPane.showMessageDialog(null, "Debe Introducir datos correctos para agregar al dataset", "Informacion", JOptionPane.INFORMATION_MESSAGE, icon2);
-            }
-        }
-        else
+        FlatSVGIcon icon2 = new FlatSVGIcon("png/bluebell.svg");
+        if (Validator.isCorrectInputOnlyNumbers(widhLeaf.getText()) && Validator.isCorrectInputOnlyNumbers(widthStem.getText()) &&
+            Validator.isCorrectInputOnlyNumbers(LongLeaf.getText()) && Validator.isCorrectInputOnlyNumbers(LongStem.getText())  &&
+            ComboBoxIris.getSelectedItem() != " ")
         {
-            if (Validator.isCorrectInputOnlyNumbers(widhLeaf.getText()) && Validator.isCorrectInputOnlyNumbers(widthStem.getText()) && Validator.isCorrectInputOnlyNumbers(LongLeaf.getText()) && Validator.isCorrectInputOnlyNumbers(LongStem.getText()) && ComboBoxIris.getSelectedItem() != " ") {
-                int resultado = JOptionPane.showOptionDialog(null, "Desea guardrar los cambios realizados", "Guardar cambios", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, icon2, botones, botones[0]);
-                if (resultado == JOptionPane.YES_OPTION) {
-                    if(Validator.MaxTam(data)==true)
-                    {
-                        JOptionPane.showMessageDialog(null, "Este es el ultimo cambio que puede guadar.Solo hasta 10 modificaciones", "Informacion", JOptionPane.INFORMATION_MESSAGE, icon2);
-                        buttonEnter.setEnabled(false);
-                    }
-                    else
-                    {
-                        //esto es el caso si la tabla tiene elemtnos 
-                        //UIcontrollers.filename=nombre del archivo
-                        //data=arraydevalores
-                        //la funcion de rellenar tabla
-                        JOptionPane.showMessageDialog(null, "Datos guardados exitosamente", "Informacion", JOptionPane.INFORMATION_MESSAGE, icon2);
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(null, "No se guardaron los cambios", "Informacion", JOptionPane.INFORMATION_MESSAGE, icon2);
-                }
+            int resultado = JOptionPane.showOptionDialog(null, "Desea guardrar los cambios realizados", "Guardar cambios", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, icon2, botones, botones[0]);
+            if (resultado == JOptionPane.YES_OPTION) {
                 
+                try {
+                    Validator.MaxTam(data);
+                    line=widhLeaf.getText()+","+widthStem.getText()+","+LongLeaf.getText()+","+LongStem.getText()+","+ComboBoxIris.getSelectedItem();
+                    datasetTabel(Controller.getInstance().editFile(line, UIControllers.Filename));
+                    JOptionPane.showMessageDialog(null, "Datos guardados exitosamente", "Informacion", JOptionPane.INFORMATION_MESSAGE, icon2);
+            
+                } catch (Exception ex) {
+                    UIControllers.JOptioncatch(ex.getMessage());
+                }
             } else {
-                JOptionPane.showMessageDialog(null, "Debe Introducir datos correctos para agregar al dataset", "Informacion", JOptionPane.INFORMATION_MESSAGE, icon2);
+                JOptionPane.showMessageDialog(null, "No se guardaron los cambios", "Informacion", JOptionPane.INFORMATION_MESSAGE, icon2);
             }
-        } 
+        } else 
+            JOptionPane.showMessageDialog(null, "Debe Introducir datos correctos para agregar al dataset", "Informacion", JOptionPane.INFORMATION_MESSAGE, icon2);
+        
         ComboBoxIris.setSelectedItem(" ");
         widhLeaf.setText("");
         LongLeaf.setText("");
         widthStem.setText("");
         LongStem.setText("");
-        widhLeaf.putClientProperty("JComponent.outline",new Color(102, 153, 255));
-        LongLeaf.putClientProperty("JComponent.outline",new Color(102, 153, 255));
-        widthStem.putClientProperty("JComponent.outline",new Color(102, 153, 255));
-        LongStem.putClientProperty("JComponent.outline",new Color(102, 153, 255));
+        widhLeaf.putClientProperty("JComponent.outline", new Color(102, 153, 255));
+        LongLeaf.putClientProperty("JComponent.outline", new Color(102, 153, 255));
+        widthStem.putClientProperty("JComponent.outline", new Color(102, 153, 255));
+        LongStem.putClientProperty("JComponent.outline", new Color(102, 153, 255));
     }//GEN-LAST:event_buttonEnterActionPerformed
 
     private void buttonBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBackActionPerformed
