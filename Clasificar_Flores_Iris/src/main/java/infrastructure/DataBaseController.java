@@ -16,6 +16,7 @@ import java.util.ArrayList;
 public class DataBaseController {
     private static ArrayList<File> files  = new ArrayList<>();;
     static String packagePath = "src/main/java/dataBase_DataSet";
+    static String trainerPath ="src/main/java/dataBase_Trainings/";
     
     public DataBaseController()
     {
@@ -26,6 +27,26 @@ public class DataBaseController {
     public static ArrayList<File> getFilesInPackage() {
         ArrayList<File> fileList = new ArrayList<>();
         File directory = new File(packagePath);
+
+        if (directory.exists() && directory.isDirectory()) {
+            File[] filesInPackage = directory.listFiles();
+            if (filesInPackage != null) {
+                for (File file : filesInPackage) {
+                    if (file.isFile()) {
+                        fileList.add(file);
+                        updateFile(file);
+                    }
+                }
+            }
+        }
+        else
+            System.out.println("El directorio no existe");
+        return fileList;
+    }
+    
+        public static ArrayList<File> getTrainnersInPackage() {
+        ArrayList<File> fileList = new ArrayList<>();
+        File directory = new File(trainerPath);
 
         if (directory.exists() && directory.isDirectory()) {
             File[] filesInPackage = directory.listFiles();

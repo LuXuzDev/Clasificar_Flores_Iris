@@ -121,6 +121,17 @@ public class Controller {
     }
 
     
+    public ArrayList<String> loadedTrainnersName() {
+        ArrayList<File> files = DataBaseController.getFilesInPackage();
+        ArrayList<String> names = new ArrayList<>();
+
+        for (File f : files) {
+            names.add(f.getName());
+        }
+        return names;
+    }
+    
+    
     public void createFile(String name) throws IOException {
         DataBaseController.createFile(name);
     }
