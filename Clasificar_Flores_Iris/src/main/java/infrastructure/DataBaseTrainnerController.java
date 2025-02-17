@@ -16,12 +16,12 @@ import neuralNetwork.NeuralNetwork;
  * @author Angel Hernandez
  */
 public class DataBaseTrainnerController {
-    private static ArrayList<File> trainnigs;
+    private static ArrayList<File> trainnigs= new ArrayList<>();
     static String packagePath = "src/main/java/dataBase_Trainings/";
     
     
     public DataBaseTrainnerController() {
-        trainnigs = new ArrayList<>();
+
     }
 
     public static ArrayList<File> getFileOutputStreams() {

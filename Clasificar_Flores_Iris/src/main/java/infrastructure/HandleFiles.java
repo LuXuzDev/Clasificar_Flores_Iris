@@ -102,6 +102,7 @@ public class HandleFiles {
     public static void saveObjectsToBinaryFile(Object objeto1, Object objeto2, String fileName) throws IOException {
         try (FileOutputStream fileOut = new FileOutputStream(RUTA_TRAINNER + fileName); ObjectOutputStream objectOut = new ObjectOutputStream(fileOut)) {
 
+            
             objectOut.writeObject(objeto1);
             objectOut.writeObject(objeto2);
 

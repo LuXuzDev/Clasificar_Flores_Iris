@@ -11,6 +11,9 @@ import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import java.awt.Color;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
@@ -243,7 +246,14 @@ public class TrainMenu extends javax.swing.JFrame {
         {
             JOptionPane.showOptionDialog(null, "Entrenamiento cargado ", "Entrenamiento", JOptionPane.CLOSED_OPTION, JOptionPane.INFORMATION_MESSAGE, icon, null, null);
             LabelResult.setText("Entrenamiento cargado: " + UIControllers.ComboboxName);
-            Controller.getInstance().loadFile(UIControllers.ComboboxName);
+            try {
+                Controller.getInstance().loadTrain(UIControllers.ComboboxName);
+                Controller.getInstance().setLoaded(true);
+            } catch (IOException ex) {
+                UIControllers.JOptioncatch(ex.getMessage());
+            } catch (ClassNotFoundException ex) {
+                UIControllers.JOptioncatch(ex.getMessage());
+            }
         }
         
     }//GEN-LAST:event_buttonLoadtrainActionPerformed

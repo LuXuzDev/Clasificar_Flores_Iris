@@ -40,6 +40,13 @@ public class Normalizer {
     }
     
     public ArrayList<Double> normalizarEntrada(ArrayList<Double> dataSet) {
+        minimos = new double[5];
+        maximos = new double[5];
+        for (int i = 0; i < 5; i++) {
+            minimos[i] = Double.MAX_VALUE;
+            maximos[i] = Double.MIN_VALUE;
+        }
+        
         ArrayList<Double> dataSetNormalizado = new ArrayList<>(dataSet.size());
 
         // Inicializar la lista con ceros o valores predeterminados
