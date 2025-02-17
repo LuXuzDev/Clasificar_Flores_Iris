@@ -45,6 +45,8 @@ public class TrainMenu extends javax.swing.JFrame {
     }
     //funcion para diseño general del Jframe
     private void design() {
+        LabelIndicationTrain.setText("Dataset Cargado: ");
+        LabelResult.setText("Entrenamiento cargado: ");
         Flatlaf();
         UIControllers.setFontFamily("Arial");
         setIconImage(UIControllers.design().getImage());
@@ -173,11 +175,19 @@ public class TrainMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonLoadDatasetActionPerformed
 
     private void buttonTrainActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonTrainActionPerformed
-        FlatSVGIcon icon = new FlatSVGIcon("png/bluebell.svg");
+        UIControllers.NumberOptionPane=3;
+        new JOptionpane(this,true).setVisible(true);
+        FlatSVGIcon icon=new FlatSVGIcon("png/bluebell.svg");
+        if (UIControllers.JoptionTrainMenu==false) {
+            UIControllers.JOptioncatch("No se guardo el entrenamiento");
+        } else if (UIControllers.JoptionTrainMenu==true) {
+            JOptionPane.showOptionDialog(null, "Datos cargados correctamente", "Dataset", JOptionPane.CLOSED_OPTION, JOptionPane.INFORMATION_MESSAGE, icon, null, null);
+            LabelResult.setText("Entrenamiento cargado: "+UIControllers.TrainName);
+        }
         try {
             Controller.getInstance().train();
         } catch (Exception ex) {
-            Logger.getLogger(TrainMenu.class.getName()).log(Level.SEVERE, null, ex);
+            UIControllers.JOptioncatch(ex.getMessage());
         }
         
         if (!Validator.isEmptyInput(LabelIndicationTrain.getText())) {
