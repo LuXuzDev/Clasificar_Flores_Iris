@@ -34,7 +34,7 @@ public class TrainerResults implements Serializable{
         this.acurracyClass=acurracyClass;
     }
     
-    
+   
 
 
     
