@@ -4,6 +4,7 @@
  */
 package ui;
 
+import back_end.TrainerResults;
 import back_end.Validator;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
@@ -27,25 +28,36 @@ import javax.swing.event.DocumentListener;
 public class JOptionpane extends javax.swing.JDialog {
 
     
-    /**
-     * Creates new form JOptionpane
-     */
     public JOptionpane(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         UIControllers.newFilename="";
         UIControllers.ComboboxName="";
+        UIControllers.TrainName="";
+        
         initComponents();
+        PanelTrainMenu.setVisible(true);
+        PanelComboBox.setVisible(false);
+        PanelTextField.setVisible(false);
         if(UIControllers.NumberOptionPane==1)
         {
             this.setTitle("Seleccionar dataset");
             PanelComboBox.setVisible(true);
             PanelTextField.setVisible(false);
+            PanelTrainMenu.setVisible(false);
         }
         else if(UIControllers.NumberOptionPane==2)
         {
             this.setTitle("Crear dataset");
             PanelComboBox.setVisible(false);
             PanelTextField.setVisible(true);
+            PanelTrainMenu.setVisible(false);
+        }
+        else if(UIControllers.NumberOptionPane==3)
+        {
+            this.setTitle("Crear entrenamiento");
+            PanelTrainMenu.setVisible(true);
+            PanelComboBox.setVisible(false);
+            PanelTextField.setVisible(false);
         }
         design();
     }
@@ -67,6 +79,60 @@ public class JOptionpane extends javax.swing.JDialog {
         getRootPane().putClientProperty(FlatClientProperties.TITLE_BAR_SHOW_ICON,true);
         getRootPane().putClientProperty(FlatClientProperties.TITLE_BAR_SHOW_ICONIFFY,true);
         this.setLocationRelativeTo(null);
+        
+        //TrainmenuMetricas
+        UIControllers.NamesLabelsTrainMenu(LabelEpocas, LabelAccuracy, LabelError);
+        LabelCaution.setText("El nombre solo contiene letras");
+        LabelCaution.setForeground(Color.red);
+        LabelCaution.setText("Ingrese el nombre");
+        LabelCaution.setForeground(new Color(102, 153, 255));
+        FieldNameTrain.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                if(Validator.containsNumber(FieldNameTrain.getText()))
+                {
+                    FieldNameTrain.putClientProperty("JComponent.outline","error");
+                    LabelCaution.setText("El nombre solo contiene letras");
+                    LabelCaution.setForeground(Color.red);
+                }
+                else
+                {
+                    FieldNameTrain.putClientProperty("JComponent.outline",new Color(102, 153, 255));
+                    LabelCaution.setText("");
+                }
+            }
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                if(Validator.containsNumber(FieldNameTrain.getText()))
+                {
+                    FieldNameTrain.putClientProperty("JComponent.outline","error");
+                    LabelCaution.setText("El nombre solo contiene letras");
+                    LabelCaution.setForeground(Color.red);
+                }
+                else
+                {
+                    FieldNameTrain.putClientProperty("JComponent.outline",new Color(102, 153, 255));
+                    LabelCaution.setText("");
+                }
+            }
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                if(Validator.containsNumber(FieldNameTrain.getText()))
+                {
+                    FieldNameTrain.putClientProperty("JComponent.outline","error");
+                    LabelCaution.setText("El nombre solo contiene letras");
+                    LabelCaution.setForeground(Color.red);
+                }
+                else
+                {
+                    FieldNameTrain.putClientProperty("JComponent.outline",new Color(102, 153, 255));
+                    LabelCaution.setText("");
+                }
+            }
+        });
+    
+   
+    
         
         //COMBOBOX DIALOG
         LabelIndicatorCombo.setText("Debe ingresar una opcion valida");
@@ -153,6 +219,14 @@ public class JOptionpane extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        PanelTrainMenu = new javax.swing.JPanel();
+        FieldNameTrain = new javax.swing.JTextField();
+        LabelEpocas = new javax.swing.JLabel();
+        LabelError = new javax.swing.JLabel();
+        LabelAccuracy = new javax.swing.JLabel();
+        buttonSave = new javax.swing.JButton();
+        buttonDiscard = new javax.swing.JButton();
+        LabelCaution = new javax.swing.JLabel();
         PanelComboBox = new javax.swing.JPanel();
         ComboBoxDialog = new javax.swing.JComboBox<>();
         buttonYesCombo = new javax.swing.JButton();
@@ -168,6 +242,43 @@ public class JOptionpane extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
+
+        PanelTrainMenu.setBackground(new java.awt.Color(255, 255, 255));
+        PanelTrainMenu.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        PanelTrainMenu.add(FieldNameTrain, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 30, 190, 30));
+
+        LabelEpocas.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        LabelEpocas.setText("Epocas: ");
+        PanelTrainMenu.add(LabelEpocas, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 110, -1));
+
+        LabelError.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        LabelError.setText("Error: ");
+        PanelTrainMenu.add(LabelError, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 110, -1));
+
+        LabelAccuracy.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        LabelAccuracy.setText("Metricas: ");
+        PanelTrainMenu.add(LabelAccuracy, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 110, -1));
+
+        buttonSave.setBackground(new java.awt.Color(0, 153, 255));
+        buttonSave.setForeground(new java.awt.Color(255, 255, 255));
+        buttonSave.setText("Guardar");
+        buttonSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonSaveActionPerformed(evt);
+            }
+        });
+        PanelTrainMenu.add(buttonSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 70, 90, 30));
+
+        buttonDiscard.setText("Descartar");
+        buttonDiscard.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonDiscardActionPerformed(evt);
+            }
+        });
+        PanelTrainMenu.add(buttonDiscard, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 70, 90, 30));
+
+        LabelCaution.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        PanelTrainMenu.add(LabelCaution, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 0, 180, 20));
 
         PanelComboBox.setBackground(new java.awt.Color(255, 255, 255));
         PanelComboBox.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -232,6 +343,8 @@ public class JOptionpane extends javax.swing.JDialog {
                     .addGap(0, 0, Short.MAX_VALUE)
                     .addComponent(PanelComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(PanelTrainMenu, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 360, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -241,6 +354,8 @@ public class JOptionpane extends javax.swing.JDialog {
                     .addGap(0, 0, Short.MAX_VALUE)
                     .addComponent(PanelComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(PanelTrainMenu, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE))
         );
 
         pack();
@@ -284,6 +399,24 @@ public class JOptionpane extends javax.swing.JDialog {
         this.dispose();
     }//GEN-LAST:event_buttonNoComboActionPerformed
 
+    private void buttonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSaveActionPerformed
+        FlatSVGIcon icon=new FlatSVGIcon("png/bluebell.svg");
+        if (!Validator.containsNumber(FieldNameTrain.getText()) && !Validator.isEmptyInput(FieldNameTrain.getText())) {
+            UIControllers.JoptionTrainMenu=true;
+            UIControllers.TrainName=FieldNameTrain.getText();
+            this.dispose();
+        }
+        else
+        {
+            this.dispose();
+            JOptionPane.showMessageDialog(null, "Los datos ingresados son erroneos no se guardaran los cambios", "Error", JOptionPane.ERROR_MESSAGE, icon);
+        }
+    }//GEN-LAST:event_buttonSaveActionPerformed
+
+    private void buttonDiscardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDiscardActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_buttonDiscardActionPerformed
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -325,15 +458,23 @@ public class JOptionpane extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> ComboBoxDialog;
+    private javax.swing.JTextField FieldNameTrain;
     private javax.swing.JTextField FieldPrin;
+    private javax.swing.JLabel LabelAccuracy;
+    private javax.swing.JLabel LabelCaution;
+    private javax.swing.JLabel LabelEpocas;
+    private javax.swing.JLabel LabelError;
     private javax.swing.JLabel LabelIcon;
     private javax.swing.JLabel LabelIconCombo;
     private javax.swing.JLabel LabelIndicatorCombo;
     private javax.swing.JLabel Labelprin;
     private javax.swing.JPanel PanelComboBox;
     private javax.swing.JPanel PanelTextField;
+    private javax.swing.JPanel PanelTrainMenu;
+    private javax.swing.JButton buttonDiscard;
     private javax.swing.JButton buttonNO;
     private javax.swing.JButton buttonNoCombo;
+    private javax.swing.JButton buttonSave;
     private javax.swing.JButton buttonYes;
     private javax.swing.JButton buttonYesCombo;
     // End of variables declaration//GEN-END:variables

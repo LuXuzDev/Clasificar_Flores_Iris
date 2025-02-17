@@ -5,10 +5,12 @@
 package ui;
 
 
+import back_end.TrainerResults;
 import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.extras.FlatAnimatedLafChange;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.formdev.flatlaf.util.FontUtils;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
@@ -25,6 +27,9 @@ public class UIControllers {
     public static boolean JoptionCombo=false;
     public static String ComboboxName="";
     public static int NumberOptionPane=0;
+    public static String TrainName="";
+    public static boolean JoptionTrainMenu=false;
+    public static TrainerResults trainer;
     
     public static void setFontFamily(String fontFamily)
     {
@@ -50,6 +55,12 @@ public class UIControllers {
         JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.INFORMATION_MESSAGE, icon2);
     }
     
+    public static void NamesLabelsTrainMenu(JLabel epoch,JLabel accuracy,JLabel error)
+    {
+        epoch.setText("Epocas: "+trainer.getEpoch());
+        accuracy.setText("Precision: "+trainer.getAcurracyTotal()+"%");
+        error.setText("Error: "+trainer.getErrorEntrenamiento().getLast());
+    }
 }
 
 
