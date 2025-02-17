@@ -16,14 +16,11 @@ import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 import javax.swing.*;
 import java.awt.*;
-import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import org.jfree.chart.ChartPanel;
-import static ui.UIControllers.trainer;
+
 
 
 

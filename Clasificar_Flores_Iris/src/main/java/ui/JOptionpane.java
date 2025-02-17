@@ -5,7 +5,6 @@
 package ui;
 
 import back_end.Controller;
-import back_end.TrainerResults;
 import back_end.Validator;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
@@ -13,8 +12,6 @@ import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
@@ -69,7 +66,6 @@ public class JOptionpane extends javax.swing.JDialog {
    
     private void design()
     {
-        
         UIControllers.Joption=false;
         FlatSVGIcon icon=new FlatSVGIcon("png/bluebell.svg");
         LabelIcon.setIcon(icon);

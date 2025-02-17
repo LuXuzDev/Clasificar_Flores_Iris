@@ -11,8 +11,6 @@ import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import java.awt.Color;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
@@ -204,6 +202,7 @@ public class TrainMenu extends javax.swing.JFrame {
             } else if (UIControllers.JoptionTrainMenu == true) {
                 JOptionPane.showOptionDialog(null, "Datos guardados correctamente", "Dataset", JOptionPane.CLOSED_OPTION, JOptionPane.INFORMATION_MESSAGE, icon, null, null);
                 LabelResult.setText("Entrenamiento cargado: " + UIControllers.TrainName);
+                Controller.getInstance().setLoaded(true);
             }
 
         } catch (Exception ex) {
