@@ -74,8 +74,8 @@ public class Validator {
         return check;
     }
     
-    //esta es la funciom
-    //funcion para validar el maximo de archivos modificados en el dataset
+    
+    //validar el maximo de archivos modificados en el dataset
     public static boolean MaxTam(ArrayList<String> array)
     {
         boolean check=false;
@@ -85,7 +85,9 @@ public class Validator {
         }
         return check;
     }
-    //funcion para validar en un joption pane q el usuario selecciono si
+    
+    
+    //validar en un joption pane q el usuario selecciono si
     public static boolean YesOptionJOption(int result)
     {
         boolean check=false;

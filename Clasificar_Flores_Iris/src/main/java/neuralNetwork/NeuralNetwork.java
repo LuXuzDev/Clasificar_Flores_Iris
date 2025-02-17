@@ -161,7 +161,6 @@ public class NeuralNetwork implements Serializable{
             dataSetMezclado[i] = dataSet[indices[i]];
             salidasMezcladas[i] = salidas[indices[i]];
         }
-
         return new Object[]{dataSetMezclado, salidasMezcladas};
     }
 
