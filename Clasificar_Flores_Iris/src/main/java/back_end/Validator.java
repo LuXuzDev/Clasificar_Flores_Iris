@@ -158,4 +158,10 @@ public class Validator {
             throw new Exception("El archivo no existe");
         return file;
     }
+    
+    public static void loadedDataSet() throws Exception
+    {
+        if(Controller.getInstance().getDataSetLoaded()==null)
+            throw new Exception("No hay data-set cargado");
+    }
 }
