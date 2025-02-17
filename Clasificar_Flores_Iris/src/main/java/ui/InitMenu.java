@@ -317,12 +317,17 @@ public class InitMenu extends javax.swing.JFrame {
 
     private void buttonAnalizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAnalizeActionPerformed
         FlatSVGIcon icon = new FlatSVGIcon("png/bluebell.svg");
-        if (checkAndStart() == true) {
-            JprogressbarLabel.setVisible(true);
-            ProgressBar.setVisible(true);
-            startProgress(ProgressBar);
-        } else {
-            JOptionPane.showMessageDialog(null, "Debe Introducir datos correctos para analizar", "Informacion", JOptionPane.INFORMATION_MESSAGE, icon);
+        try {
+            Validator.loadedTrainner();
+            if (checkAndStart() == true) {
+                JprogressbarLabel.setVisible(true);
+                ProgressBar.setVisible(true);
+                startProgress(ProgressBar);
+            } else {
+                JOptionPane.showMessageDialog(null, "Debe Introducir datos correctos para analizar", "Informacion", JOptionPane.INFORMATION_MESSAGE, icon);
+            }
+        } catch (Exception ex) {
+            UIControllers.JOptioncatch(ex.getMessage());
         }
     }//GEN-LAST:event_buttonAnalizeActionPerformed
 

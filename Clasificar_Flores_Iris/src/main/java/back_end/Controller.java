@@ -169,9 +169,17 @@ public class Controller {
         Controller.trainnerResults = trainnerResults;
     }
 
+    public static void setNeuralNetwork(NeuralNetwork neuralNetwork) {
+        Controller.neuralNetwork = neuralNetwork;
+    }
+
     
     public File getDataSetLoaded() {
         return dataSetLoaded;
+    }
+        
+    public TrainerResults getTrainerResultsLoaded() {
+        return trainnerResults;
     }
 
     

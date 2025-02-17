@@ -59,9 +59,10 @@ public class NeuralNetwork implements Serializable{
         ArrayList<String> metricas = new ArrayList<String>();
         ArrayList<Double> errorEntrenamiento = new ArrayList<Double>();
         double mejorError = Double.MAX_VALUE;
-        int paciencia = 50;
+        int paciencia = 150;
         int contador = 0;
-
+        int lastEpoch = 0;
+        
         Object[] shuffledData = mezclarDataSet(dataSet, salidas);
         dataSet = (double[][]) shuffledData[0];
         salidas = (int[]) shuffledData[1];
@@ -135,8 +136,9 @@ public class NeuralNetwork implements Serializable{
             String metrica = "Epoca: " + epoch + ", Error: " + errorTotal + ", Precision: " + (double) aciertos / dataSet.length;
             metricas.add(metrica);
             errorEntrenamiento.add(errorTotal);
+            lastEpoch = epoch;
         }
-        return guardarEntrenamiento(dataSet, salidas, metricas, errorEntrenamiento);
+        return guardarEntrenamiento(dataSet, lastEpoch,salidas, metricas, errorEntrenamiento);
     }
 
     
@@ -165,7 +167,7 @@ public class NeuralNetwork implements Serializable{
     }
 
     
-    private TrainerResults guardarEntrenamiento(double[][] dataSetPrueba, int[] salidasReales, ArrayList<String> metricas, ArrayList<Double> error) {
+    private TrainerResults guardarEntrenamiento(double[][] dataSetPrueba,int epoch, int[] salidasReales, ArrayList<String> metricas, ArrayList<Double> error) {
 
         int aciertos = 0;
         int[] aciertosPorClase = new int[3];
@@ -201,7 +203,7 @@ public class NeuralNetwork implements Serializable{
             }
         }
 
-        results = new TrainerResults(precision, dataSetPrueba.length, errorEntrenamiento, metricasEpoca, precisionClase);
+        results = new TrainerResults(precision,epoch, errorEntrenamiento, metricasEpoca, precisionClase);
         return results;
     }
 }
