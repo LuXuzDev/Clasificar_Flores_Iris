@@ -23,17 +23,10 @@ public class Controller {
     private static TrainerResults trainnerResults;
     private final Trainer trainer;
     private static Normalizer normalizer;
-
-    public static Normalizer getNormalizer() {
-        return normalizer;
-    }
-    
-    public Trainer getTrainer() {
-        return trainer;
-    }
-    
     private File dataSetLoaded;
     private boolean loaded;
+
+
 
     // Constructor privado para evitar instanciación externa
     private Controller() {
@@ -46,20 +39,16 @@ public class Controller {
         DataBaseController.getFilesInPackage();
     }
 
-    // Método estático para obtener la instancia única
-    public static Controller getInstance() {
-        if (instance == null) {
-            instance = new Controller();
-        }
-        return instance;
-    }
+    
 
+    //Metodo para clasificar la flor
     public String flowerType(String widthLeaf, String lengthLeaf, String widthStem, String lengthStem) {
         int output = neuralNetwork.calcularSalidas(normalizer.normalizarEntrada(takeInput(widthLeaf, lengthLeaf, widthStem, lengthStem)));
-        System.out.println("La clasifica como: " + classifierOutput(output));
         return classifierOutput(output);
     }
 
+    
+    //Metodo para tomar los valores de entrada
     private ArrayList<Double> takeInput(String widthLeaf, String lengthLeaf, String widthStem, String lengthStem) {
         double wLeaf = stringToDouble(widthLeaf);
         double lLeaf = stringToDouble(lengthLeaf);
@@ -74,6 +63,7 @@ public class Controller {
     }
 
     
+    //Metodo para elegir la clasificacion de flor
     private String classifierOutput(int output) {
         String flowerType = "Iris-Setosa";
         
@@ -81,15 +71,18 @@ public class Controller {
             flowerType = "Iris-Virginica";
         else if (output == 2)
             flowerType = "Iris-Versicolor";
+        
         return flowerType;
     }
 
     
+    //Metodo para convertir de String a Double
     private double stringToDouble(String num) {
         return Double.parseDouble(num);
     }
 
     
+    //Metodo para entrenar la red neuronal y devolver los resultados del entrenamiento
     public TrainerResults train() throws Exception {
         
         //Validar Datos
@@ -97,7 +90,6 @@ public class Controller {
             throw new Exception("No hay dataSet cargados");
     
         trainer.processInput(DataBaseController.fileContent(dataSetLoaded.getName()));
-        
         
         //Normalizar Datos
         normalizer.ajustar(trainer.getDataSet());
@@ -131,10 +123,13 @@ public class Controller {
         System.out.println("Salida red: " + neuralNetwork.calcularSalidas(normalizer.normalizarEntrada(entrada1))+" esperada 0");
         System.out.println("Salida red: " + neuralNetwork.calcularSalidas(normalizer.normalizarEntrada(entrada2))+" esperada 1");
         System.out.println("Salida red: " + neuralNetwork.calcularSalidas(normalizer.normalizarEntrada(entrada3))+" esperada 2");
+        
         trainnerResults=results;
         return results;
     }
 
+    
+    //Metodo que de retorna los nombres de los dataset almacenados en dataBase_DataSet
     public ArrayList<String> loadedFilesName() {
         ArrayList<File> files = DataBaseController.getFilesInPackage();
         ArrayList<String> names = new ArrayList<>();
@@ -146,6 +141,7 @@ public class Controller {
     }
 
     
+    //Metodo que de retorna los nombres de los entrenamientos almacenados en dataBase_Trainings
     public ArrayList<String> loadedTrainnersName() {
         ArrayList<File> files = DataBaseTrainnerController.getFileOutputStreams();
         ArrayList<String> names = new ArrayList<>();
@@ -157,26 +153,31 @@ public class Controller {
     }
     
     
+    //Metodo para crear un fichero
     public void createFile(String name) throws IOException {
         DataBaseController.createFile(name);
     }
 
     
+    //Metodo para eliminar un fichero
     public void deleteFile(String name) throws Exception {
         DataBaseController.deleteFile(name);
     }
 
     
-    public void loadFile(String path) {
+    //Metodo para importar un fichero
+    public void importFile(String path) {
         DataBaseController.loadFile(path);
     }
 
     
+    //Metodo que devuelve el contenido de un archivo
     public ArrayList<String> fileContent(String name) throws Exception {
         return DataBaseController.fileContent(name);
     }
     
     
+    //Metodo para editar un fichero
     public ArrayList<String> editFile(String line,String name) throws Exception
     {
         DataBaseController.editFile(line, name);
@@ -184,55 +185,65 @@ public class Controller {
     }
 
     
-    public static TrainerResults getTrainnerResults() {
-        return trainnerResults;
-    }
-
-    
-    public static void setTrainnerResults(TrainerResults trainnerResults) {
-        Controller.trainnerResults = trainnerResults;
-    }
-
-    public static void setNeuralNetwork(NeuralNetwork neuralNetwork) {
-        Controller.neuralNetwork = neuralNetwork;
-    }
-
-    
-    public File getDataSetLoaded() {
-        return dataSetLoaded;
-    }
-        
-    public TrainerResults getTrainerResultsLoaded() {
-        return trainnerResults;
-    }
-
-    public boolean isLoaded() {
-        return loaded;
-    }
-
-    public void setLoaded(boolean loaded) {
-        this.loaded = loaded;
-    }
-
-    
+    //Metodo para crear un fichero que guarda en binario el estado de la red neuronal y el resultado del entrenamiento
     public void saveTrain (String name) throws IOException
     {
         DataBaseTrainnerController.saveTrain(neuralNetwork, trainnerResults, name);
     }
     
+    
+    //Metodo qque carga de un fichero .dat la red neuronal y el resultado del entrenamiento
     public void loadTrain(String name) throws IOException, ClassNotFoundException
     {
         trainnerResults = DataBaseTrainnerController.getBinaryTrainnerResults(name);
         neuralNetwork = DataBaseTrainnerController.getBinaryNeuralNetwork(name);
         
         if (neuralNetwork != null && trainnerResults != null) 
-                System.out.println("Entrenamiento cargado correctamente.");
+            System.out.println("Entrenamiento cargado correctamente.");
         else 
-                System.out.println("Error al cargar entrenamiento.");
-            
-
-            
+            System.out.println("Error al cargar entrenamiento.");
     }
+    
+    
+
+    //Getters and Setters
+    
+    
+    // Método estático para obtener la instancia única
+    public static Controller getInstance() {
+        if (instance == null) {
+            instance = new Controller();
+        }
+        return instance;
+    }
+
+    
+    public static TrainerResults getTrainnerResults() {return trainnerResults;}
+
+    
+    public static void setTrainnerResults(TrainerResults trainnerResults) {Controller.trainnerResults = trainnerResults;}
+
+    
+    public static void setNeuralNetwork(NeuralNetwork neuralNetwork) {Controller.neuralNetwork = neuralNetwork;}
+
+    
+    public static Normalizer getNormalizer() {return normalizer;}
+    
+    
+    public File getDataSetLoaded() {return dataSetLoaded;}
+
+    
+    public TrainerResults getTrainerResultsLoaded() {return trainnerResults;}
+
+    
+    public boolean isLoaded() { return loaded;}
+
+    
+    public void setLoaded(boolean loaded) {this.loaded = loaded;}
+    
+    
+    public Trainer getTrainer() {return trainer;}
+    
     
     public void setDataSetLoaded(String dataSetName) throws Exception {
         File file = DataBaseController.findFile(dataSetName);

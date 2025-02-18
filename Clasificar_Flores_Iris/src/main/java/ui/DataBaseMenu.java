@@ -303,7 +303,7 @@ public class DataBaseMenu extends javax.swing.JFrame {
                     
                 }
                 //aqui va la funcion q devuelve arrayString te mando la ruta del archivo path
-                Controller.getInstance().loadFile(path);
+                Controller.getInstance().importFile(path);
                 addStringList(Controller.getInstance().loadedFilesName());
 
         } else {
