@@ -56,9 +56,7 @@ public class Trainer extends javax.swing.JFrame {
         setIconImage(UIControllers.design().getImage());
         JPanel panelGrafico = crearPanelGrafico();
         cardPanel.add(panelGrafico, "Grafico 1");
-        
-        //funcion para rellenar el jlist
-        //addStringList(arreglo);
+        UIControllers.AddJlist(ListData, listModel);
     }
     
     
@@ -114,28 +112,6 @@ public class Trainer extends javax.swing.JFrame {
         panel.add(chartPanel, BorderLayout.CENTER);
         return panel;
     }
-     
-      //cargar lista de nombres de ficheros para el JList
-     public void addStringList(ArrayList<String> path) {
-
-        // Verifica si ListTrain tiene un modelo de lista
-        if (Validator.ListInstanceOf(ListData)) {
-            listModel = (DefaultListModel<String>) ListData.getModel();
-        } else {
-            listModel = new DefaultListModel<>();
-            ListData.setModel(listModel);
-        }
-
-        // Vacía el modelo de lista antes de cargar nuevos elementos
-        listModel.clear();
-
-        // Agrega los nuevos elementos desde la lista path
-        for (int i = 0; i < path.size(); i++) {
-            listModel.add(i, path.get(i));
-        }
-    }
-     
-     
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
