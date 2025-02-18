@@ -6,13 +6,16 @@ package ui;
 
 
 import back_end.TrainerResults;
+import back_end.Validator;
 import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.extras.FlatAnimatedLafChange;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.formdev.flatlaf.util.FontUtils;
 import java.util.ArrayList;
+import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
@@ -82,6 +85,25 @@ public class UIControllers {
     {
         for (String n : names) {
             comboBox.addItem(n);
+        }
+    }
+    
+    public static void AddJlist(JList ListData,DefaultListModel listModel)
+    {
+        // Verifica si ListTrain tiene un modelo de lista
+        if (Validator.ListInstanceOf(ListData)) {
+            listModel = (DefaultListModel<String>) ListData.getModel();
+        } else {
+            listModel = new DefaultListModel<>();
+            ListData.setModel(listModel);
+        }
+
+        // Vacía el modelo de lista antes de cargar nuevos elementos
+        listModel.clear();
+
+        // Agrega los nuevos elementos desde la lista path
+        for (int i = 0; i < trainer.getMetricasEpoca().size(); i++) {
+            listModel.add(i, trainer.getMetricasEpoca().get(i));
         }
     }
 }
