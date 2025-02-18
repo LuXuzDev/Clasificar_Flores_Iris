@@ -18,19 +18,21 @@ import neuralNetwork.Trainer;
  * @author Angel Hernandez
  */
 public class Controller {
+    
+    //Atributos
     private static Controller instance; // Instancia única de Controller
     private static NeuralNetwork neuralNetwork;
     private static TrainerResults trainnerResults;
     private final Trainer trainer;
     private static Normalizer normalizer;
     private File dataSetLoaded;
-    private boolean loaded;
+    private boolean loadedTrain;
 
 
 
     // Constructor privado para evitar instanciación externa
     private Controller() {
-        loaded=false;
+        loadedTrain=false;
         neuralNetwork = new NeuralNetwork(4, 50, 3);
         
         // Crear Entrenador y Normalizador
@@ -236,10 +238,10 @@ public class Controller {
     public TrainerResults getTrainerResultsLoaded() {return trainnerResults;}
 
     
-    public boolean isLoaded() { return loaded;}
+    public boolean isLoadedTrain() { return loadedTrain;}
 
     
-    public void setLoaded(boolean loaded) {this.loaded = loaded;}
+    public void setLoadedTrain(boolean loaded) {this.loadedTrain = loaded;}
     
     
     public Trainer getTrainer() {return trainer;}

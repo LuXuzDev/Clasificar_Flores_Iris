@@ -222,7 +222,7 @@ public class TrainMenu extends javax.swing.JFrame {
 
                 JOptionPane.showOptionDialog(null, "Datos guardados correctamente", "Dataset", JOptionPane.CLOSED_OPTION, JOptionPane.INFORMATION_MESSAGE, icon, null, null);
                 LabelTrainLoaded.setText("Entrenamiento cargado: " + UIControllers.TrainName);
-                Controller.getInstance().setLoaded(true);
+                Controller.getInstance().setLoadedTrain(true);
             }
 
         } catch (Exception ex) {
@@ -246,7 +246,7 @@ public class TrainMenu extends javax.swing.JFrame {
             LabelTrainLoaded.setText("Entrenamiento cargado: " + UIControllers.ComboboxName);
             try {
                 Controller.getInstance().loadTrain(UIControllers.ComboboxName);
-                Controller.getInstance().setLoaded(true);
+                Controller.getInstance().setLoadedTrain(true);
                 UIControllers.trainer = Controller.getTrainnerResults();
                 UIControllers.TrainName = UIControllers.ComboboxName;
             } catch (IOException ex) {

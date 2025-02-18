@@ -13,7 +13,7 @@ import java.util.ArrayList;
  */
 public class TrainerResults implements Serializable{
     
-    //Attributes
+    //Attibutos
     private double acurracyTotal;
     private int epoch;
     private ArrayList<Double> errorEntrenamiento;
@@ -23,7 +23,7 @@ public class TrainerResults implements Serializable{
 
     
     
-    //Builder
+    //Constructor
     public TrainerResults(double acurracyTotal, int epoch,ArrayList<Double> errorEntrenamiento
                         ,ArrayList<String> metricasEpoca, ArrayList<Double> acurracyClass)
     {
@@ -34,16 +34,8 @@ public class TrainerResults implements Serializable{
         this.acurracyClass=acurracyClass;
     }
   
-    public TrainerResults() {
-        this.acurracyTotal = 0.0;
-        this.epoch = 0;
-        this.errorEntrenamiento = new ArrayList<>();
-        this.metricasEpoca = new ArrayList<>();
-        this.acurracyClass = new ArrayList<>();
-    }
 
 
-    
     //Getters
     public double getAcurracyTotal() {return acurracyTotal;}
     public int getEpoch() {return epoch;}
@@ -51,9 +43,4 @@ public class TrainerResults implements Serializable{
     public ArrayList<String> getMetricasEpoca() {return metricasEpoca;}
     public ArrayList<Double> getAcurracyClass() {return acurracyClass;}
 
-    @Override
-    public String toString()
-    {
-        return "Precision "+acurracyTotal;
-    }
 }
