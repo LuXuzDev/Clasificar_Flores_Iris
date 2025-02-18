@@ -9,8 +9,6 @@ import infrastructure.DataBaseTrainnerController;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import neuralNetwork.NeuralNetwork;
 import neuralNetwork.Normalizer;
 import neuralNetwork.Trainer;
@@ -120,15 +118,15 @@ public class Controller {
         entrada1.add(1.4);
         entrada1.add(0.2);
         ArrayList<Double> entrada2 = new ArrayList<>();
-        entrada1.add(7.7);
-        entrada1.add(3.0);
-        entrada1.add(6.1);
-        entrada1.add(2.3);
+        entrada2.add(7.7);
+        entrada2.add(3.0);
+        entrada2.add(6.1);
+        entrada2.add(2.3);
         ArrayList<Double> entrada3 = new ArrayList<>();
-        entrada1.add(6.3);
-        entrada1.add(3.4);
-        entrada1.add(5.6);
-        entrada1.add(2.4);
+        entrada3.add(6.3);
+        entrada3.add(3.4);
+        entrada3.add(5.6);
+        entrada3.add(2.4);
 
         System.out.println("Salida red: " + neuralNetwork.calcularSalidas(normalizer.normalizarEntrada(entrada1))+" esperada 0");
         System.out.println("Salida red: " + neuralNetwork.calcularSalidas(normalizer.normalizarEntrada(entrada2))+" esperada 1");
@@ -227,17 +225,13 @@ public class Controller {
         trainnerResults = DataBaseTrainnerController.getBinaryTrainnerResults(name);
         neuralNetwork = DataBaseTrainnerController.getBinaryNeuralNetwork(name);
         
-         if (neuralNetwork != null) {
-                System.out.println("NeuralNetwork cargado correctamente.");
-            } else {
-                System.out.println("NeuralNetwork es null.");
-            }
+        if (neuralNetwork != null && trainnerResults != null) 
+                System.out.println("Entrenamiento cargado correctamente.");
+        else 
+                System.out.println("Error al cargar entrenamiento.");
+            
 
-            if (trainnerResults != null) {
-                System.out.println("TrainerResults cargado correctamente.");
-            } else {
-                System.out.println("TrainerResults es null.");
-            }
+            
     }
     
     public void setDataSetLoaded(String dataSetName) throws Exception {

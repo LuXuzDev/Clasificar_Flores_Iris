@@ -8,9 +8,6 @@ import back_end.TrainerResults;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 
 public class NeuralNetwork implements Serializable{

@@ -4,7 +4,7 @@
  */
 package neuralNetwork;
 
-import infrastructure.DataBaseController;
+
 import java.util.ArrayList;
 
 /**

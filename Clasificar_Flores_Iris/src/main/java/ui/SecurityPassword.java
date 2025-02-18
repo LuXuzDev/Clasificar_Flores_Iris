@@ -4,11 +4,11 @@
  */
 package ui;
 
+import back_end.Validator;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import java.awt.Color;
-import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
@@ -133,7 +133,7 @@ public class SecurityPassword extends javax.swing.JDialog {
     }//GEN-LAST:event_buttonBackActionPerformed
 
     private void ButtonEnterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonEnterActionPerformed
-        if(!PasswordField.getText().toString().equalsIgnoreCase("admin"))
+        if(!Validator.checkPassword(PasswordField.getText()))
         {
             PasswordField.putClientProperty("JComponent.outline","error");
             LabelIncorrecto.setText("La contraseña es incorrecta");
