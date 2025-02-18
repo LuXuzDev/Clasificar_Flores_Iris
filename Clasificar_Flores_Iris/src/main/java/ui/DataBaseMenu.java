@@ -207,7 +207,7 @@ public class DataBaseMenu extends javax.swing.JFrame {
         jLabel1.setText("Dataset Cargados");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 30, 220, 30));
 
-        ButtonLoad.setText("Cargar dataset");
+        ButtonLoad.setText("Importar dataset");
         ButtonLoad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ButtonLoadActionPerformed(evt);

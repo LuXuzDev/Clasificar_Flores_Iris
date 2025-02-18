@@ -154,11 +154,11 @@ public class Trainer extends javax.swing.JFrame {
         labelIndicationMetricas.setForeground(new java.awt.Color(102, 153, 255));
         labelIndicationMetricas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelIndicationMetricas.setText("Datos Metricas");
-        paneMetricas.add(labelIndicationMetricas, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 30, 300, 30));
+        paneMetricas.add(labelIndicationMetricas, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 10, 300, 30));
 
         ScrollList.setViewportView(ListData);
 
-        paneMetricas.add(ScrollList, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 70, 370, -1));
+        paneMetricas.add(ScrollList, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 450, 210));
 
         panePrinc.add(paneMetricas, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 520, -1));
 

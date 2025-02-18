@@ -4,6 +4,7 @@
  */
 package neuralNetwork;
 
+import infrastructure.DataBaseController;
 import java.util.ArrayList;
 
 /**
@@ -14,6 +15,16 @@ public class Normalizer {
     
     private double[] minimos;
     private double[] maximos;
+
+    public double[] getMinimos() {
+        return minimos;
+    }
+
+    public double[] getMaximos() {
+        return maximos;
+    }
+    
+
 
     public void ajustar(double[][] dataSet) {
         int numAtributos = dataSet[0].length;

@@ -9,7 +9,10 @@ import back_end.Validator;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
+import infrastructure.DataBaseController;
 import java.awt.Color;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JProgressBar;
 import javax.swing.JTextField;
@@ -188,6 +191,7 @@ public class InitMenu extends javax.swing.JFrame {
         ProgressBar = new javax.swing.JProgressBar();
         JprogressbarLabel = new javax.swing.JLabel();
         buttonAnalize = new javax.swing.JButton();
+        buttonAnalize2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Iris");
@@ -291,7 +295,16 @@ public class InitMenu extends javax.swing.JFrame {
                 buttonAnalizeActionPerformed(evt);
             }
         });
-        jPanel1.add(buttonAnalize, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 160, 110, 30));
+        jPanel1.add(buttonAnalize, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 170, 140, 30));
+
+        buttonAnalize2.setForeground(new java.awt.Color(0, 0, 0));
+        buttonAnalize2.setText("Inicar Modelo");
+        buttonAnalize2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonAnalize2ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(buttonAnalize2, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 130, 140, 30));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 610, 340));
 
@@ -317,7 +330,10 @@ public class InitMenu extends javax.swing.JFrame {
         FlatSVGIcon icon = new FlatSVGIcon("png/bluebell.svg");
         try {
             Validator.loadedTrainner();
-
+            Validator.loadedDataSet();
+            if(Controller.getNormalizer().getMaximos()==null || Controller.getNormalizer().getMinimos()==null)
+                throw new Exception("Debe inicializar el modelo");
+            
             if (checkAndStart() == true) {
                 JprogressbarLabel.setVisible(true);
                 ProgressBar.setVisible(true);
@@ -329,6 +345,21 @@ public class InitMenu extends javax.swing.JFrame {
             UIControllers.JOptioncatch(ex.getMessage());
         }
     }//GEN-LAST:event_buttonAnalizeActionPerformed
+
+    private void buttonAnalize2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAnalize2ActionPerformed
+        try {
+            // TODO add your handling code here:
+            Controller.getInstance().getTrainer().processInput(DataBaseController.fileContent(Controller.getInstance().getDataSetLoaded().getName()));
+            Controller.getNormalizer().ajustar(Controller.getInstance().getTrainer().getDataSet());
+            JOptionPane.showMessageDialog(null, "Modelo iniciado", "Informacion", JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception ex) {
+            UIControllers.JOptioncatch("Error al iniciar el modelo");
+        }
+        
+        
+        //Normalizar Datos
+
+    }//GEN-LAST:event_buttonAnalize2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -380,6 +411,7 @@ public class InitMenu extends javax.swing.JFrame {
     private javax.swing.JLabel JprogressbarLabel;
     private javax.swing.JProgressBar ProgressBar;
     private javax.swing.JButton buttonAnalize;
+    private javax.swing.JButton buttonAnalize2;
     private javax.swing.JButton buttonDatabase;
     private javax.swing.JLabel jLabel_Resultado;
     private javax.swing.JPanel jPanel1;

@@ -41,23 +41,22 @@ public class TrainMenu extends javax.swing.JFrame {
                 UIManager.setLookAndFeel(new FlatMacLightLaf());
                 SwingUtilities.updateComponentTreeUI(this);
             } catch (UnsupportedLookAndFeelException ex) {
-                //funcion q mamda joption pane con el string como mensaje deljoption pane
-                //UIControllers.JOptioncatch(String);
+                ex.printStackTrace();
             }
         });
     }
     //funcion para diseño general del Jframe
     private void design() {
-        if(UIControllers.SetDataset==false)
-        {
-            LabelIndicationTrain.setText("Dataset Cargado: ");
-            LabelResult.setText("Entrenamiento cargado: ");
-        }
+        if(Controller.getInstance().getDataSetLoaded() !=null)
+            LabelDataSetLoaded.setText("Dataset Cargado: "+Controller.getInstance().getDataSetLoaded().getName());
         else
-        {
-            LabelIndicationTrain.setText(UIControllers.SetDatasetName);
-            LabelResult.setText(UIControllers.SetTrainName);
-        }
+            LabelDataSetLoaded.setText("Dataset Cargado: Ninguno");
+                  
+        
+        if(!Validator.isEmptyInput(UIControllers.TrainName))
+            LabelTrainLoaded.setText("Entrenamiento cargado: "+UIControllers.TrainName);
+        else
+            LabelTrainLoaded.setText("Entrenamiento cargado: Ninguno");
         Flatlaf();
         UIControllers.setFontFamily("Arial");
         setIconImage(UIControllers.design().getImage());
@@ -78,8 +77,8 @@ public class TrainMenu extends javax.swing.JFrame {
         buttonTrain = new javax.swing.JButton();
         buttonLoadDataset = new javax.swing.JButton();
         LabelIcon = new javax.swing.JLabel();
-        LabelIndicationTrain = new javax.swing.JLabel();
-        LabelResult = new javax.swing.JLabel();
+        LabelDataSetLoaded = new javax.swing.JLabel();
+        LabelTrainLoaded = new javax.swing.JLabel();
         buttonLoadtrain = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -129,15 +128,15 @@ public class TrainMenu extends javax.swing.JFrame {
         jPanel1.add(buttonLoadDataset, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 160, 30));
         jPanel1.add(LabelIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 90, 40, 30));
 
-        LabelIndicationTrain.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        LabelIndicationTrain.setForeground(new java.awt.Color(102, 153, 255));
-        LabelIndicationTrain.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jPanel1.add(LabelIndicationTrain, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 240, 340, 20));
+        LabelDataSetLoaded.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        LabelDataSetLoaded.setForeground(new java.awt.Color(102, 153, 255));
+        LabelDataSetLoaded.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jPanel1.add(LabelDataSetLoaded, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 240, 340, 20));
 
-        LabelResult.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        LabelResult.setForeground(new java.awt.Color(102, 153, 255));
-        LabelResult.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jPanel1.add(LabelResult, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 270, 360, 20));
+        LabelTrainLoaded.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        LabelTrainLoaded.setForeground(new java.awt.Color(102, 153, 255));
+        LabelTrainLoaded.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jPanel1.add(LabelTrainLoaded, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 270, 360, 20));
 
         buttonLoadtrain.setText("Cargar Entrenamiento");
         buttonLoadtrain.addActionListener(new java.awt.event.ActionListener() {
@@ -162,8 +161,8 @@ public class TrainMenu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonEstadisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEstadisActionPerformed
-        UIControllers.SetDatasetName=LabelIndicationTrain.getText();
-        UIControllers.SetTrainName=LabelResult.getText();
+        UIControllers.SetDatasetName=LabelDataSetLoaded.getText();
+        UIControllers.SetTrainName=LabelTrainLoaded.getText();
         try {
             Validator.loadedTrainner();
             new Trainer().setVisible(true);
@@ -174,8 +173,8 @@ public class TrainMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonEstadisActionPerformed
 
     private void buttonBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBackActionPerformed
-        UIControllers.SetDatasetName=LabelIndicationTrain.getText();
-        UIControllers.SetTrainName=LabelResult.getText();
+        UIControllers.SetDatasetName=LabelDataSetLoaded.getText();
+        UIControllers.SetTrainName=LabelTrainLoaded.getText();
         UIControllers.SetDataset=true;
         new InitMenu().setVisible(true);
         this.dispose();
@@ -195,7 +194,7 @@ public class TrainMenu extends javax.swing.JFrame {
             } catch (Exception ex) {
                 UIControllers.JOptioncatch(ex.getMessage());
             }
-            LabelIndicationTrain.setText("Dataset Cargado: "+UIControllers.ComboboxName);
+            LabelDataSetLoaded.setText("Dataset Cargado: "+UIControllers.ComboboxName);
         }
 
     }//GEN-LAST:event_buttonLoadDatasetActionPerformed
@@ -224,7 +223,7 @@ public class TrainMenu extends javax.swing.JFrame {
                 Controller.getInstance().saveTrain(UIControllers.TrainName);
 
                 JOptionPane.showOptionDialog(null, "Datos guardados correctamente", "Dataset", JOptionPane.CLOSED_OPTION, JOptionPane.INFORMATION_MESSAGE, icon, null, null);
-                LabelResult.setText("Entrenamiento cargado: " + UIControllers.TrainName);
+                LabelTrainLoaded.setText("Entrenamiento cargado: " + UIControllers.TrainName);
                 Controller.getInstance().setLoaded(true);
             }
 
@@ -246,12 +245,12 @@ public class TrainMenu extends javax.swing.JFrame {
         else if (UIControllers.JoptionCombo == true) 
         {
             JOptionPane.showOptionDialog(null, "Entrenamiento cargado ", "Entrenamiento", JOptionPane.CLOSED_OPTION, JOptionPane.INFORMATION_MESSAGE, icon, null, null);
-            LabelResult.setText("Entrenamiento cargado: " + UIControllers.ComboboxName);
+            LabelTrainLoaded.setText("Entrenamiento cargado: " + UIControllers.ComboboxName);
             try {
                 Controller.getInstance().loadTrain(UIControllers.ComboboxName);
                 Controller.getInstance().setLoaded(true);
-                System.out.println("TRAINNER " +Controller.getTrainnerResults().getEpoch());
                 UIControllers.trainer = Controller.getTrainnerResults();
+                UIControllers.TrainName = UIControllers.ComboboxName;
             } catch (IOException ex) {
                 UIControllers.JOptioncatch(ex.getMessage());
             } catch (ClassNotFoundException ex) {
@@ -297,9 +296,9 @@ public class TrainMenu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel LabelDataSetLoaded;
     private javax.swing.JLabel LabelIcon;
-    private javax.swing.JLabel LabelIndicationTrain;
-    private javax.swing.JLabel LabelResult;
+    private javax.swing.JLabel LabelTrainLoaded;
     private javax.swing.JButton buttonBack;
     private javax.swing.JButton buttonEstadis;
     private javax.swing.JButton buttonLoadDataset;
