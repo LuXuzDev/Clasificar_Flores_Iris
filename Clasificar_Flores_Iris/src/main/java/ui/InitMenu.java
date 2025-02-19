@@ -23,16 +23,12 @@ import javax.swing.event.DocumentListener;
 
 public class InitMenu extends javax.swing.JFrame {
 
-
-
-    
-  
     public InitMenu() {
         initComponents();
         design();
     }
     
-    //funcion para diseño general del Jframe
+    //Metodo para diseño general del Jframe
     private void design()
     {
         Flatlaf();
@@ -60,13 +56,17 @@ public class InitMenu extends javax.swing.JFrame {
         realTimeCheck(FieldLongitudSepalo);  
     }
      
-    //funcion para dar el color rojo de back al textfield
+    
+    
+    //metodo para dar el color rojo de back al textfield
     private void Error(JTextField field)
     {
         field.putClientProperty("JComponent.outline","error");
     }
     
-    //funcion para revisar en tiempo real un jtextfield
+    
+    
+    //metodo para revisar en tiempo real un jtextfield
     private void realTimeCheck(JTextField field)
     {
         field.getDocument().addDocumentListener(new DocumentListener() {
@@ -85,7 +85,9 @@ public class InitMenu extends javax.swing.JFrame {
         });
     }
 
-    //funcion para revisar el jText field y poner el background 
+    
+    
+    //metodo para revisar el jText field y poner el background 
     private void check(JTextField field)
     {
         if (!Validator.isCorrectInputOnlyNumbers(field.getText())) {
@@ -95,7 +97,7 @@ public class InitMenu extends javax.swing.JFrame {
         }
     }
     
-    //funcion para verificar si todos estan llenos y empezar el analisis automatico
+    //metodo para verificar si todos estan llenos y empezar el analisis automatico
     public boolean checkAndStart()
     {
         boolean isCorrectInput=false;
@@ -108,7 +110,7 @@ public class InitMenu extends javax.swing.JFrame {
     }
  
     
-   //analisis automatico de la barraprogress con hilos y reiniciar los datos
+   //metodo para analisis automatico de la barraprogress con hilos y reiniciar los datos
     private void startProgress(JProgressBar progressBar)
     {
         buttonAnalize.setEnabled(false);
@@ -119,7 +121,7 @@ public class InitMenu extends javax.swing.JFrame {
                         try {
                             Thread.sleep(20);
                         } catch (InterruptedException ex) {
-                            ex.printStackTrace();
+                            UIControllers.JOptioncatch(ex.getMessage());
                         }
                         progressBar.setValue(i);
                         FieldAnchoPetalo.setEnabled(false);
@@ -139,7 +141,8 @@ public class InitMenu extends javax.swing.JFrame {
     }
     
     
-    //funcion para reestablecer los datos
+    
+    //metodo para reestablecer los datos
     private void restart()
     {
         if(ProgressBar.getValue()==100)
@@ -156,7 +159,7 @@ public class InitMenu extends javax.swing.JFrame {
     }
 
     
-    //funcion de diseño de flatlaf
+    //metodo de diseño de flatlaf
     public void Flatlaf()
     {
         SwingUtilities.invokeLater(() -> {
@@ -177,7 +180,7 @@ public class InitMenu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        panelPrinc = new javax.swing.JPanel();
         ButtonTrain = new javax.swing.JButton();
         buttonDatabase = new javax.swing.JButton();
         FieldAnchoPetalo = new javax.swing.JTextField();
@@ -197,8 +200,8 @@ public class InitMenu extends javax.swing.JFrame {
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        panelPrinc.setBackground(new java.awt.Color(255, 255, 255));
+        panelPrinc.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         ButtonTrain.setForeground(new java.awt.Color(0, 0, 0));
         ButtonTrain.setText("Entrenar");
@@ -207,7 +210,7 @@ public class InitMenu extends javax.swing.JFrame {
                 ButtonTrainActionPerformed(evt);
             }
         });
-        jPanel1.add(ButtonTrain, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 80, 130, 30));
+        panelPrinc.add(ButtonTrain, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 80, 130, 30));
 
         buttonDatabase.setForeground(new java.awt.Color(0, 0, 0));
         buttonDatabase.setText("Base de datos");
@@ -216,7 +219,7 @@ public class InitMenu extends javax.swing.JFrame {
                 buttonDatabaseActionPerformed(evt);
             }
         });
-        jPanel1.add(buttonDatabase, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, 130, 30));
+        panelPrinc.add(buttonDatabase, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, 130, 30));
 
         FieldAnchoPetalo.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         FieldAnchoPetalo.setForeground(new java.awt.Color(0, 0, 0));
@@ -228,7 +231,7 @@ public class InitMenu extends javax.swing.JFrame {
                 FieldInputsKeyReleased(evt);
             }
         });
-        jPanel1.add(FieldAnchoPetalo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, 170, -1));
+        panelPrinc.add(FieldAnchoPetalo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, 170, -1));
 
         FieldLongitudSepalo.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         FieldLongitudSepalo.setForeground(new java.awt.Color(0, 0, 0));
@@ -240,7 +243,7 @@ public class InitMenu extends javax.swing.JFrame {
                 FieldInputsKeyReleased(evt);
             }
         });
-        jPanel1.add(FieldLongitudSepalo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, 170, -1));
+        panelPrinc.add(FieldLongitudSepalo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, 170, -1));
 
         FieldAnchoSepalo.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         FieldAnchoSepalo.setForeground(new java.awt.Color(0, 0, 0));
@@ -252,7 +255,7 @@ public class InitMenu extends javax.swing.JFrame {
                 FieldInputsKeyReleased(evt);
             }
         });
-        jPanel1.add(FieldAnchoSepalo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 170, -1));
+        panelPrinc.add(FieldAnchoSepalo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 170, -1));
 
         FieldLongitudPetalo.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         FieldLongitudPetalo.setForeground(new java.awt.Color(0, 0, 0));
@@ -264,27 +267,27 @@ public class InitMenu extends javax.swing.JFrame {
                 FieldInputsKeyReleased(evt);
             }
         });
-        jPanel1.add(FieldLongitudPetalo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, 170, -1));
+        panelPrinc.add(FieldLongitudPetalo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, 170, -1));
 
         jLabel_Resultado.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         jLabel_Resultado.setForeground(new java.awt.Color(102, 153, 255));
         jLabel_Resultado.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jPanel1.add(jLabel_Resultado, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 230, 160, 30));
+        panelPrinc.add(jLabel_Resultado, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 230, 160, 30));
 
         Imagen.setIcon(new FlatSVGIcon("png/bluebell.svg"));
-        jPanel1.add(Imagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 260, 70, 60));
+        panelPrinc.add(Imagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 260, 70, 60));
 
         ProgressBar.setBackground(new java.awt.Color(255, 255, 255));
         ProgressBar.setToolTipText("Analizando...");
         ProgressBar.setOpaque(true);
-        jPanel1.add(ProgressBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 234, 170, 20));
+        panelPrinc.add(ProgressBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 234, 170, 20));
 
         JprogressbarLabel.setBackground(new java.awt.Color(255, 255, 255));
         JprogressbarLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         JprogressbarLabel.setForeground(new java.awt.Color(102, 153, 255));
         JprogressbarLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         JprogressbarLabel.setText("Analizando...");
-        jPanel1.add(JprogressbarLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 206, 90, 30));
+        panelPrinc.add(JprogressbarLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 206, 90, 30));
 
         buttonAnalize.setForeground(new java.awt.Color(0, 0, 0));
         buttonAnalize.setText("Analizar");
@@ -293,7 +296,7 @@ public class InitMenu extends javax.swing.JFrame {
                 buttonAnalizeActionPerformed(evt);
             }
         });
-        jPanel1.add(buttonAnalize, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 170, 140, 30));
+        panelPrinc.add(buttonAnalize, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 170, 140, 30));
 
         buttonAnalize2.setForeground(new java.awt.Color(0, 0, 0));
         buttonAnalize2.setText("Inicar Modelo");
@@ -302,9 +305,9 @@ public class InitMenu extends javax.swing.JFrame {
                 buttonAnalize2ActionPerformed(evt);
             }
         });
-        jPanel1.add(buttonAnalize2, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 130, 140, 30));
+        panelPrinc.add(buttonAnalize2, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 130, 140, 30));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 610, 340));
+        getContentPane().add(panelPrinc, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 610, 340));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -325,6 +328,7 @@ public class InitMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_FieldInputsKeyReleased
 
     private void buttonAnalizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAnalizeActionPerformed
+        //crear icono
         FlatSVGIcon icon = new FlatSVGIcon("png/bluebell.svg");
         try {
             Validator.loadedTrainner();
@@ -346,7 +350,6 @@ public class InitMenu extends javax.swing.JFrame {
 
     private void buttonAnalize2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAnalize2ActionPerformed
         try {
-            // TODO add your handling code here:
             Controller.getInstance().getTrainer().processInput(DataBaseController.fileContent(Controller.getInstance().getDataSetLoaded().getName()));
             Controller.getNormalizer().ajustar(Controller.getInstance().getTrainer().getDataSet());
             JOptionPane.showMessageDialog(null, "Modelo iniciado", "Informacion", JOptionPane.INFORMATION_MESSAGE);
@@ -392,6 +395,7 @@ public class InitMenu extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 InitMenu init = new InitMenu();
                 init.setVisible(true);
@@ -412,6 +416,6 @@ public class InitMenu extends javax.swing.JFrame {
     private javax.swing.JButton buttonAnalize2;
     private javax.swing.JButton buttonDatabase;
     private javax.swing.JLabel jLabel_Resultado;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel panelPrinc;
     // End of variables declaration//GEN-END:variables
 }

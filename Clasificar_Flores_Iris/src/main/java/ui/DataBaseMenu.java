@@ -17,8 +17,6 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -28,28 +26,18 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 
-
-
-
 public class DataBaseMenu extends javax.swing.JFrame {
 
     private static boolean check=false;
-    private boolean valid=false;
     private static Timer timer;
     private DefaultListModel<String> listModel= new DefaultListModel<>();
     private static ArrayList<String> datos= new ArrayList<>(160);
-    private boolean trainCheck=false;
 
-    
  
     public DataBaseMenu() {
         initComponents();
         design();
-        
-         
         addStringList(Controller.getInstance().loadedFilesName());
-        //funcion para llenar la jlist pasame un array de string con los nombres
-        //addStringList(array);
         
         timer = new Timer(1500, new ActionListener() {
             @Override
@@ -59,11 +47,10 @@ public class DataBaseMenu extends javax.swing.JFrame {
             }
         });
         timer.setRepeats(false);
-        
-       
     }
     
-    //funcion para diseño general del Jframe
+    
+    //metodo para diseño general del Jframe
     private void design()
     {
         LabelSuccess.setVisible(false);
@@ -77,31 +64,6 @@ public class DataBaseMenu extends javax.swing.JFrame {
     }
     
     
-    //metodo para agregarle el funcionamiento del doble click en el jlist
-    private boolean addMouse()
-    {
-        ListTrain.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                // Verificar si fue un doble clic
-                if (e.getClickCount() == 2) {
-                    ArrayList<String> meta = new ArrayList<>();
-                    FlatSVGIcon icon2 = new FlatSVGIcon("png/bluebell.svg");
-                    if (ListTrain.getSelectedValue() != null && ListTrain.getSelectedValue().endsWith(".data")) {
-                        check = true;
-                        String path2 = ListTrain.getSelectedValue().toString();
-                        UIControllers.Filename = path2;
-                        //nombre del archivo esta variable da arriba uicontrollers.filename
-                        new ModifyDataset(datos).setVisible(true);
-                        
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Debe seleccionar en la lista un dataset para modificar", "Informacion", JOptionPane.INFORMATION_MESSAGE, icon2);
-                    }
-                }
-            }
-        });
-        return check;
-    }
     //metodo para reestablecer el timer para enseñar el JLabel de archivo cargado
     private void restartTimer()
     {
@@ -109,25 +71,24 @@ public class DataBaseMenu extends javax.swing.JFrame {
         timer.start();
     }
     
+    
+    //metodo de diseño 
      public void Flatlaf()
     {
-        
         SwingUtilities.invokeLater(() -> {
             try {
                 UIManager.setLookAndFeel(new FlatMacLightLaf());
                 SwingUtilities.updateComponentTreeUI(this);
-                
-
             } catch (UnsupportedLookAndFeelException ex) {
-                //funcion q mamda joption pane con el string como mensaje deljoption pane
-                //UIControllers.JOptioncatch(String);
+                UIControllers.JOptioncatch(ex.getMessage());
             }
         });
     }
      
      
-     //cargar lista de nombres de ficheros para el JList
-     public void addStringList(ArrayList<String> path) {
+     
+     //metodo cargar lista de nombres de ficheros para el JList
+     private void addStringList(ArrayList<String> path) {
 
         // Verifica si ListTrain tiene un modelo de lista
         if (Validator.ListInstanceOf(ListTrain)) {
@@ -146,16 +107,7 @@ public class DataBaseMenu extends javax.swing.JFrame {
         }
     }
      
-     
-    public void createTable(boolean add,String filename)
-    {
-        if(add==true)
-        {
-            listModel.addElement(filename);
-        }
-    }
-     
-      
+  
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -281,9 +233,7 @@ public class DataBaseMenu extends javax.swing.JFrame {
     private void ButtonLoadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonLoadActionPerformed
         FlatSVGIcon icon=new FlatSVGIcon("png/bluebell.svg");
         JFileChooser filetxt = new JFileChooser();
-        ArrayList<String> retorno= new ArrayList<>();
         int option = filetxt.showOpenDialog(this);
-        valid = false;
         if (Validator.aprooveJfilechooser(option)) {
             File file = filetxt.getSelectedFile();
             String FileName = file.getName();
@@ -305,7 +255,6 @@ public class DataBaseMenu extends javax.swing.JFrame {
                     
                 }
             try {
-                //aqui va la funcion q devuelve arrayString te mando la ruta del archivo path
                 Controller.getInstance().importFile(path);
             } catch (Exception ex) {
                 UIControllers.JOptioncatch(ex.getMessage());
@@ -323,16 +272,13 @@ public class DataBaseMenu extends javax.swing.JFrame {
         
             if (Validator.checkList(ListTrain) == true) {
                 String path2 = ListTrain.getSelectedValue().toString();
-                //funcion q me pasas un array y relleno la tabla
-                //addStringList(arrayq me pasas tu);
             try {
                 System.out.println("Path2" +path2);
                 UIControllers.Filename=path2;
                 new ModifyDataset(Controller.getInstance().fileContent(path2)).setVisible(true);
                 this.dispose();
             } catch (Exception ex) {
-                //funcion q mamda joption pane con el string como mensaje deljoption pane
-                //UIControllers.JOptioncatch(String);
+                UIControllers.JOptioncatch(ex.getMessage());
             }
                 //path2=nombredelarchivoseleccionado
                
