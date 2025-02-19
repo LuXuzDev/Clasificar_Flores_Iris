@@ -84,7 +84,7 @@ public class HandleFiles {
     }
 
     
-    public static void copyFile(String sourcePath) {
+    public static void copyFile(String sourcePath) throws Exception {
         Path source = Paths.get(sourcePath);
         Path target = Paths.get(RUTA_DATA_BASE + source.getFileName());
 
@@ -92,8 +92,7 @@ public class HandleFiles {
             Files.copy(source, target, REPLACE_EXISTING);
             System.out.println("Archivo copiado exitosamente");
         } catch (IOException e) {
-            e.printStackTrace();
-            System.err.println("Error al copiar el archivo: ");
+            throw new Exception("Error al copiar el archivo");
         }
     }
 

@@ -168,7 +168,7 @@ public class Controller {
 
     
     //Metodo para importar un fichero
-    public void importFile(String path) {
+    public void importFile(String path) throws Exception {
         DataBaseController.loadFile(path);
     }
 

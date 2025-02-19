@@ -55,6 +55,8 @@ public class TrainMenu extends javax.swing.JFrame {
             LabelTrainLoaded.setText("Entrenamiento cargado: "+UIControllers.TrainName);
         else
             LabelTrainLoaded.setText("Entrenamiento cargado: Ninguno");
+        
+        
         Flatlaf();
         UIControllers.setFontFamily("Arial");
         setIconImage(UIControllers.design().getImage());

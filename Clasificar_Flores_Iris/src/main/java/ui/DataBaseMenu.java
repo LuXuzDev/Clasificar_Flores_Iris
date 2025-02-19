@@ -17,6 +17,8 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -302,8 +304,12 @@ public class DataBaseMenu extends javax.swing.JFrame {
                     restartTimer();
                     
                 }
+            try {
                 //aqui va la funcion q devuelve arrayString te mando la ruta del archivo path
                 Controller.getInstance().importFile(path);
+            } catch (Exception ex) {
+                UIControllers.JOptioncatch(ex.getMessage());
+            }
                 addStringList(Controller.getInstance().loadedFilesName());
 
         } else {

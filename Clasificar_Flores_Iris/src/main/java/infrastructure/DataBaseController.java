@@ -79,7 +79,7 @@ public class DataBaseController {
         HandleFiles.deleteFiles(name);
     }
 
-    public static void loadFile(String path) {
+    public static void loadFile(String path) throws Exception {
         HandleFiles.copyFile(path);
     }
 
