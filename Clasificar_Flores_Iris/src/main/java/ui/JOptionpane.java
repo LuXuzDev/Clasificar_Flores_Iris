@@ -25,43 +25,33 @@ import javax.swing.event.DocumentListener;
  */
 public class JOptionpane extends javax.swing.JDialog {
 
-    
     public JOptionpane(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-        UIControllers.newFilename="";
-        UIControllers.ComboboxName="";
-        UIControllers.TrainName="";
-        
+        UIControllers.newFilename = "";
+
         initComponents();
         PanelTrainMenu.setVisible(true);
         PanelComboBox.setVisible(false);
         PanelTextField.setVisible(false);
-        if(UIControllers.NumberOptionPane==1)
-        {
+        if (UIControllers.NumberOptionPane == 1) {
             this.setTitle("Seleccionar dataset");
             UIControllers.updateComboBox(Controller.getInstance().loadedFilesName(), ComboBoxDialog);
             PanelComboBox.setVisible(true);
             PanelTextField.setVisible(false);
             PanelTrainMenu.setVisible(false);
-        }
-        else if(UIControllers.NumberOptionPane==2)
-        {
+        } else if (UIControllers.NumberOptionPane == 2) {
             this.setTitle("Crear dataset");
             PanelComboBox.setVisible(false);
             PanelTextField.setVisible(true);
             PanelTrainMenu.setVisible(false);
-        }
-        else if(UIControllers.NumberOptionPane==3)
-        {
+        } else if (UIControllers.NumberOptionPane == 3) {
             UIControllers.NamesLabelsTrainMenu(LabelEpocas, LabelAccuracy, LabelError);
             this.setTitle("Crear entrenamiento");
             UIControllers.NamesLabelsTrainMenu(LabelEpocas, LabelAccuracy, LabelError);
             PanelTrainMenu.setVisible(true);
             PanelComboBox.setVisible(false);
             PanelTextField.setVisible(false);
-        }
-        else if(UIControllers.NumberOptionPane==4)
-        {
+        } else if (UIControllers.NumberOptionPane == 4) {
             this.setTitle("Seleccionar entrenamiento");
             UIControllers.updateComboBox(Controller.getInstance().loadedTrainnersName(), ComboBoxDialog);
             PanelComboBox.setVisible(true);
@@ -71,11 +61,9 @@ public class JOptionpane extends javax.swing.JDialog {
         design();
     }
 
-   
-    private void design()
-    {
-        UIControllers.Joption=false;
-        FlatSVGIcon icon=new FlatSVGIcon("png/bluebell.svg");
+    private void design() {
+        UIControllers.Joption = false;
+        FlatSVGIcon icon = new FlatSVGIcon("png/bluebell.svg");
         LabelIcon.setIcon(icon);
         LabelIconCombo.setIcon(icon);
         this.setSize(357, 171);
@@ -83,10 +71,11 @@ public class JOptionpane extends javax.swing.JDialog {
         setIconImage(UIControllers.design().getImage());
         Flatlaf();
         getRootPane().putClientProperty(FlatClientProperties.TITLE_BAR_BACKGROUND, new Color(102, 153, 255));
-        getRootPane().putClientProperty(FlatClientProperties.TITLE_BAR_SHOW_MAXIMIZE,false);
-        getRootPane().putClientProperty(FlatClientProperties.TITLE_BAR_SHOW_ICON,true);
-        getRootPane().putClientProperty(FlatClientProperties.TITLE_BAR_SHOW_ICONIFFY,true);
+        getRootPane().putClientProperty(FlatClientProperties.TITLE_BAR_SHOW_MAXIMIZE, false);
+        getRootPane().putClientProperty(FlatClientProperties.TITLE_BAR_SHOW_ICON, true);
+        getRootPane().putClientProperty(FlatClientProperties.TITLE_BAR_SHOW_ICONIFFY, true);
         this.setLocationRelativeTo(null);
+
         
         //TrainmenuMetricas
         LabelCaution.setText("El nombre solo contiene letras");
@@ -96,53 +85,43 @@ public class JOptionpane extends javax.swing.JDialog {
         FieldNameTrain.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
-                if(Validator.containsNumber(FieldNameTrain.getText()))
-                {
-                    FieldNameTrain.putClientProperty("JComponent.outline","error");
+                if (Validator.containsNumber(FieldNameTrain.getText())) {
+                    FieldNameTrain.putClientProperty("JComponent.outline", "error");
                     LabelCaution.setText("El nombre solo contiene letras");
                     LabelCaution.setForeground(Color.red);
-                }
-                else
-                {
-                    FieldNameTrain.putClientProperty("JComponent.outline",new Color(102, 153, 255));
+                } else {
+                    FieldNameTrain.putClientProperty("JComponent.outline", new Color(102, 153, 255));
                     LabelCaution.setText("");
                 }
             }
+
             @Override
             public void removeUpdate(DocumentEvent e) {
-                if(Validator.containsNumber(FieldNameTrain.getText()))
-                {
-                    FieldNameTrain.putClientProperty("JComponent.outline","error");
+                if (Validator.containsNumber(FieldNameTrain.getText())) {
+                    FieldNameTrain.putClientProperty("JComponent.outline", "error");
                     LabelCaution.setText("El nombre solo contiene letras");
                     LabelCaution.setForeground(Color.red);
-                }
-                else
-                {
-                    FieldNameTrain.putClientProperty("JComponent.outline",new Color(102, 153, 255));
+                } else {
+                    FieldNameTrain.putClientProperty("JComponent.outline", new Color(102, 153, 255));
                     LabelCaution.setText("");
                 }
             }
+
             @Override
             public void changedUpdate(DocumentEvent e) {
-                if(Validator.containsNumber(FieldNameTrain.getText()))
-                {
-                    FieldNameTrain.putClientProperty("JComponent.outline","error");
+                if (Validator.containsNumber(FieldNameTrain.getText())) {
+                    FieldNameTrain.putClientProperty("JComponent.outline", "error");
                     LabelCaution.setText("El nombre solo contiene letras");
                     LabelCaution.setForeground(Color.red);
-                }
-                else
-                {
-                    FieldNameTrain.putClientProperty("JComponent.outline",new Color(102, 153, 255));
+                } else {
+                    FieldNameTrain.putClientProperty("JComponent.outline", new Color(102, 153, 255));
                     LabelCaution.setText("");
                 }
             }
         });
-    
-   
-    
-        
+
         //COMBOBOX DIALOG
-        LabelIndicatorCombo.setText("Debe ingresar una opcion valida");
+        LabelIndicatorCombo.setText("Debe ingresar una opcion válida");
         LabelIndicatorCombo.setForeground(Color.red);
         LabelIndicatorCombo.setVisible(false);
         ComboBoxDialog.addActionListener(new ActionListener() {
@@ -156,62 +135,51 @@ public class JOptionpane extends javax.swing.JDialog {
                 }
             }
         });
-        
+
         //TEXTFIELD DIALOG
         Labelprin.setText("Debe ingresar el nombre del dataset");
         Labelprin.setForeground(new Color(102, 153, 255));
         FieldPrin.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
-                if(!Validator.isCorrectInputOnlyLetter(FieldPrin.getText()))
-                {
-                    FieldPrin.putClientProperty("JComponent.outline","error");
+                if (!Validator.isCorrectInputOnlyLetter(FieldPrin.getText())) {
+                    FieldPrin.putClientProperty("JComponent.outline", "error");
                     Labelprin.setText("El texto debe contener letras");
                     Labelprin.setForeground(Color.red);
-                }
-                else
-                {
-                    FieldPrin.putClientProperty("JComponent.outline",new Color(102, 153, 255));
+                } else {
+                    FieldPrin.putClientProperty("JComponent.outline", new Color(102, 153, 255));
                     Labelprin.setText("");
                 }
             }
+
             @Override
             public void removeUpdate(DocumentEvent e) {
-                if(Validator.containsNumber(FieldPrin.getText()))
-                {
-                    FieldPrin.putClientProperty("JComponent.outline","error");
+                if (Validator.containsNumber(FieldPrin.getText())) {
+                    FieldPrin.putClientProperty("JComponent.outline", "error");
                     Labelprin.setText("El texto no debe contener numeros");
                     Labelprin.setForeground(Color.red);
-                }
-                else
-                {
-                    FieldPrin.putClientProperty("JComponent.outline",new Color(102, 153, 255));
+                } else {
+                    FieldPrin.putClientProperty("JComponent.outline", new Color(102, 153, 255));
                     Labelprin.setText("");
                 }
             }
+
             @Override
             public void changedUpdate(DocumentEvent e) {
-                if(Validator.containsNumber(FieldPrin.getText()))
-                {
-                    FieldPrin.putClientProperty("JComponent.outline","error");
+                if (Validator.containsNumber(FieldPrin.getText())) {
+                    FieldPrin.putClientProperty("JComponent.outline", "error");
                     Labelprin.setText("El texto no debe contener numeros");
                     Labelprin.setForeground(Color.red);
-                }
-                else
-                {
-                    FieldPrin.putClientProperty("JComponent.outline",new Color(102, 153, 255));
+                } else {
+                    FieldPrin.putClientProperty("JComponent.outline", new Color(102, 153, 255));
                     Labelprin.setText("");
                 }
             }
         });
-    
+
     }
-    
-    
-        
-    
-    public void Flatlaf()
-    {
+
+    public void Flatlaf() {
         SwingUtilities.invokeLater(() -> {
             try {
                 UIManager.setLookAndFeel(new FlatMacLightLaf());
@@ -222,6 +190,7 @@ public class JOptionpane extends javax.swing.JDialog {
             }
         });
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -242,8 +211,8 @@ public class JOptionpane extends javax.swing.JDialog {
         LabelIconCombo = new javax.swing.JLabel();
         PanelTextField = new javax.swing.JPanel();
         LabelIcon = new javax.swing.JLabel();
-        buttonNO = new javax.swing.JButton();
-        buttonYes = new javax.swing.JButton();
+        buttonNOTextFileld = new javax.swing.JButton();
+        buttonYesTextField = new javax.swing.JButton();
         FieldPrin = new javax.swing.JTextField();
         Labelprin = new javax.swing.JLabel();
 
@@ -318,24 +287,24 @@ public class JOptionpane extends javax.swing.JDialog {
         PanelTextField.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         PanelTextField.add(LabelIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 70, 80));
 
-        buttonNO.setText("No");
-        buttonNO.addActionListener(new java.awt.event.ActionListener() {
+        buttonNOTextFileld.setText("No");
+        buttonNOTextFileld.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonNOActionPerformed(evt);
+                buttonNOTextFileldActionPerformed(evt);
             }
         });
-        PanelTextField.add(buttonNO, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 90, -1, -1));
+        PanelTextField.add(buttonNOTextFileld, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 90, -1, -1));
 
-        buttonYes.setBackground(new java.awt.Color(0, 153, 255));
-        buttonYes.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        buttonYes.setForeground(new java.awt.Color(255, 255, 255));
-        buttonYes.setText("Si");
-        buttonYes.addActionListener(new java.awt.event.ActionListener() {
+        buttonYesTextField.setBackground(new java.awt.Color(0, 153, 255));
+        buttonYesTextField.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        buttonYesTextField.setForeground(new java.awt.Color(255, 255, 255));
+        buttonYesTextField.setText("Si");
+        buttonYesTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonYesActionPerformed(evt);
+                buttonYesTextFieldActionPerformed(evt);
             }
         });
-        PanelTextField.add(buttonYes, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 90, -1, -1));
+        PanelTextField.add(buttonYesTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 90, -1, -1));
         PanelTextField.add(FieldPrin, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 40, 190, 30));
         PanelTextField.add(Labelprin, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 10, 220, 20));
 
@@ -367,51 +336,51 @@ public class JOptionpane extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void buttonYesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonYesActionPerformed
-        FlatSVGIcon icon2=new FlatSVGIcon("png/bluebell.svg");
+    //accion de si en el jdialog de text field
+    private void buttonYesTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonYesTextFieldActionPerformed
+        FlatSVGIcon icon2 = new FlatSVGIcon("png/bluebell.svg");
         if (!Validator.containsNumber(FieldPrin.getText()) && !Validator.isEmptyInput(FieldPrin.getText())) {
-            UIControllers.Joption=true;
-            UIControllers.newFilename=FieldPrin.getText()+".data";
+            UIControllers.Joption = true;
+            UIControllers.newFilename = FieldPrin.getText() + ".data";
             this.dispose();
-        }
-        else
-        {
+        } else {
             this.dispose();
-            JOptionPane.showMessageDialog(null, "Los datos ingresados son erroneos no se guardaran los cambios", "Error", JOptionPane.ERROR_MESSAGE, icon2);
+            JOptionPane.showMessageDialog(null, "Los datos ingresados son erróneos no se guardaran los cambios", "Error", JOptionPane.ERROR_MESSAGE, icon2);
         }
-        
-    }//GEN-LAST:event_buttonYesActionPerformed
 
+    }//GEN-LAST:event_buttonYesTextFieldActionPerformed
+
+    //accion de si en el dialog del comboBox
     private void buttonYesComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonYesComboActionPerformed
-        FlatSVGIcon icon=new FlatSVGIcon("png/bluebell.svg");
-            this.dispose();
-            UIControllers.JoptionCombo=true;
-            UIControllers.ComboboxName=ComboBoxDialog.getSelectedItem().toString();
-       
+        FlatSVGIcon icon = new FlatSVGIcon("png/bluebell.svg");
+        this.dispose();
+        UIControllers.JoptionCombo = true;
+        UIControllers.ComboboxName = ComboBoxDialog.getSelectedItem().toString();
     }//GEN-LAST:event_buttonYesComboActionPerformed
 
-    private void buttonNOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonNOActionPerformed
+    
+    private void buttonNOTextFileldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonNOTextFileldActionPerformed
         this.dispose();
-    }//GEN-LAST:event_buttonNOActionPerformed
+    }//GEN-LAST:event_buttonNOTextFileldActionPerformed
 
     private void buttonNoComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonNoComboActionPerformed
         this.dispose();
     }//GEN-LAST:event_buttonNoComboActionPerformed
 
+    //boton de salvar los datos jdialog
     private void buttonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSaveActionPerformed
-        FlatSVGIcon icon=new FlatSVGIcon("png/bluebell.svg");
+        FlatSVGIcon icon = new FlatSVGIcon("png/bluebell.svg");
         if (!Validator.isCorrectInputOnlyLetter(FieldNameTrain.getText()) && !Validator.isEmptyInput(FieldNameTrain.getText())) {
             this.dispose();
-            UIControllers.JoptionTrainMenu=true;
-            UIControllers.TrainName=FieldNameTrain.getText();
-        }
-        else
-        {
+            UIControllers.JoptionTrainMenu = true;
+            UIControllers.TrainName = FieldNameTrain.getText();
+        } else {
             this.dispose();
             JOptionPane.showMessageDialog(null, "Los datos ingresados son erroneos no se guardaran los cambios", "Error", JOptionPane.ERROR_MESSAGE, icon);
         }
     }//GEN-LAST:event_buttonSaveActionPerformed
 
+    
     private void buttonDiscardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDiscardActionPerformed
         this.dispose();
     }//GEN-LAST:event_buttonDiscardActionPerformed
@@ -471,10 +440,10 @@ public class JOptionpane extends javax.swing.JDialog {
     private javax.swing.JPanel PanelTextField;
     private javax.swing.JPanel PanelTrainMenu;
     private javax.swing.JButton buttonDiscard;
-    private javax.swing.JButton buttonNO;
+    private javax.swing.JButton buttonNOTextFileld;
     private javax.swing.JButton buttonNoCombo;
     private javax.swing.JButton buttonSave;
-    private javax.swing.JButton buttonYes;
     private javax.swing.JButton buttonYesCombo;
+    private javax.swing.JButton buttonYesTextField;
     // End of variables declaration//GEN-END:variables
 }
