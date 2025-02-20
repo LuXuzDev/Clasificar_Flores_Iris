@@ -26,8 +26,12 @@ import org.jfree.chart.ChartPanel;
 
 public class Trainer extends javax.swing.JFrame {
     
+    
+    //Atributos
     private DefaultListModel<String> listModel= new DefaultListModel<>();
     
+    
+    //Constructor
     public Trainer() {
         initComponents();
         design();
@@ -35,7 +39,7 @@ public class Trainer extends javax.swing.JFrame {
         paneLabels.setVisible(false);
     }
     
-    //funcion para el diseño del jrame
+    //metodo para el diseño del jrame
     private void design ()
     {
         Flatlaf();
@@ -58,6 +62,7 @@ public class Trainer extends javax.swing.JFrame {
     }
     
     
+    //metodo de disenno general
      public void Flatlaf()
     {
         SwingUtilities.invokeLater(() -> {
@@ -71,6 +76,8 @@ public class Trainer extends javax.swing.JFrame {
             }
         });
     }
+     
+     
      //crear los graficos de prueba
      private JPanel crearPanelGrafico() {
         // Crear la serie de datos
@@ -80,7 +87,6 @@ public class Trainer extends javax.swing.JFrame {
         for (int i = 0; i < UIControllers.trainer.getErrorEntrenamiento().size(); i++) {
             series.add(i + 1,UIControllers.trainer.getErrorEntrenamiento().get(i)); // i + 1 para que las épocas empiecen desde 1
         }
-
         // Crear el conjunto de datos
         XYSeriesCollection dataset = new XYSeriesCollection(series);
 
@@ -100,9 +106,6 @@ public class Trainer extends javax.swing.JFrame {
         plot.setDomainGridlinePaint(Color.LIGHT_GRAY); // Líneas de la cuadrícula
         plot.setRangeGridlinePaint(Color.LIGHT_GRAY);
         plot.setRenderer(renderer);
-        // Método para añadir anotaciones (etiquetas) al gráfico
-        // Personalizar el gráfico
-        
         // Crear un panel para el gráfico
         ChartPanel chartPanel = new ChartPanel(chart);
         chartPanel.setPreferredSize(new Dimension(540, 280));
@@ -110,6 +113,7 @@ public class Trainer extends javax.swing.JFrame {
         panel.add(chartPanel, BorderLayout.CENTER);
         return panel;
     }
+     
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -151,7 +155,7 @@ public class Trainer extends javax.swing.JFrame {
         labelIndicationMetricas.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         labelIndicationMetricas.setForeground(new java.awt.Color(102, 153, 255));
         labelIndicationMetricas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labelIndicationMetricas.setText("Datos Metricas");
+        labelIndicationMetricas.setText("Datos Métricas");
         paneMetricas.add(labelIndicationMetricas, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 10, 300, 30));
 
         ScrollList.setViewportView(ListData);
@@ -209,7 +213,7 @@ public class Trainer extends javax.swing.JFrame {
 
         buttonGraph.setBackground(new java.awt.Color(255, 255, 255));
         buttonGraph.setForeground(new java.awt.Color(0, 0, 0));
-        buttonGraph.setText("Grafico");
+        buttonGraph.setText("Gráfico");
         buttonGraph.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonGraphActionPerformed(evt);
@@ -219,7 +223,7 @@ public class Trainer extends javax.swing.JFrame {
 
         buttonMetrics.setBackground(new java.awt.Color(255, 255, 255));
         buttonMetrics.setForeground(new java.awt.Color(0, 0, 0));
-        buttonMetrics.setText("Metricas");
+        buttonMetrics.setText("Métricas");
         buttonMetrics.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonMetricsActionPerformed(evt);
@@ -229,7 +233,7 @@ public class Trainer extends javax.swing.JFrame {
 
         buttonInfo.setBackground(new java.awt.Color(255, 255, 255));
         buttonInfo.setForeground(new java.awt.Color(0, 0, 0));
-        buttonInfo.setText("Informacion");
+        buttonInfo.setText("Información");
         buttonInfo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonInfoActionPerformed(evt);
@@ -253,6 +257,7 @@ public class Trainer extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
     private void buttonGraphActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonGraphActionPerformed
         cardPanel.setVisible(true);
         paneMetricas.setVisible(false);

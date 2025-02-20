@@ -35,13 +35,13 @@ public class InitMenu extends javax.swing.JFrame {
         UIControllers.setFontFamily("Arial");
         setIconImage(UIControllers.design().getImage());
         this.setLocationRelativeTo(null);
-        ProgressBar.setStringPainted(true);
-        ProgressBar.setVisible(false);
+        barAnalize.setStringPainted(true);
+        barAnalize.setVisible(false);
         JprogressbarLabel.setVisible(false);
-        FieldAnchoPetalo.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT,"Ancho Petalo");
-        FieldAnchoSepalo.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT,"Ancho Sepalo");
-        FieldLongitudPetalo.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT,"Longitud Petalo");
-        FieldLongitudSepalo.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT,"Longitud Sepalo");
+        FieldAnchoPetalo.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT,"            Ancho Pétalo");
+        FieldAnchoSepalo.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT,"            Ancho Sépalo");
+        FieldLongitudPetalo.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT,"          Longitud Pétalo");
+        FieldLongitudSepalo.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT,"          Longitud Sépalo");
         FieldAnchoPetalo.putClientProperty(FlatClientProperties.TEXT_FIELD_SHOW_CLEAR_BUTTON,true);
         FieldAnchoSepalo.putClientProperty(FlatClientProperties.TEXT_FIELD_SHOW_CLEAR_BUTTON,true);
         FieldLongitudPetalo.putClientProperty(FlatClientProperties.TEXT_FIELD_SHOW_CLEAR_BUTTON,true);
@@ -132,7 +132,7 @@ public class InitMenu extends javax.swing.JFrame {
                     }
                     SwingUtilities.invokeLater(()->restart());
                     
-                    jLabel_Resultado.setText(Controller.getInstance().flowerType(FieldLongitudSepalo.getText(),FieldAnchoSepalo.getText()
+                    LabelResultado.setText(Controller.getInstance().flowerType(FieldLongitudSepalo.getText(),FieldAnchoSepalo.getText()
                                                 ,FieldLongitudPetalo.getText(), FieldAnchoPetalo.getText()));
                 }
             }).start();
@@ -145,10 +145,10 @@ public class InitMenu extends javax.swing.JFrame {
     //metodo para reestablecer los datos
     private void restart()
     {
-        if(ProgressBar.getValue()==100)
+        if(barAnalize.getValue()==100)
         {
-            ProgressBar.setValue(0);
-            ProgressBar.setVisible(false);
+            barAnalize.setValue(0);
+            barAnalize.setVisible(false);
             JprogressbarLabel.setVisible(false);
             FieldAnchoPetalo.setEnabled(true);
             FieldAnchoSepalo.setEnabled(true);
@@ -187,9 +187,9 @@ public class InitMenu extends javax.swing.JFrame {
         FieldLongitudSepalo = new javax.swing.JTextField();
         FieldAnchoSepalo = new javax.swing.JTextField();
         FieldLongitudPetalo = new javax.swing.JTextField();
-        jLabel_Resultado = new javax.swing.JLabel();
+        LabelResultado = new javax.swing.JLabel();
         Imagen = new javax.swing.JLabel();
-        ProgressBar = new javax.swing.JProgressBar();
+        barAnalize = new javax.swing.JProgressBar();
         JprogressbarLabel = new javax.swing.JLabel();
         buttonAnalize = new javax.swing.JButton();
         buttonAnalize2 = new javax.swing.JButton();
@@ -269,18 +269,18 @@ public class InitMenu extends javax.swing.JFrame {
         });
         panelPrinc.add(FieldLongitudPetalo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, 170, -1));
 
-        jLabel_Resultado.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
-        jLabel_Resultado.setForeground(new java.awt.Color(102, 153, 255));
-        jLabel_Resultado.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        panelPrinc.add(jLabel_Resultado, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 230, 160, 30));
+        LabelResultado.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        LabelResultado.setForeground(new java.awt.Color(102, 153, 255));
+        LabelResultado.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        panelPrinc.add(LabelResultado, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 230, 160, 30));
 
         Imagen.setIcon(new FlatSVGIcon("png/bluebell.svg"));
         panelPrinc.add(Imagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 260, 70, 60));
 
-        ProgressBar.setBackground(new java.awt.Color(255, 255, 255));
-        ProgressBar.setToolTipText("Analizando...");
-        ProgressBar.setOpaque(true);
-        panelPrinc.add(ProgressBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 234, 170, 20));
+        barAnalize.setBackground(new java.awt.Color(255, 255, 255));
+        barAnalize.setToolTipText("Analizando...");
+        barAnalize.setOpaque(true);
+        panelPrinc.add(barAnalize, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 234, 170, 20));
 
         JprogressbarLabel.setBackground(new java.awt.Color(255, 255, 255));
         JprogressbarLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -338,8 +338,8 @@ public class InitMenu extends javax.swing.JFrame {
             
             if (checkAndStart() == true) {
                 JprogressbarLabel.setVisible(true);
-                ProgressBar.setVisible(true);
-                startProgress(ProgressBar);
+                barAnalize.setVisible(true);
+                startProgress(barAnalize);
             } else {
                 JOptionPane.showMessageDialog(null, "Debe Introducir datos correctos para analizar", "Informacion", JOptionPane.INFORMATION_MESSAGE, icon);
             }
@@ -349,10 +349,12 @@ public class InitMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonAnalizeActionPerformed
 
     private void buttonAnalize2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAnalize2ActionPerformed
+        FlatSVGIcon icon = new FlatSVGIcon("png/bluebell.svg");
+        System.out.println(UIControllers.TrainName);
         try {
             Controller.getInstance().getTrainer().processInput(DataBaseController.fileContent(Controller.getInstance().getDataSetLoaded().getName()));
             Controller.getNormalizer().ajustar(Controller.getInstance().getTrainer().getDataSet());
-            JOptionPane.showMessageDialog(null, "Modelo iniciado", "Informacion", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Modelo iniciado", "Informacion", JOptionPane.INFORMATION_MESSAGE,icon);
         } catch (Exception ex) {
             UIControllers.JOptioncatch("Error al iniciar el modelo");
         }
@@ -411,11 +413,11 @@ public class InitMenu extends javax.swing.JFrame {
     private javax.swing.JTextField FieldLongitudSepalo;
     private javax.swing.JLabel Imagen;
     private javax.swing.JLabel JprogressbarLabel;
-    private javax.swing.JProgressBar ProgressBar;
+    private javax.swing.JLabel LabelResultado;
+    private javax.swing.JProgressBar barAnalize;
     private javax.swing.JButton buttonAnalize;
     private javax.swing.JButton buttonAnalize2;
     private javax.swing.JButton buttonDatabase;
-    private javax.swing.JLabel jLabel_Resultado;
     private javax.swing.JPanel panelPrinc;
     // End of variables declaration//GEN-END:variables
 }

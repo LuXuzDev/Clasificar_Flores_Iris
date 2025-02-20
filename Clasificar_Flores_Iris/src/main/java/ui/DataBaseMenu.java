@@ -112,10 +112,10 @@ public class DataBaseMenu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        panelPrinc = new javax.swing.JPanel();
         ButtonBack = new javax.swing.JButton();
         ButtonEdit = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        LabelDatasetLoaded = new javax.swing.JLabel();
         ButtonLoad = new javax.swing.JButton();
         LabelSuccess = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -128,10 +128,10 @@ public class DataBaseMenu extends javax.swing.JFrame {
         setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         setResizable(false);
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.setFont(null);
-        jPanel1.setPreferredSize(new java.awt.Dimension(610, 340));
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        panelPrinc.setBackground(new java.awt.Color(255, 255, 255));
+        panelPrinc.setFont(null);
+        panelPrinc.setPreferredSize(new java.awt.Dimension(610, 340));
+        panelPrinc.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         ButtonBack.setIcon(new FlatSVGIcon("png/arrow.svg"));
         ButtonBack.addActionListener(new java.awt.event.ActionListener() {
@@ -139,7 +139,7 @@ public class DataBaseMenu extends javax.swing.JFrame {
                 ButtonBackActionPerformed(evt);
             }
         });
-        jPanel1.add(ButtonBack, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 20, 40, 30));
+        panelPrinc.add(ButtonBack, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 20, 40, 30));
 
         ButtonEdit.setText("Modificar dataset");
         ButtonEdit.addComponentListener(new java.awt.event.ComponentAdapter() {
@@ -152,14 +152,14 @@ public class DataBaseMenu extends javax.swing.JFrame {
                 ButtonEditActionPerformed(evt);
             }
         });
-        jPanel1.add(ButtonEdit, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, 130, 30));
+        panelPrinc.add(ButtonEdit, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, 130, 30));
 
-        jLabel1.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(102, 153, 255));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Dataset Cargados");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 30, 220, 30));
+        LabelDatasetLoaded.setBackground(new java.awt.Color(255, 255, 255));
+        LabelDatasetLoaded.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        LabelDatasetLoaded.setForeground(new java.awt.Color(102, 153, 255));
+        LabelDatasetLoaded.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        LabelDatasetLoaded.setText("Dataset Cargados");
+        panelPrinc.add(LabelDatasetLoaded, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 30, 220, 30));
 
         ButtonLoad.setText("Importar dataset");
         ButtonLoad.addActionListener(new java.awt.event.ActionListener() {
@@ -167,14 +167,14 @@ public class DataBaseMenu extends javax.swing.JFrame {
                 ButtonLoadActionPerformed(evt);
             }
         });
-        jPanel1.add(ButtonLoad, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, 130, 30));
+        panelPrinc.add(ButtonLoad, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, 130, 30));
 
         LabelSuccess.setBackground(new java.awt.Color(255, 255, 255));
         LabelSuccess.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         LabelSuccess.setForeground(new java.awt.Color(0, 0, 0));
         LabelSuccess.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         LabelSuccess.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(102, 153, 255)));
-        jPanel1.add(LabelSuccess, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 70, 220, 20));
+        panelPrinc.add(LabelSuccess, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 70, 220, 20));
 
         ListTrain.setBackground(new java.awt.Color(255, 255, 255));
         ListTrain.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
@@ -187,7 +187,7 @@ public class DataBaseMenu extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(ListTrain);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 110, 220, 150));
+        panelPrinc.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 110, 220, 150));
 
         ButtonCreate.setText("Crear dataset");
         ButtonCreate.addActionListener(new java.awt.event.ActionListener() {
@@ -195,7 +195,7 @@ public class DataBaseMenu extends javax.swing.JFrame {
                 ButtonCreateActionPerformed(evt);
             }
         });
-        jPanel1.add(ButtonCreate, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, 130, 30));
+        panelPrinc.add(ButtonCreate, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, 130, 30));
 
         buttonDelete.setText("Eliminar");
         buttonDelete.addActionListener(new java.awt.event.ActionListener() {
@@ -203,17 +203,17 @@ public class DataBaseMenu extends javax.swing.JFrame {
                 buttonDeleteActionPerformed(evt);
             }
         });
-        jPanel1.add(buttonDelete, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 223, 130, 30));
+        panelPrinc.add(buttonDelete, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 223, 130, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 611, Short.MAX_VALUE)
+            .addComponent(panelPrinc, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 611, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 338, Short.MAX_VALUE)
+            .addComponent(panelPrinc, javax.swing.GroupLayout.DEFAULT_SIZE, 338, Short.MAX_VALUE)
         );
 
         pack();
@@ -262,36 +262,30 @@ public class DataBaseMenu extends javax.swing.JFrame {
                 addStringList(Controller.getInstance().loadedFilesName());
 
         } else {
-            JOptionPane.showMessageDialog(null, "No se selecciono ningun archivo", "Error", JOptionPane.ERROR_MESSAGE, icon);
+            JOptionPane.showMessageDialog(null, "No se seleccionó ningun archivo", "Error", JOptionPane.ERROR_MESSAGE, icon);
         }
     }//GEN-LAST:event_ButtonLoadActionPerformed
 
     private void ButtonEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonEditActionPerformed
-        ArrayList<String> meta=new ArrayList<>();
         FlatSVGIcon icon2=new FlatSVGIcon("png/bluebell.svg");
         
-            if (Validator.checkList(ListTrain) == true) {
-                String path2 = ListTrain.getSelectedValue().toString();
+        if (Validator.checkList(ListTrain) == true) {
+            String path2 = ListTrain.getSelectedValue();
             try {
-                System.out.println("Path2" +path2);
-                UIControllers.Filename=path2;
+                System.out.println("Path2" + path2);
+                UIControllers.Filename = path2;
                 new ModifyDataset(Controller.getInstance().fileContent(path2)).setVisible(true);
                 this.dispose();
             } catch (Exception ex) {
                 UIControllers.JOptioncatch(ex.getMessage());
             }
-                //path2=nombredelarchivoseleccionado
-               
-            } else {
-                JOptionPane.showMessageDialog(null, "Debe seleccionar en la lista un dataset para modificar", "Error", JOptionPane.INFORMATION_MESSAGE, icon2);
-            }
-        
-        
+        } else {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar en la lista un dataset para modificar", "Error", JOptionPane.INFORMATION_MESSAGE, icon2);
+        }     
     }//GEN-LAST:event_ButtonEditActionPerformed
 
     private void ButtonCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonCreateActionPerformed
         UIControllers.NumberOptionPane=2;
-        FlatSVGIcon icon2=new FlatSVGIcon("png/bluebell.svg");
         JOptionpane pane = new JOptionpane(this, true);
         pane.setVisible(true);
         if(UIControllers.Joption==true)
@@ -301,13 +295,11 @@ public class DataBaseMenu extends javax.swing.JFrame {
             restartTimer();
             
             try {
-                //variable q tiene el nombre del archivo creado UIControllers.filename
                 UIControllers.Filename = UIControllers.newFilename;
                 Controller.getInstance().createFile(UIControllers.Filename);
                 addStringList(Controller.getInstance().loadedFilesName());
             } catch (IOException ex) {
-                //funcion q mamda joption pane con el string como mensaje deljoption pane
-                //UIControllers.JOptioncatch(String);
+                 UIControllers.JOptioncatch(ex.getMessage());
             }
         }
     }//GEN-LAST:event_ButtonCreateActionPerformed
@@ -321,20 +313,18 @@ public class DataBaseMenu extends javax.swing.JFrame {
 
         if (Validator.checkList(ListTrain) == true) {
             String[] botones = {"Si", "No"};
-            int result = JOptionPane.showOptionDialog(null, "Seguro desea eliminar este dataset?", "Eliminar dataset", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, icon2, botones, botones[0]);
+            int result = JOptionPane.showOptionDialog(null, "¿Seguro desea eliminar este dataset?", "Eliminar dataset", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, icon2, botones, botones[0]);
             if (Validator.YesOptionJOption(result) && Validator.checkList(ListTrain)) {
                 String selectedValue = ListTrain.getSelectedValue();
-                //funcion q elimina y actualiza te paso el nombre dela archivo (selectedvalue)
                 try {
                     Controller.getInstance().deleteFile(selectedValue);
                     addStringList(Controller.getInstance().loadedFilesName());
                 } catch (Exception ex) {
-                    //funcion q mamda joption pane con el string como mensaje deljoption pane
-                    //UIControllers.JOptioncatch(String);
+                    UIControllers.JOptioncatch(ex.getMessage());
                 }
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Debe seleccionar en la lista un dataset para eliminarlo", "Informacion", JOptionPane.INFORMATION_MESSAGE, icon2);
+            JOptionPane.showMessageDialog(null, "Debe seleccionar en la lista un dataset para eliminarlo", "Información", JOptionPane.INFORMATION_MESSAGE, icon2);
         }
     }//GEN-LAST:event_buttonDeleteActionPerformed
 
@@ -342,6 +332,7 @@ public class DataBaseMenu extends javax.swing.JFrame {
     public static void main(String args[]) {
         
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 
                 new DataBaseMenu().setVisible(true);
@@ -354,11 +345,11 @@ public class DataBaseMenu extends javax.swing.JFrame {
     private javax.swing.JButton ButtonCreate;
     private javax.swing.JButton ButtonEdit;
     private javax.swing.JButton ButtonLoad;
+    private javax.swing.JLabel LabelDatasetLoaded;
     private javax.swing.JLabel LabelSuccess;
     private javax.swing.JList<String> ListTrain;
     private javax.swing.JButton buttonDelete;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel panelPrinc;
     // End of variables declaration//GEN-END:variables
 }

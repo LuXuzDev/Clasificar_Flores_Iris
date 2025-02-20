@@ -29,7 +29,12 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ModifyDataset extends javax.swing.JFrame {
 
-    String[] columnas={"Ancho petalo","Longitud petalo","Ancho sepalo","Longitud sepalo","Resultado"};
+    
+    //Atributos
+    private static ArrayList<String> data=new ArrayList<>(160);
+    
+    //el model de la tabla asi como los encabezados
+    String[] columnas={"Ancho pétalo","Longitud pétalo","Ancho sépalo","Longitud sépalo","Resultado"};
     DefaultTableModel model = new DefaultTableModel(columnas, 0) {
         @Override
         public boolean isCellEditable(int row, int column) {
@@ -37,10 +42,8 @@ public class ModifyDataset extends javax.swing.JFrame {
         }
     };
     
-   
-    private static ArrayList<String> data=new ArrayList<>(160);
     
-    
+    //Constructor
     public ModifyDataset(ArrayList<String> datos) {
         data=datos;
         initComponents();
@@ -53,6 +56,7 @@ public class ModifyDataset extends javax.swing.JFrame {
         
     }
 
+    
     //funcion para diseño general del Jframe
     private void design()
     {
@@ -73,9 +77,12 @@ public class ModifyDataset extends javax.swing.JFrame {
         realTimeCheck(LongLeaf);
         realTimeCheck(widthStem);
         realTimeCheck(LongStem);
+        tableData.getTableHeader().setResizingAllowed(false);
+        tableData.getTableHeader().setReorderingAllowed(false);
     }
     
-    //funcion para añadir cada elemento a la tbala
+    
+    //metodo para añadir cada elemento a la tabla
     public void datasetTabel(ArrayList<String> arreglo)
     {
         model.setRowCount(0);
@@ -86,6 +93,8 @@ public class ModifyDataset extends javax.swing.JFrame {
         }
     }
     
+    
+    //metodo de disenno general
     public void Flatlaf()
     {
         SwingUtilities.invokeLater(() -> {
@@ -98,6 +107,7 @@ public class ModifyDataset extends javax.swing.JFrame {
         });
     }
     
+    //metodo para poner el font general
     private void setFontFamily(String fontFamily)
     {
         java.awt.Font font = UIManager.getFont("defaultFont");
@@ -108,7 +118,8 @@ public class ModifyDataset extends javax.swing.JFrame {
         
     }
     
-    //funcion para revisar en tiempo real los text field
+    
+    //metodo para revisar en tiempo real los text field
     private void realTimeCheck(JTextField field)
     {
         field.getDocument().addDocumentListener(new DocumentListener()
@@ -130,7 +141,9 @@ public class ModifyDataset extends javax.swing.JFrame {
     
         });
     }
-    //funcion para poner color a los bordes del texte fiedl
+    
+    
+    //metodo para poner color a los bordes del texte fiedl
     private void check(JTextField field)
     {
         if (!Validator.isCorrectInputOnlyNumbers(field.getText())) {
@@ -141,19 +154,14 @@ public class ModifyDataset extends javax.swing.JFrame {
             field.putClientProperty("JComponent.outline",new Color(102, 153, 255));
         }
     }
-    //funcion para poner borde de errror al text field
+    
+    
+    //metodo para poner borde de errror al text field
     private void Error(JTextField field)
     {
         field.putClientProperty("JComponent.outline","error");
     }
  
-    //get de array con la informacion agregada
-    private ArrayList<String> returnDataset(ArrayList<String> array)
-    {
-        return array;
-    }
-    
-    
     
     
     @SuppressWarnings("unchecked")
@@ -247,24 +255,24 @@ public class ModifyDataset extends javax.swing.JFrame {
             Validator.isCorrectInputOnlyNumbers(LongLeaf.getText()) && Validator.isCorrectInputOnlyNumbers(LongStem.getText())  &&
             ComboBoxIris.getSelectedItem() != " ")
         {
-            int resultado = JOptionPane.showOptionDialog(null, "Desea guardrar los cambios realizados", "Guardar cambios", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, icon2, botones, botones[0]);
+            var resultado = JOptionPane.showOptionDialog(null, "¿Desea guardar los cambios realizados?", "Guardar cambios", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, icon2, botones, botones[0]);
             if (resultado == JOptionPane.YES_OPTION) {
                 try {
                     Validator.MaxTam(data);
                     line=widhLeaf.getText()+","+widthStem.getText()+","+LongLeaf.getText()+","+LongStem.getText()+","+ComboBoxIris.getSelectedItem();
                     datasetTabel(Controller.getInstance().editFile(line, UIControllers.Filename));
-                    JOptionPane.showMessageDialog(null, "Datos guardados exitosamente", "Informacion", JOptionPane.INFORMATION_MESSAGE, icon2);
+                    JOptionPane.showMessageDialog(null, "Datos guardados exitosamente", "Información", JOptionPane.INFORMATION_MESSAGE, icon2);
             
                 } catch (Exception ex) {
                     UIControllers.JOptioncatch(ex.getMessage());
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "No se guardaron los cambios", "Informacion", JOptionPane.INFORMATION_MESSAGE, icon2);
+                JOptionPane.showMessageDialog(null, "No se guardaron los cambios", "Información", JOptionPane.INFORMATION_MESSAGE, icon2);
             }
         } else 
-            JOptionPane.showMessageDialog(null, "Debe Introducir datos correctos para agregar al dataset", "Informacion", JOptionPane.INFORMATION_MESSAGE, icon2);
+            JOptionPane.showMessageDialog(null, "Debe Introducir datos correctos para agregar al dataset", "Información", JOptionPane.INFORMATION_MESSAGE, icon2);
         
-        ComboBoxIris.setSelectedItem(" ");
+        /*ComboBoxIris.setSelectedItem(" ");
         widhLeaf.setText("");
         LongLeaf.setText("");
         widthStem.setText("");
@@ -272,7 +280,7 @@ public class ModifyDataset extends javax.swing.JFrame {
         widhLeaf.putClientProperty("JComponent.outline", new Color(102, 153, 255));
         LongLeaf.putClientProperty("JComponent.outline", new Color(102, 153, 255));
         widthStem.putClientProperty("JComponent.outline", new Color(102, 153, 255));
-        LongStem.putClientProperty("JComponent.outline", new Color(102, 153, 255));
+        LongStem.putClientProperty("JComponent.outline", new Color(102, 153, 255));*/
     }//GEN-LAST:event_buttonEnterActionPerformed
 
     private void buttonBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBackActionPerformed

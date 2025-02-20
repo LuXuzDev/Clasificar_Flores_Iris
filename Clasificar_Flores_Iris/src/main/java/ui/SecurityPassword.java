@@ -20,8 +20,12 @@ import javax.swing.UnsupportedLookAndFeelException;
  */
 public class SecurityPassword extends javax.swing.JDialog {
 
-    private JFrame parentFrame;
     
+    //Atributos
+    private JFrame parentFrame;
+
+
+    //Constructor    
     public SecurityPassword(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         this.parentFrame=(JFrame) parent;
@@ -30,7 +34,7 @@ public class SecurityPassword extends javax.swing.JDialog {
     }
 
    
-    
+    //metodo de disenno gheneral
     public void Flatlaf()
     {
         SwingUtilities.invokeLater(() -> {
@@ -43,7 +47,9 @@ public class SecurityPassword extends javax.swing.JDialog {
             }
         });
     }
-    //funcion para diseño general del jdialog
+    
+    
+    //metodo para diseño general del jdialog
     private void design()
     {
         UIControllers.setFontFamily("Arial");
@@ -63,7 +69,7 @@ public class SecurityPassword extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        PanelPrinc = new javax.swing.JPanel();
         LabelSecurity = new javax.swing.JLabel();
         PasswordField = new javax.swing.JPasswordField();
         buttonBack = new javax.swing.JButton();
@@ -73,24 +79,23 @@ public class SecurityPassword extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Seguridad");
         setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        setPreferredSize(new java.awt.Dimension(610, 340));
         setResizable(false);
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.setPreferredSize(new java.awt.Dimension(474, 270));
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        PanelPrinc.setBackground(new java.awt.Color(255, 255, 255));
+        PanelPrinc.setPreferredSize(new java.awt.Dimension(474, 270));
+        PanelPrinc.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         LabelSecurity.setBackground(new java.awt.Color(255, 255, 255));
         LabelSecurity.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         LabelSecurity.setForeground(new java.awt.Color(102, 153, 255));
         LabelSecurity.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         LabelSecurity.setText("Contraseña de seguridad");
-        jPanel1.add(LabelSecurity, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 30, 230, 50));
+        PanelPrinc.add(LabelSecurity, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 30, 230, 50));
 
         PasswordField.setBackground(new java.awt.Color(255, 255, 255));
         PasswordField.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         PasswordField.setForeground(new java.awt.Color(0, 0, 0));
-        jPanel1.add(PasswordField, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 90, 200, 30));
+        PanelPrinc.add(PasswordField, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 90, 200, 30));
 
         buttonBack.setIcon(new FlatSVGIcon("png/arrow.svg"));
         buttonBack.setBackground(new java.awt.Color(255, 255, 255));
@@ -100,7 +105,7 @@ public class SecurityPassword extends javax.swing.JDialog {
                 buttonBackActionPerformed(evt);
             }
         });
-        jPanel1.add(buttonBack, new org.netbeans.lib.awtextra.AbsoluteConstraints(322, 20, 40, 30));
+        PanelPrinc.add(buttonBack, new org.netbeans.lib.awtextra.AbsoluteConstraints(322, 20, 40, 30));
 
         ButtonEnter.setBackground(new java.awt.Color(255, 255, 255));
         ButtonEnter.setForeground(new java.awt.Color(102, 153, 255));
@@ -110,21 +115,21 @@ public class SecurityPassword extends javax.swing.JDialog {
                 ButtonEnterActionPerformed(evt);
             }
         });
-        jPanel1.add(ButtonEnter, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 160, 90, 30));
+        PanelPrinc.add(ButtonEnter, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 160, 90, 30));
 
         LabelIncorrecto.setBackground(new java.awt.Color(255, 255, 255));
         LabelIncorrecto.setForeground(new java.awt.Color(255, 0, 0));
-        jPanel1.add(LabelIncorrecto, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 120, 160, 20));
+        PanelPrinc.add(LabelIncorrecto, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 120, 160, 20));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 386, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(PanelPrinc, javax.swing.GroupLayout.PREFERRED_SIZE, 386, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(PanelPrinc, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -207,8 +212,8 @@ public class SecurityPassword extends javax.swing.JDialog {
     private javax.swing.JButton ButtonEnter;
     private javax.swing.JLabel LabelIncorrecto;
     private javax.swing.JLabel LabelSecurity;
+    private javax.swing.JPanel PanelPrinc;
     private javax.swing.JPasswordField PasswordField;
     private javax.swing.JButton buttonBack;
-    private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }
