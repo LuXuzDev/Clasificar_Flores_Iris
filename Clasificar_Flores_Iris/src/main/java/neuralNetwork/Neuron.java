@@ -8,8 +8,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Neuron implements Serializable{
-    
+public class Neuron implements Serializable {
+
     public ArrayList<Double> weights; // Pesos de la neurona
     private double bias;
     private Random random;
@@ -18,7 +18,7 @@ public class Neuron implements Serializable{
 
     // Constructor que acepta un parámetro para indicar si es una neurona de salida
     public Neuron(int numEntradas, boolean isOutputNeuron) {
-         this.isOutputNeuron = isOutputNeuron;
+        this.isOutputNeuron = isOutputNeuron;
         this.alpha = 0.01;
         weights = new ArrayList<>();
         random = new Random();
@@ -50,7 +50,7 @@ public class Neuron implements Serializable{
     }
 
     private double leakyReLU(double x) {
-        return (x > 0) ? x : alpha * x; // Leaky ReLU
+       return (x > 0) ? x : alpha * x; // Leaky ReLU
     }
 
     public static ArrayList<Double> softmax(ArrayList<Double> logits) {
@@ -77,10 +77,12 @@ public class Neuron implements Serializable{
     }
 
     public void ajustarPesos(ArrayList<Double> entradas, double error, double tasaAprendizaje, double lambda) {
-    for (int i = 0; i < weights.size(); i++) {
-        // Actualizar pesos con L2 regularization
-        weights.set(i, weights.get(i) + tasaAprendizaje * (error * entradas.get(i) - lambda * weights.get(i)));
+        for (int i = 0; i < weights.size(); i++) {
+            // Actualizar pesos con L2 regularization
+           double nuevoPeso = weights.get(i) + tasaAprendizaje * (error * 
+                              entradas.get(i) - lambda * weights.get(i));
+           weights.set(i, nuevoPeso);
+        }
+        bias += tasaAprendizaje * error; // Actualizar bias
     }
-    bias += tasaAprendizaje * error; // Actualizar bias
-}
 }

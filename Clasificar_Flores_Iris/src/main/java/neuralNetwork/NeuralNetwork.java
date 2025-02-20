@@ -51,6 +51,7 @@ public class NeuralNetwork implements Serializable{
         return -Math.log(predicciones.get(claseReal) + epsilon);
     }
 
+    
     public TrainerResults entrenar(double[][] dataSet, int[] salidas, double tasaAprendizaje, int epochs, double lambda) {
 
         ArrayList<String> metricas = new ArrayList<String>();
@@ -204,3 +205,5 @@ public class NeuralNetwork implements Serializable{
         return results;
     }
 }
+
+
