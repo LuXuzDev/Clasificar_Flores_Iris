@@ -21,10 +21,9 @@ import neuralNetwork.NeuralNetwork;
 
 public class TrainMenu extends javax.swing.JFrame {
 
-    /**
-     * Creates new form TrainMenu
-     */
+   
     
+    //Constructor
     public TrainMenu() {
         initComponents();
         design();
@@ -33,6 +32,8 @@ public class TrainMenu extends javax.swing.JFrame {
         }
     }
 
+    
+    //metodo general de disenno
     public void Flatlaf() {
         SwingUtilities.invokeLater(() -> {
             try {
@@ -43,20 +44,18 @@ public class TrainMenu extends javax.swing.JFrame {
             }
         });
     }
-    //funcion para diseño general del Jframe
+    
+    
+    //metodo para diseño general del Jframe
     private void design() {
         if(Controller.getInstance().getDataSetLoaded() !=null)
             LabelDataSetLoaded.setText("Dataset Cargado: "+Controller.getInstance().getDataSetLoaded().getName());
         else
             LabelDataSetLoaded.setText("Dataset Cargado: Ninguno");
-                  
-        
         if(!Validator.isEmptyInput(UIControllers.TrainName))
             LabelTrainLoaded.setText("Entrenamiento cargado: "+UIControllers.TrainName);
         else
             LabelTrainLoaded.setText("Entrenamiento cargado: Ninguno");
-        
-        
         Flatlaf();
         UIControllers.setFontFamily("Arial");
         setIconImage(UIControllers.design().getImage());
@@ -160,6 +159,7 @@ public class TrainMenu extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
     private void buttonEstadisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEstadisActionPerformed
         UIControllers.SetDatasetName=LabelDataSetLoaded.getText();
         UIControllers.SetTrainName=LabelTrainLoaded.getText();
@@ -201,32 +201,24 @@ public class TrainMenu extends javax.swing.JFrame {
 
     private void buttonTrainActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonTrainActionPerformed
         UIControllers.NumberOptionPane = 3;
-
         FlatSVGIcon icon = new FlatSVGIcon("png/bluebell.svg");
-
         try {
             Validator.loadedDataSet();
             TrainerResults results = Controller.getInstance().train();
-            
             UIControllers.trainer = results;
             new JOptionpane(this, true).setVisible(true);
-            
             if (UIControllers.JoptionTrainMenu == false) {
-                UIControllers.JOptioncatch("No se guardo el entrenamiento");
-                
+                UIControllers.JOptioncatch("No se guardó el entrenamiento");
                 UIControllers.trainer=null;
                 Controller.setNeuralNetwork(new NeuralNetwork(4, 50, 3));
             } 
             else if (UIControllers.JoptionTrainMenu == true) 
             {
-                
                 Controller.getInstance().saveTrain(UIControllers.TrainName);
-
                 JOptionPane.showOptionDialog(null, "Datos guardados correctamente", "Dataset", JOptionPane.CLOSED_OPTION, JOptionPane.INFORMATION_MESSAGE, icon, null, null);
                 LabelTrainLoaded.setText("Entrenamiento cargado: " + UIControllers.TrainName);
                 Controller.getInstance().setLoadedTrain(true);
             }
-
         } catch (Exception ex) {
             UIControllers.JOptioncatch(ex.getMessage());
         }
@@ -238,9 +230,8 @@ public class TrainMenu extends javax.swing.JFrame {
         UIControllers.JoptionCombo=false;
         UIControllers.NumberOptionPane=4;
         new JOptionpane(this,true).setVisible(true);
-        
         if (UIControllers.JoptionCombo == false) {
-            UIControllers.JOptioncatch("No se cargo el entrenamiento");
+            UIControllers.JOptioncatch("No se cargó el entrenamiento");
         } 
         else if (UIControllers.JoptionCombo == true) 
         {
